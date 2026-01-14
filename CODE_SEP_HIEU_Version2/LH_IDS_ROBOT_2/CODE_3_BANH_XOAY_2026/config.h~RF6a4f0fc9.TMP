@@ -1,0 +1,1259 @@
+
+#include "stm32f4xx.h"
+#include "stm32f4xx_gpio.h"
+#include "stm32f4xx_rcc.h"
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+
+
+vu8 DATA_SPEED[60]={255,1,0,0,
+										255,2,0,0,
+										255,3,0,0,
+										255,4,0,0,
+										255,5,0,0,
+										255,6,0,0
+//										255,7,0,0,
+//										255,8,0,0,
+//										255,9,0,0,
+//										255,10,0,0,
+//										255,11,0,0,
+//										255,12,0,0,
+//										255,13,0,0,
+//										255,14,0,0,										
+};
+
+
+vs32 _bien_adc,bien_adc,adc,setup,chong_nhieu=0,chong_nhieu1=0,nho_encoder;
+
+
+#define 	ADC1_DR_ADDRESS    ((uint32_t)0x4001204C)
+////////////////////////NHUNG CHAN MAC DINH/////////////////////////////////////////
+//-------------------------------- DEFINE MOTOR ---------------------------------------
+
+//==============TIMER-CH==============
+//#define	banh_trai					TIM4->CCR1
+//#define chieu_trai_toi		GPIO_WriteBit(GPIOA,GPIO_Pin_8,0)
+//#define chieu_trai_lui 		GPIO_WriteBit(GPIOA,GPIO_Pin_8,1)
+
+//#define	banh_phai					TIM4->CCR2
+//#define chieu_phai_toi		GPIO_WriteBit(GPIOA,GPIO_Pin_11,1)
+//#define chieu_phai_lui 		GPIO_WriteBit(GPIOA,GPIO_Pin_11,0)
+
+//#define		DC3				TIM4->CCR3
+//#define DC3_toi			GPIO_WriteBit(GPIOA,GPIO_Pin_12,1)
+//#define DC3_lui 		GPIO_WriteBit(GPIOA,GPIO_Pin_12,0)
+
+//#define	DC4					TIM4->CCR4
+//#define DC4_toi			GPIO_WriteBit(GPIOC,GPIO_Pin_10,0)
+//#define DC4_lui 		GPIO_WriteBit(GPIOC,GPIO_Pin_10,1)
+/////////////////////// --KHAI BAO DINH NGHIA PWM-- /////////////////////////////////////
+#define	DIA_CHI_START1 	DATA_SPEED[0]=255
+#define	ID1 		 				DATA_SPEED[1]=1
+#define DC_XOAY_NONG_SAU 	  DATA_SPEED[2]=1
+#define DC_XOAY_NONG_TRUOC 		DATA_SPEED[2]=0
+#define	DC_XOAY_NONG 		 		DATA_SPEED[3]
+
+#define	DIA_CHI_START2 	DATA_SPEED[4]=255
+#define	ID2 		 				DATA_SPEED[5]=2
+#define CHIEU_DC2_1 		DATA_SPEED[6]=1
+#define CHIEU_DC2_0 		DATA_SPEED[6]=0
+#define	DC2 		 				DATA_SPEED[7]
+
+#define	DIA_CHI_START3 	DATA_SPEED[8]=255
+#define	ID3 		 				DATA_SPEED[9]=3
+#define phai_truoc_toi 		DATA_SPEED[10]=0
+#define phai_truoc_lui 		DATA_SPEED[10]=1
+#define	phai_truoc 		 		DATA_SPEED[11]
+
+#define	DIA_CHI_START4 	DATA_SPEED[12]=255
+#define	ID4 		 				DATA_SPEED[13]=4
+#define phai_sau_toi 		DATA_SPEED[14]=0
+#define phai_sau_lui 		DATA_SPEED[14]=1
+#define	phai_sau 		 				DATA_SPEED[15]
+
+#define	DIA_CHI_START5 	DATA_SPEED[16]=255
+#define	ID5 		 				DATA_SPEED[17]=5
+#define trai_truoc_toi 		DATA_SPEED[18]=1
+#define trai_truoc_lui 		DATA_SPEED[18]=0
+#define	trai_truoc 		 				DATA_SPEED[19]
+
+#define	DIA_CHI_START6 	DATA_SPEED[20]=255
+#define	ID6 		 				DATA_SPEED[21]=6
+#define trai_sau_toi 		DATA_SPEED[22]=1
+#define trai_sau_lui 		DATA_SPEED[22]=0
+#define	trai_sau 		 				DATA_SPEED[23]
+//////////////////////////////////////////////////////////////////
+#define	DIA_CHI_START7 	DATA_SPEED[24]=255
+#define	ID7 		 				DATA_SPEED[25]=7
+#define CHIEU_DC7_1 		DATA_SPEED[26]=1
+#define CHIEU_DC7_0 		DATA_SPEED[26]=0
+#define	DC7 		 				DATA_SPEED[27]
+
+#define	DIA_CHI_START8 	DATA_SPEED[28]=255
+#define	ID8 		 				DATA_SPEED[29]=8
+#define CHIEU_DC8_1 		DATA_SPEED[30]=1
+#define CHIEU_DC8_0 		DATA_SPEED[30]=0
+#define	DC8 		 				DATA_SPEED[31]
+
+#define	DIA_CHI_START9 	DATA_SPEED[32]=255
+#define	ID9 		 				DATA_SPEED[33]=9
+#define CHIEU_DC9_1 		DATA_SPEED[34]=1
+#define CHIEU_DC9_0 		DATA_SPEED[34]=0
+#define	DC9		 				  DATA_SPEED[35]
+
+#define	DIA_CHI_START10 DATA_SPEED[36]=255
+#define	ID10 		 				DATA_SPEED[37]=10
+#define CHIEU_DC10_1 		DATA_SPEED[38]=1
+#define CHIEU_DC10_0 		DATA_SPEED[38]=0
+#define	DC10 		 				DATA_SPEED[39]
+
+#define	DIA_CHI_START11 DATA_SPEED[40]=255
+#define	ID11 		 				DATA_SPEED[41]=11
+#define CHIEU_DC11_1 		DATA_SPEED[42]=1
+#define CHIEU_DC11_0 		DATA_SPEED[42]=0
+#define	DC11 		 				DATA_SPEED[43]
+
+#define	DIA_CHI_START12 DATA_SPEED[44]=255
+#define	ID12 		 				DATA_SPEED[45]=12
+#define CHIEU_DC12_1 		DATA_SPEED[46]=1
+#define CHIEU_DC12_0 		DATA_SPEED[46]=0
+#define	DC12 		 				DATA_SPEED[47]
+
+#define	DIA_CHI_START13 DATA_SPEED[48]=255
+#define	ID13 		 				DATA_SPEED[49]=13
+#define CHIEU_DC13_1 		DATA_SPEED[50]=1
+#define CHIEU_DC13_0 		DATA_SPEED[50]=0
+#define	DC13 		 				DATA_SPEED[51]
+#define	DIA_CHI_START14 DATA_SPEED[52]=255
+#define	ID14 		 				DATA_SPEED[53]=14
+#define CHIEU_DC14_1 		DATA_SPEED[54]=1
+#define CHIEU_DC14_0 		DATA_SPEED[54]=0
+#define	DC14 		 				DATA_SPEED[55]
+
+//=============================ADC DMI======================================
+#define ADC_0							  _ADC1_Value[0]
+#define ADC_1								_ADC1_Value[1]
+#define ADC_2								_ADC1_Value[2]
+#define ADC_3								_ADC1_Value[3]
+#define ADC_4								_ADC1_Value[4]
+#define ADC_5								_ADC1_Value[5]
+//==============================LINE========================================
+
+//xxxxxxxxxxxxxxxxxxxxxxxxxx OUTPUT xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+//#define  XL_KEP			GPIO_WriteBit(GPIOA,GPIO_Pin_4);
+//#define  K_XL_BAN				GPIO_WriteBit(GPIOA,GPIO_Pin_5);
+
+//#define  OUT_1			GPIO_WriteBit(GPIOD,GPIO_Pin_3,0);//GPIO_ReadOutputDataBit(GPIOD,GPIO_Pin_3);
+//#define  OUT_2 			GPIO_WriteBit(GPIOD,GPIO_Pin_4,0);
+//#define  OUT_3			GPIO_WriteBit(GPIOD,GPIO_Pin_5,0);
+//#define  OUT_4 			GPIO_WriteBit(GPIOD,GPIO_Pin_6,0);	//GPIO_ToggleBits(GPIOD,GPIO_Pin_5);
+//#define  OUT_5			GPIO_WriteBit(GPIOD,GPIO_Pin_7,0);
+
+//#define  XL_KHOP2			GPIO_WriteBit(GPIOB,GPIO_Pin_12);
+//#define  XL_KHOP1 		GPIO_WriteBit(GPIOB,GPIO_Pin_13);
+//#define  OUT_8			GPIO_WriteBit(GPIOB,GPIO_Pin_8,0);
+//#define  OUT_9 			GPIO_WriteBit(GPIOB,GPIO_Pin_9,0);					
+
+//#define  OUT_10			GPIO_WriteBit(GPIOE,GPIO_Pin_0,0);
+//#define  OUT_11			GPIO_WriteBit(GPIOE,GPIO_Pin_1,0);
+//#define  OUT_12			GPIO_WriteBit(GPIOE,GPIO_Pin_2,0);
+//#define  OUT_13			GPIO_WriteBit(GPIOE,GPIO_Pin_3,0);
+//#define  OUT_14			GPIO_WriteBit(GPIOE,GPIO_Pin_4,0);
+//#define  OUT_15			GPIO_WriteBit(GPIOE,GPIO_Pin_5,0);
+
+////===========================INPUT================================
+//#define  IN_1					GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_0)
+//#define  IN_2					GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_1)
+//#define  IN_3					GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_7);
+//#define  IN_4					GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_8);
+//#define  CB_QUANG_3_XANH		GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_5)
+//#define  CB_QUANG						GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_12)
+//#define  HT_XOAY_SAU				GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_7)
+//#define  HT_XOAY_TRUOC			GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_8)
+//#define  IN_9					GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_15);
+//#define  IN_10				GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_10);
+//#define  IN_11				GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_11);
+//#define  IN_12				GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_12);
+//#define  IN_13				GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_13);
+//#define  IN_14				GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_14);
+//#define  IN_15				GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_15);
+//#define  IN_16				GPIO_ReadInputDataBit(GPIOD,GPIO_Pin_10)
+//=============================ENCODER======================================
+//#define ENCODER_1	(num_over_t2<<16)|TIM_GetCounter(TIM2)
+//#define ENCODER_2	(num_over_t3<<16)|TIM_GetCounter(TIM3)
+//#define ENCODER_3	(num_over_t1<<16)|TIM_GetCounter(TIM1)
+//#define ENCODER_4	(num_over_t9<<16)|TIM_GetCounter(TIM9)
+
+
+////////////////////////KHAI BAO HE DIEU HANH RTOS//////////////////////////////////////////////////
+
+
+//xTaskHandle Chu_trinh_1, Chu_trinh_2, Chu_trinh_3,Chu_trinh_4;
+
+static void Task_Main(void *pvParameters);
+static void Task_HMI(void *pvParameters);  
+static void Task_Control_1(void *pvParameters);
+static void Task_Control_2(void *pvParameters);
+vs32 CHAY_TU_DONG_THEO_LAZE_0(vs32 chieu_chay,vs32 laze_chuan,vs32 he_so_dap_ung_laze);
+
+////////////////////////KHAI BAO HE DIEU HANH RTOS//////////////////////////////////////////////////
+
+///////////////////////KET THUC KHAI BAO NHUNG CHAN MAC DINH/////////////////////////////////////////
+
+vs32 	sieu_am,num_over_t1,num_over_t2, num_over_t3, num_over_t5,CCR2_Val,ENCODER_DOC,HMI_LOOP,CAMERA_LINE;
+vs16 	IMU,TRUNG_BINH_SUM_ADC;
+vu8 	data_tx_gyro,en_gyro;
+vu8 	RxBuffer_compass[2],RX_USART1[15];//TAY GAME, LA BAN
+uint8_t MANG_GAME[15];									
+vu16 _ADC1_Value[10];
+unsigned int captpix[128];   
+char chuoi_line[128];
+uint8_t GP_BTN [15];
+vs32 NOI_ADC,ADC1_Value_0,ADC1_Value_1,_ADC1_Value_0,_ADC1_Value_1,BIEN_ADC1_Value_0,BIEN_ADC1_Value_1,VR1;
+vs32 S_cm, En2;
+//------------------------------------ DELAY MICROSECOND--------------------------------------------
+void delay_us(vu32 num)
+{
+	__IO uint32_t index = 0;
+
+	/* default system clock is 180MHz */
+	for(index = (18 * num); index != 0; index--);
+}
+//------------------------------------ DELAY MILISECOND--------------------------------------------
+void delay_ms(vu32 num)
+{
+	__IO uint32_t index = 0;
+
+	/* default system clock is 180MHz */
+	for(index = (18000 * num); index != 0; index--);
+}
+
+///////////////////////////////////////////////
+
+//---------------------------- KHAI BAO NGO RA -----------------------------
+void Config_out_mode(void)
+{
+	GPIO_InitTypeDef  GPIO_InitStructure;
+  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD|RCC_AHB1Periph_GPIOB|RCC_AHB1Periph_GPIOA|RCC_AHB1Periph_GPIOC, ENABLE);
+
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6|GPIO_Pin_8|GPIO_Pin_11|GPIO_Pin_12|GPIO_Pin_5|GPIO_Pin_4;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	
+	GPIO_InitStructure.GPIO_Pin =GPIO_Pin_7|GPIO_Pin_6|GPIO_Pin_8|GPIO_Pin_9|GPIO_Pin_10|GPIO_Pin_11|GPIO_Pin_12|GPIO_Pin_13|GPIO_Pin_14|GPIO_Pin_15;	
+	GPIO_Init(GPIOB, &GPIO_InitStructure);
+	
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11|GPIO_Pin_10|GPIO_Pin_7;
+	GPIO_Init(GPIOD, &GPIO_InitStructure);
+
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8|GPIO_Pin_9|GPIO_Pin_15; 
+  GPIO_Init(GPIOC, &GPIO_InitStructure); 
+
+}
+
+//---------------------------- KHAI BAO NGO VAO -----------------------------
+void Config_in_mode(void)
+{
+	GPIO_InitTypeDef  GPIO_InitStructure;
+  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB | RCC_AHB1Periph_GPIOC | RCC_AHB1Periph_GPIOD | RCC_AHB1Periph_GPIOE  , ENABLE);
+	/////////////////////////////////////line
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13|GPIO_Pin_14 ;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOC, &GPIO_InitStructure);
+	
+//	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1|GPIO_Pin_4|GPIO_Pin_5;/// SW1
+//  GPIO_Init(GPIOB, &GPIO_InitStructure);
+	
+	
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_5|GPIO_Pin_4|GPIO_Pin_3|GPIO_Pin_2|GPIO_Pin_1|GPIO_Pin_6|GPIO_Pin_7|GPIO_Pin_8|GPIO_Pin_10|GPIO_Pin_12|GPIO_Pin_13|GPIO_Pin_14|GPIO_Pin_15;
+  GPIO_Init(GPIOE, &GPIO_InitStructure);
+	
+}
+
+//---------------------------- KHAI BAO TIMER6 -----------------------------
+void Config_int_time6(void)
+{
+ 	TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
+	NVIC_InitTypeDef NVIC_InitStructure;
+  NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);
+  NVIC_InitStructure.NVIC_IRQChannel = TIM6_DAC_IRQn;
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
+  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  NVIC_Init(&NVIC_InitStructure);
+    
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM6, ENABLE);
+	TIM_TimeBaseInitStructure.TIM_Prescaler=500;//50
+  TIM_TimeBaseInitStructure.TIM_Period=999;//999;//1ms
+  TIM_TimeBaseInitStructure.TIM_ClockDivision=TIM_CKD_DIV1;
+	TIM_TimeBaseInitStructure.TIM_CounterMode = TIM_CounterMode_Up;//
+  TIM_TimeBaseInit(TIM6, &TIM_TimeBaseInitStructure);
+  
+  TIM_ClearITPendingBit(TIM6, TIM_IT_Update);
+  TIM_ITConfig(TIM6, TIM_IT_Update, ENABLE);
+  TIM_SetCounter(TIM6, 0); 
+ TIM_Cmd(TIM6,ENABLE);
+}
+//---------------------------- KHAI BAO TIMER7 -----------------------------
+void Config_int_time7(void)
+{
+ 	TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
+	NVIC_InitTypeDef NVIC_InitStructure;
+  NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);
+  NVIC_InitStructure.NVIC_IRQChannel = TIM7_IRQn;
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  NVIC_Init(&NVIC_InitStructure);
+    
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM7, ENABLE);
+	TIM_TimeBaseInitStructure.TIM_Prescaler=1000;//500;
+  TIM_TimeBaseInitStructure.TIM_Period=999;//999;//1ms
+  TIM_TimeBaseInitStructure.TIM_ClockDivision=TIM_CKD_DIV1;
+	TIM_TimeBaseInitStructure.TIM_CounterMode = TIM_CounterMode_Up;//
+  TIM_TimeBaseInit(TIM7, &TIM_TimeBaseInitStructure);
+  
+  TIM_ClearITPendingBit(TIM7, TIM_IT_Update);
+  TIM_ITConfig(TIM7, TIM_IT_Update, ENABLE);
+  TIM_SetCounter(TIM7, 0); 
+  TIM_Cmd(TIM7,ENABLE);
+}
+
+//---------------------------- KHAI BAO PWM TIMER4 -----------------------------
+void Config_pwm_time_t4(void)
+{
+ 	TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
+	GPIO_InitTypeDef  GPIO_InitStructure;
+  TIM_OCInitTypeDef  TIM_OCInitStructure;
+	
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD|RCC_AHB1Periph_GPIOA|RCC_AHB1Periph_GPIOC, ENABLE);
+		
+  GPIO_PinAFConfig(GPIOD, GPIO_PinSource12, GPIO_AF_TIM4); // ch1
+  GPIO_PinAFConfig(GPIOD, GPIO_PinSource13, GPIO_AF_TIM4);// ch2
+  GPIO_PinAFConfig(GPIOD, GPIO_PinSource14, GPIO_AF_TIM4);// ch3
+  GPIO_PinAFConfig(GPIOD, GPIO_PinSource15, GPIO_AF_TIM4);  //ch4
+	
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12|GPIO_Pin_15|GPIO_Pin_13|GPIO_Pin_14;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+  GPIO_Init(GPIOD, &GPIO_InitStructure);
+		/*
+	TIM_TimeBaseStructure.TIM_Period = 839800000; // 84Mhz/839800000 = 0.1 (Hz)
+TIM_TimeBaseStructure.TIM_Prescaler = 0; // Maximum TIM5 clock: 84.000.000Hz
+TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+
+	*/
+	TIM_TimeBaseInitStructure.TIM_Prescaler=84000000/(2000*255); // fpwm=2khz
+  TIM_TimeBaseInitStructure.TIM_Period=256;
+  TIM_TimeBaseInitStructure.TIM_ClockDivision=TIM_CKD_DIV2;
+	TIM_TimeBaseInitStructure.TIM_CounterMode = TIM_CounterMode_Up;//
+  TIM_TimeBaseInit(TIM4, &TIM_TimeBaseInitStructure);
+  
+	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM2;
+  TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+  TIM_OCInitStructure.TIM_Pulse = 0;
+  TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+  TIM_Cmd(TIM4,ENABLE);
+  TIM_SetCounter(TIM4, 0);
+   
+  TIM_OC1Init(TIM4, &TIM_OCInitStructure);
+	TIM_OC2Init(TIM4, &TIM_OCInitStructure);
+	TIM_OC3Init(TIM4, &TIM_OCInitStructure);
+	TIM_OC4Init(TIM4, &TIM_OCInitStructure);
+
+}
+
+
+//---------------------------- KHAI BAO ENCODER TIMER 2,3-----------------------------
+void Config_encoder_timer2_timer3(void)
+{
+ 	TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
+	TIM_ICInitTypeDef TIM_ICInitStructure;
+  GPIO_InitTypeDef  GPIO_InitStructure;
+	 NVIC_InitTypeDef NVIC_InitStructure;
+	
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
+	
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA | RCC_AHB1Periph_GPIOB, ENABLE);
+	
+  GPIO_PinAFConfig(GPIOA, GPIO_PinSource15, GPIO_AF_TIM2); // tim2
+  GPIO_PinAFConfig(GPIOB, GPIO_PinSource3, GPIO_AF_TIM2);
+
+  GPIO_PinAFConfig(GPIOB, GPIO_PinSource4, GPIO_AF_TIM3); // tim3
+  GPIO_PinAFConfig(GPIOB, GPIO_PinSource5, GPIO_AF_TIM3);
+  
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3|GPIO_Pin_4|GPIO_Pin_5;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP ;	
+  GPIO_Init(GPIOB, &GPIO_InitStructure);
+	
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_15;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP ;
+  GPIO_Init(GPIOA, &GPIO_InitStructure);
+	
+//  GPIO_InitStructure.GPIO_Pin = ;
+//  GPIO_Init(GPIOB, &GPIO_InitStructure);
+	
+	TIM_TimeBaseInitStructure.TIM_Prescaler=0;
+  TIM_TimeBaseInitStructure.TIM_Period=65535;
+  TIM_TimeBaseInitStructure.TIM_ClockDivision=TIM_CKD_DIV1;
+	TIM_TimeBaseInitStructure.TIM_CounterMode = TIM_CounterMode_Up;//
+  TIM_TimeBaseInit(TIM2, &TIM_TimeBaseInitStructure);
+  TIM_TimeBaseInit(TIM3, &TIM_TimeBaseInitStructure);
+    
+  TIM_ICInitStructure.TIM_Channel=TIM_Channel_1|TIM_Channel_2;
+  TIM_ICInitStructure.TIM_ICPolarity=TIM_ICPolarity_Falling;
+  TIM_ICInitStructure.TIM_ICFilter=20;
+  TIM_ICInitStructure.TIM_ICSelection=TIM_ICSelection_DirectTI;
+  TIM_ICInit(TIM2, &TIM_ICInitStructure);
+  TIM_ICInit(TIM3, &TIM_ICInitStructure);
+	
+  TIM_EncoderInterfaceConfig(TIM2, TIM_EncoderMode_TI12, TIM_ICPolarity_Falling, TIM_ICPolarity_Falling);
+  TIM_EncoderInterfaceConfig(TIM3, TIM_EncoderMode_TI12, TIM_ICPolarity_Falling, TIM_ICPolarity_Falling);
+
+  TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
+  TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
+  TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
+  TIM_ITConfig(TIM3, TIM_IT_Update, ENABLE);
+  
+  TIM_Cmd(TIM2,ENABLE); 
+	TIM_Cmd(TIM3,ENABLE);
+	
+  TIM_SetCounter(TIM2, 10000); 
+	TIM_SetCounter(TIM3, 10000);
+    
+ ////////////
+   NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
+  /* Enable the TIM3 gloabal Interrupt */
+  NVIC_InitStructure.NVIC_IRQChannel = TIM3_IRQn;
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  NVIC_Init(&NVIC_InitStructure);
+
+  NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn;
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 4;
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  NVIC_Init(&NVIC_InitStructure);
+}
+
+
+//---------------------------- KHAI BAO ENCODER TIMER 1-----------------------------
+void Config_encoder_timer1(void)
+{
+ 	TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
+	TIM_ICInitTypeDef TIM_ICInitStructure;
+  GPIO_InitTypeDef  GPIO_InitStructure;
+	NVIC_InitTypeDef NVIC_InitStructure;
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE);
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE , ENABLE);
+
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9|GPIO_Pin_11;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP ;	
+  GPIO_Init(GPIOE, &GPIO_InitStructure);
+
+	TIM_TimeBaseInitStructure.TIM_Prescaler=0;
+  TIM_TimeBaseInitStructure.TIM_Period=65535;
+  TIM_TimeBaseInitStructure.TIM_ClockDivision=TIM_CKD_DIV1;
+	TIM_TimeBaseInitStructure.TIM_CounterMode = TIM_CounterMode_Up;//
+  TIM_TimeBaseInit(TIM1, &TIM_TimeBaseInitStructure);
+  
+	GPIO_PinAFConfig(GPIOE, GPIO_PinSource9, GPIO_AF_TIM1); // tim5
+  GPIO_PinAFConfig(GPIOE, GPIO_PinSource11, GPIO_AF_TIM1);
+
+		
+  TIM_ICInitStructure.TIM_Channel=TIM_Channel_1|TIM_Channel_2;
+  TIM_ICInitStructure.TIM_ICPolarity=TIM_ICPolarity_Falling;
+  TIM_ICInitStructure.TIM_ICFilter=200;
+  TIM_ICInitStructure.TIM_ICSelection=TIM_ICSelection_DirectTI;
+  TIM_ICInit(TIM1, &TIM_ICInitStructure);	
+  TIM_EncoderInterfaceConfig(TIM1, TIM_EncoderMode_TI12, TIM_ICPolarity_Falling, TIM_ICPolarity_Falling);
+  TIM_ClearITPendingBit(TIM1, TIM_IT_Update);
+  TIM_ITConfig(TIM1, TIM_IT_Update, ENABLE);
+  TIM_Cmd(TIM1,ENABLE); 	
+  TIM_SetCounter(TIM1, 10000); 
+   ///////////////////////////
+		TIM1->EGR = 0;           // Generate an update event
+    TIM1->CR1 = 1;           // Enable the counter
+   /////////////////
+  NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
+  NVIC_InitStructure.NVIC_IRQChannel = TIM1_UP_TIM10_IRQn;
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 4;
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  NVIC_Init(&NVIC_InitStructure);
+}
+//---------------------------- KHAI BAO ENCODER TIMER 1-----------------------------
+void Config_encoder_timer5(void)
+{
+ 	TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
+	TIM_ICInitTypeDef TIM_ICInitStructure;
+  GPIO_InitTypeDef  GPIO_InitStructure;
+	NVIC_InitTypeDef NVIC_InitStructure;
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM5, ENABLE);
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA , ENABLE);
+
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_1;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP ;	
+  GPIO_Init(GPIOA, &GPIO_InitStructure);
+
+	TIM_TimeBaseInitStructure.TIM_Prescaler=0;
+  TIM_TimeBaseInitStructure.TIM_Period=65535;
+  TIM_TimeBaseInitStructure.TIM_ClockDivision=TIM_CKD_DIV1;
+	TIM_TimeBaseInitStructure.TIM_CounterMode = TIM_CounterMode_Up;//
+  TIM_TimeBaseInit(TIM5, &TIM_TimeBaseInitStructure);
+  
+	GPIO_PinAFConfig(GPIOA, GPIO_PinSource0, GPIO_AF_TIM5); // tim5
+  GPIO_PinAFConfig(GPIOA, GPIO_PinSource1, GPIO_AF_TIM5);
+
+		
+  TIM_ICInitStructure.TIM_Channel=TIM_Channel_1|TIM_Channel_2;
+  TIM_ICInitStructure.TIM_ICPolarity=TIM_ICPolarity_Falling;
+  TIM_ICInitStructure.TIM_ICFilter=200;
+  TIM_ICInitStructure.TIM_ICSelection=TIM_ICSelection_DirectTI;
+  TIM_ICInit(TIM5, &TIM_ICInitStructure);	
+  TIM_EncoderInterfaceConfig(TIM5, TIM_EncoderMode_TI12, TIM_ICPolarity_Falling, TIM_ICPolarity_Falling);
+  TIM_ClearITPendingBit(TIM5, TIM_IT_Update);
+  TIM_ITConfig(TIM5, TIM_IT_Update, ENABLE);
+  TIM_Cmd(TIM5,ENABLE); 	
+  TIM_SetCounter(TIM5, 10000); 
+   ///////////////////////////
+		TIM5->EGR = 0;           // Generate an update event
+    TIM5->CR1 = 1;           // Enable the counter
+   /////////////////
+  NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
+  NVIC_InitStructure.NVIC_IRQChannel = TIM5_IRQn;
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 4;
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  NVIC_Init(&NVIC_InitStructure);
+}
+
+//---------------------------- KHAI BAO ADC DMA----------------------------- 
+void Config_ADC1_DMA(void)
+{
+  ADC_InitTypeDef       ADC_InitStructure;
+  ADC_CommonInitTypeDef ADC_CommonInitStructure;
+  DMA_InitTypeDef       DMA_InitStructure;
+  GPIO_InitTypeDef      GPIO_InitStructure;
+
+  /* Enable ADC3, DMA2 and GPIO clocks ****************************************/
+  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA2 | RCC_AHB1Periph_GPIOA | RCC_AHB1Periph_GPIOC, ENABLE);
+  RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
+
+  /* DMA2 Stream0 channel0 configuration **************************************/
+  DMA_InitStructure.DMA_Channel = DMA_Channel_0;  
+  DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)ADC1_DR_ADDRESS;
+  DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t)&_ADC1_Value;
+  DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;
+  DMA_InitStructure.DMA_BufferSize = 6;
+  DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+  DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
+  DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
+  DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
+  DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
+  DMA_InitStructure.DMA_Priority = DMA_Priority_High;
+  DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Disable;         
+  DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_HalfFull;
+  DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;
+  DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;
+  DMA_Init(DMA2_Stream0, &DMA_InitStructure);
+  DMA_Cmd(DMA2_Stream0, ENABLE);
+//	config_ngat_dma();// cau hinh ngat dma phai dat sau lenh enable kenh dma.
+
+  /* Configure ADC1 Channel7 pin as analog input ******************************/
+
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_1|GPIO_Pin_2|GPIO_Pin_3|GPIO_Pin_4|GPIO_Pin_5;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
+  GPIO_Init(GPIOC, &GPIO_InitStructure);
+  /* ADC Common Init **********************************************************/
+  ADC_CommonInitStructure.ADC_Mode = ADC_Mode_Independent;
+  ADC_CommonInitStructure.ADC_Prescaler = ADC_Prescaler_Div8;
+  ADC_CommonInitStructure.ADC_DMAAccessMode = ADC_DMAAccessMode_Disabled;//ADC_DMAAccessMode_1;//
+  ADC_CommonInitStructure.ADC_TwoSamplingDelay = ADC_TwoSamplingDelay_10Cycles;
+  ADC_CommonInit(&ADC_CommonInitStructure);
+
+  /* ADC3 Init ****************************************************************/
+  ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;
+  ADC_InitStructure.ADC_ScanConvMode = ENABLE;
+  ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
+  ADC_InitStructure.ADC_ExternalTrigConvEdge = ADC_ExternalTrigConvEdge_None;
+  ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_T1_CC1;
+  ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
+  ADC_InitStructure.ADC_NbrOfConversion = 6;
+  ADC_Init(ADC1, &ADC_InitStructure);
+
+  /* ADC3 regular channel7 configuration *************************************/
+	#define sample_time_adc1 ADC_SampleTime_3Cycles
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_10, 1, ADC_SampleTime_3Cycles);
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_11, 2, ADC_SampleTime_3Cycles);
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_12, 3, ADC_SampleTime_3Cycles);
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_13, 4, ADC_SampleTime_3Cycles);
+  ADC_RegularChannelConfig(ADC1, ADC_Channel_14, 5, ADC_SampleTime_3Cycles);
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_15, 6, ADC_SampleTime_3Cycles);
+//	ADC_RegularChannelConfig(ADC1, ADC_Channel_6, 7, sample_time_adc1);
+//	ADC_RegularChannelConfig(ADC1, ADC_Channel_7, 8, sample_time_adc1); // cac so rank la so thu tu chuyen doi adc 
+
+ /* Enable DMA request after last transfer (Single-ADC mode) */
+  ADC_DMARequestAfterLastTransferCmd(ADC1, ENABLE);
+//ADC_MultiModeDMARequestAfterLastTransferCmd(ENABLE);
+  /* Enable ADC1 DMA */
+  ADC_DMACmd(ADC1, ENABLE);
+
+  /* Enable ADC1 */
+  ADC_Cmd(ADC1, ENABLE);
+	ADC_SoftwareStartConv(ADC1);
+}
+
+//---------------------------- KHAI BAO UART 1-----------------------------
+void UART1_DMA_RX(u32 baudrate)
+{		
+		DMA_InitTypeDef DMA_InitStructure;
+		NVIC_InitTypeDef NVIC_InitStructure;
+    USART_InitTypeDef USART_InitStructure;
+		GPIO_InitTypeDef GPIO_InitStructure;
+		RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
+		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
+		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA2, ENABLE);
+   /*-------------------------- GPIO Configuration ----------------------------*/
+   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9 | GPIO_Pin_10;
+   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+   GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+   GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+   GPIO_Init(GPIOA, &GPIO_InitStructure);
+   /* Connect USART pins to AF */
+   GPIO_PinAFConfig(GPIOA, GPIO_PinSource9, GPIO_AF_USART1);
+   GPIO_PinAFConfig(GPIOA, GPIO_PinSource10, GPIO_AF_USART1);
+
+   USART_InitStructure.USART_BaudRate = baudrate;
+   USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+   USART_InitStructure.USART_StopBits = USART_StopBits_1;
+   USART_InitStructure.USART_Parity = USART_Parity_No;
+   USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None; 
+   USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx; 
+   USART_Init(USART1, &USART_InitStructure); 
+   USART_Cmd(USART1, ENABLE);
+
+   /* Configure the Priority Group to 2 bits */
+   NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
+   /* Enable the UART4 RX DMA Interrupt */
+   NVIC_InitStructure.NVIC_IRQChannel = DMA2_Stream2_IRQn;
+   NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+   NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
+   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+   NVIC_Init(&NVIC_InitStructure);
+	
+	 DMA_DeInit(DMA2_Stream2);
+   DMA_InitStructure.DMA_Channel = DMA_Channel_4;
+   DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory; // Receive
+   DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t)RX_USART1;
+   DMA_InitStructure.DMA_BufferSize =10;//imu//(uint16_t)sizeof(Buffer);
+   DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&USART1->DR;
+   DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+   DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
+   DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
+   DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
+   DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
+   DMA_InitStructure.DMA_Priority = DMA_Priority_High;
+   DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Enable;
+   DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_Full;
+   DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;
+   DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single; 
+   DMA_Init(DMA2_Stream2, &DMA_InitStructure); 
+   /* Enable DMA Stream Half Transfer and Transfer Complete interrupt */
+   USART_DMACmd(USART1, USART_DMAReq_Rx, ENABLE); // Enable USART Rx DMA Request
+	 DMA_ITConfig(DMA2_Stream2, DMA_IT_TC, ENABLE);  
+   /* Enable the DMA RX Stream */
+   DMA_Cmd(DMA2_Stream2, ENABLE);
+	 
+
+}
+//---------------------------- KHAI BAO UART 3-----------------------------
+void UART3_DMA_RX(u32 baudrate)
+{		
+		DMA_InitTypeDef DMA_InitStructure;
+		NVIC_InitTypeDef NVIC_InitStructure;
+    USART_InitTypeDef USART_InitStructure;
+		GPIO_InitTypeDef GPIO_InitStructure;
+		RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, ENABLE);
+		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
+		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA1, ENABLE);
+   /*-------------------------- GPIO Configuration ----------------------------*/
+   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_9;
+   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+   GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+   GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+   GPIO_Init(GPIOD, &GPIO_InitStructure);
+   /* Connect USART pins to AF */
+   GPIO_PinAFConfig(GPIOD, GPIO_PinSource8, GPIO_AF_USART3);
+   GPIO_PinAFConfig(GPIOD, GPIO_PinSource9, GPIO_AF_USART3);
+
+   USART_InitStructure.USART_BaudRate = baudrate;
+   USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+   USART_InitStructure.USART_StopBits = USART_StopBits_1;
+   USART_InitStructure.USART_Parity = USART_Parity_No;
+   USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None; 
+   USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx; 
+   USART_Init(USART3, &USART_InitStructure); 
+   USART_Cmd(USART3, ENABLE);
+
+/////////////////////////////////////////////	   
+   
+   /* Configure the Priority Group to 2 bits */
+   NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
+   /* Enable the UART4 RX DMA Interrupt */
+   NVIC_InitStructure.NVIC_IRQChannel = DMA1_Stream1_IRQn;
+   NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+   NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+   NVIC_Init(&NVIC_InitStructure);
+	
+	 DMA_DeInit(DMA1_Stream1);
+   DMA_InitStructure.DMA_Channel = DMA_Channel_4;
+   DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory; // Receive
+   DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t)MANG_GAME;
+   DMA_InitStructure.DMA_BufferSize = 8;//(uint16_t)sizeof(Buffer);
+   DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&USART3->DR;
+   DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+   DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
+   DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
+   DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
+   DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
+   DMA_InitStructure.DMA_Priority = DMA_Priority_High;
+   DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Enable;
+   DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_Full;
+   DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;
+   DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single; 
+   DMA_Init(DMA1_Stream1, &DMA_InitStructure); 
+   /* Enable the USART Rx DMA request */
+   USART_DMACmd(USART3, USART_DMAReq_Rx, ENABLE); 
+   /* Enable DMA Stream Half Transfer and Transfer Complete interrupt */
+   USART_DMACmd(USART3, USART_DMAReq_Rx, ENABLE); // Enable USART Rx DMA Request
+	 DMA_ITConfig(DMA1_Stream1, DMA_IT_TC, ENABLE);  
+   /* Enable the DMA RX Stream */
+   DMA_Cmd(DMA1_Stream1, ENABLE);	
+}
+
+//---------------------------- KHAI BAO UART 4-----------------------------
+void UART4_DMA_RX(u32 baudrate)
+{		
+		DMA_InitTypeDef DMA_InitStructure;
+		NVIC_InitTypeDef NVIC_InitStructure;
+    USART_InitTypeDef USART_InitStructure;
+		GPIO_InitTypeDef GPIO_InitStructure;
+		RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART4, ENABLE);
+		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
+		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA1, ENABLE);
+   /*-------------------------- GPIO Configuration ----------------------------*/
+   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1;
+   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+   GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+   GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+   GPIO_Init(GPIOA, &GPIO_InitStructure);
+   /* Connect USART pins to AF */
+   GPIO_PinAFConfig(GPIOA, GPIO_PinSource0, GPIO_AF_UART4);
+   GPIO_PinAFConfig(GPIOA, GPIO_PinSource1, GPIO_AF_UART4);
+
+   USART_InitStructure.USART_BaudRate = baudrate;
+   USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+   USART_InitStructure.USART_StopBits = USART_StopBits_1;
+   USART_InitStructure.USART_Parity = USART_Parity_No;
+   USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None; 
+   USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx; 
+   USART_Init(UART4, &USART_InitStructure); 
+   USART_Cmd(UART4, ENABLE);
+
+/////////////////////////////////////////////	   
+   
+   /* Configure the Priority Group to 2 bits */
+   NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
+   /* Enable the UART4 RX DMA Interrupt */
+   NVIC_InitStructure.NVIC_IRQChannel = DMA1_Stream2_IRQn;
+   NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+   NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+   NVIC_Init(&NVIC_InitStructure);
+	
+	 DMA_DeInit(DMA1_Stream2);
+   DMA_InitStructure.DMA_Channel = DMA_Channel_4;
+   DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory; // Receive
+   DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t)MANG_GAME;
+   DMA_InitStructure.DMA_BufferSize = 8;//(uint16_t)sizeof(Buffer);
+   DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&UART4->DR;
+   DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+   DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
+   DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
+   DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
+   DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
+   DMA_InitStructure.DMA_Priority = DMA_Priority_High;
+   DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Enable;
+   DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_Full;
+   DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;
+   DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single; 
+   DMA_Init(DMA1_Stream2, &DMA_InitStructure); 
+   /* Enable the USART Rx DMA request */
+   USART_DMACmd(UART4, USART_DMAReq_Rx, ENABLE); 
+   /* Enable DMA Stream Half Transfer and Transfer Complete interrupt */
+   USART_DMACmd(UART4, USART_DMAReq_Rx, ENABLE); // Enable USART Rx DMA Request
+	 DMA_ITConfig(DMA1_Stream2, DMA_IT_TC, ENABLE);  
+   /* Enable the DMA RX Stream */
+   DMA_Cmd(DMA1_Stream2, ENABLE);	
+}
+
+//---------------------------- KHAI BAO UART 5-----------------------------
+void UART5_DMA_TX(u32 baudrate)
+{		
+		DMA_InitTypeDef DMA_InitStructure;
+		NVIC_InitTypeDef NVIC_InitStructure;
+    USART_InitTypeDef USART_InitStructure;
+		GPIO_InitTypeDef GPIO_InitStructure;
+	 RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA1, ENABLE);
+		RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART5, ENABLE);
+		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD|RCC_AHB1Periph_GPIOC, ENABLE);
+   /*-------------------------- GPIO Configuration ----------------------------*/
+   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
+   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+   GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+   GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+   GPIO_Init(GPIOD, &GPIO_InitStructure);
+	
+	 GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;
+	 GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+   GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+   GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+   GPIO_Init(GPIOC, &GPIO_InitStructure);
+	
+   /* Connect USART pins to AF */
+   GPIO_PinAFConfig(GPIOD, GPIO_PinSource2, GPIO_AF_UART5);
+   GPIO_PinAFConfig(GPIOC, GPIO_PinSource12, GPIO_AF_UART5);
+  NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
+
+  /* Enable the UART5 TX DMA Interrupt */
+  NVIC_InitStructure.NVIC_IRQChannel = DMA1_Stream7_IRQn;
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 5;
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 5;
+  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  NVIC_Init(&NVIC_InitStructure);
+
+
+
+   USART_InitStructure.USART_BaudRate = baudrate;
+   USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+   USART_InitStructure.USART_StopBits = USART_StopBits_1;
+   USART_InitStructure.USART_Parity = USART_Parity_No;
+   USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None; 
+   USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx; 
+   USART_Init(UART5, &USART_InitStructure); 
+   USART_Cmd(UART5, ENABLE);
+
+/////////////////////////////////////////////	   
+
+  DMA_DeInit(DMA1_Stream7);
+
+  DMA_InitStructure.DMA_Channel = DMA_Channel_4;
+  DMA_InitStructure.DMA_DIR = DMA_DIR_MemoryToPeripheral; // Transmit
+  DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t)Buffer_HMI;
+  DMA_InitStructure.DMA_BufferSize = (uint16_t)sizeof(Buffer_HMI)-1 ;
+  DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&UART5->DR;
+  DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+  DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
+  DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
+  DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
+  DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
+  DMA_InitStructure.DMA_Priority = DMA_Priority_High;//DMA_Priority_High;
+  DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Enable;
+  DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_Full;
+  DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;
+  DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;
+
+  DMA_Init(DMA1_Stream7, &DMA_InitStructure);
+
+  /* Enable the USART Tx DMA request */
+  USART_DMACmd(UART5, USART_DMAReq_Tx, ENABLE);
+
+  /* Enable DMA Stream Transfer Complete interrupt */
+  DMA_ITConfig(DMA1_Stream7, DMA_IT_TC, ENABLE);
+
+  /* Enable the DMA TX Stream */
+
+DMA_Cmd(DMA1_Stream7, ENABLE);
+
+}
+
+//---------------------------- KHAI BAO UART 2-----------------------------
+void UART2_DMA_TX(u32 baudrate)
+{		
+		DMA_InitTypeDef DMA_InitStructure;
+		NVIC_InitTypeDef NVIC_InitStructure;
+    USART_InitTypeDef USART_InitStructure;
+		GPIO_InitTypeDef GPIO_InitStructure;
+	 RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA1, ENABLE);
+		RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
+		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
+   /*-------------------------- GPIO Configuration ----------------------------*/
+   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5|GPIO_Pin_6;
+   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+   GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+   GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+   GPIO_Init(GPIOD, &GPIO_InitStructure);
+
+   /* Connect USART pins to AF */
+   GPIO_PinAFConfig(GPIOD, GPIO_PinSource5, GPIO_AF_USART2);
+   GPIO_PinAFConfig(GPIOD, GPIO_PinSource6, GPIO_AF_USART2);
+	
+
+   USART_InitStructure.USART_BaudRate = baudrate;
+   USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+   USART_InitStructure.USART_StopBits = USART_StopBits_1;
+   USART_InitStructure.USART_Parity = USART_Parity_No;
+   USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None; 
+   USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx; 
+   USART_Init(USART2, &USART_InitStructure); 
+   USART_Cmd(USART2, ENABLE);
+
+
+/////////////////////////////////
+ /* Configure the Priority Group to 2 bits */
+   NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
+   /* Enable the UART4 RX DMA Interrupt */
+   NVIC_InitStructure.NVIC_IRQChannel = DMA1_Stream6_IRQn;
+   NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+   NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+   NVIC_Init(&NVIC_InitStructure);
+	
+	 DMA_DeInit(DMA1_Stream6);
+   DMA_InitStructure.DMA_Channel = DMA_Channel_4;
+   DMA_InitStructure.DMA_DIR = DMA_DIR_MemoryToPeripheral; // Receive
+   DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t)DATA_SPEED;
+   DMA_InitStructure.DMA_BufferSize =(uint16_t)sizeof(DATA_SPEED);//(uint16_t)sizeof(Buffer_SPEED)-1 ;
+   DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&USART2->DR;
+   DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+   DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
+   DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
+   DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
+   DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
+   DMA_InitStructure.DMA_Priority = DMA_Priority_High;
+   DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Enable;
+   DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_Full;
+   DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;
+   DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single; 
+   DMA_Init(DMA1_Stream6, &DMA_InitStructure); 
+   /* Enable the USART Rx DMA request */
+   USART_DMACmd(USART2, USART_DMAReq_Tx, ENABLE); 
+   /* Enable DMA Stream Half Transfer and Transfer Complete interrupt */
+   USART_DMACmd(USART2, USART_DMAReq_Tx, ENABLE); // Enable USART Rx DMA Request
+	 DMA_ITConfig(DMA1_Stream6, DMA_IT_TC, ENABLE);  
+   /* Enable the DMA RX Stream */
+   DMA_Cmd(DMA1_Stream6, ENABLE);	
+
+}
+
+
+//---------------------------- KHAI BAO NGAT NGOAI-----------------------------
+void ngat_ngoai(void)   
+	{
+			GPIO_InitTypeDef  GPIO_InitStructure;
+			NVIC_InitTypeDef  NVIC_InitStructure;
+			EXTI_InitTypeDef  EXTI_InitStructure;
+
+		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE); 
+    /* Enable SYSCFG clock */
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+    
+    /* Configure PB5 PB6 pin as input floating */
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2 | GPIO_Pin_3;
+    GPIO_Init(GPIOD, &GPIO_InitStructure);
+  
+    /* Connect EXTI Line5, Line6 to PB5,PB6 pin */
+    SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOD, EXTI_PinSource2);
+ //   SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOD, EXTI_PinSource3);
+		
+    /* Configure EXTI Line5, Line6 */
+    EXTI_InitStructure.EXTI_Line = EXTI_Line2 ;
+    EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+    EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling;  
+    EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+    EXTI_Init(&EXTI_InitStructure);
+  
+    /* Enable and set EXTI Line5, Line6 Interrupt to the lowest priority */
+    NVIC_InitStructure.NVIC_IRQChannel = EXTI2_IRQn  ;
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_Init(&NVIC_InitStructure);
+		
+		}
+
+
+//----------------------------  SEND UART-----------------------------
+void SEND_UART(u8 _UART,u8 _GIA_TRI)
+{
+	if(_UART==1) 		{  USART_SendData(USART1, (uint8_t) _GIA_TRI); 	while (USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET){} }
+	else if(_UART==3) {  USART_SendData(USART2, (uint8_t) _GIA_TRI); 	while (USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET){} }
+	else if(_UART==4) {  USART_SendData(UART4, (uint8_t) _GIA_TRI); 	while (USART_GetFlagStatus(UART4, USART_FLAG_TC) == RESET){} }
+	else if(_UART==5) {  USART_SendData(UART5, (uint8_t) _GIA_TRI); 	while (USART_GetFlagStatus(UART5, USART_FLAG_TC) == RESET){} }
+
+}
+//---------------------------- READ ENCODER -----------------------------
+s32 READ_ENCODER(u8 TIMER)
+{
+	if(TIMER==1) 			return (num_over_t1<<16)|(TIM_GetCounter(TIM1)-10000);
+	else if(TIMER==2) return (num_over_t2<<16)|(TIM_GetCounter(TIM2)-10000);
+	else if(TIMER==3) return (num_over_t3<<16)|(TIM_GetCounter(TIM3)-10000);
+	else if(TIMER==5) return (num_over_t5<<16)|(TIM_GetCounter(TIM5)-10000);
+	else return 0;
+}
+
+//---------------------------- RESET ENCODER-----------------------------
+void RESET_ENCODER(u8 TIMER)
+{
+	if(TIMER==1) 	{	TIM1->CNT = 10000;num_over_t1 = 0;	}
+	else if(TIMER==2) {	TIM2->CNT = 10000;num_over_t2 = 0;}	
+	else if(TIMER==3) {	TIM3->CNT = 10000;num_over_t3 = 0;}
+	else if(TIMER==5) {	TIM5->CNT = 10000;num_over_t5 = 0;}	
+
+}
+//---------------------------- RESET IMU-----------------------------
+void run_read_gyro_uart1(void)
+{ 
+	u32 i;
+  en_gyro=0;
+  for(i=0;i<2;i++)
+  {
+		SEND_UART(1,'a');
+		delay_ms(50);
+  }
+  en_gyro=1;
+  data_tx_gyro='z';
+}
+//---------------------------- TRUYEN DU LIEU VAO MANG-----------------------------
+void HMI_TRAN(vs32 _so_dong)
+{
+		char*camera="11111111111111111111110111111111";
+									vs32 _i,_chua_cac_bit=0;
+									char _ghep_bit[40];
+									char _chu_cac_bit[40];
+									_ghep_bit[0]=0;
+									_chu_cac_bit[0]=0;
+								
+							switch (_so_dong) {
+									case 0:
+									
+										//HMI_DMI_CHI_GUI_SO(chuoi_line,0);//("0        ",TRUNG_BINH_SUM_ADC,0);
+								
+										break;
+									case 1:
+										HMI_DMI("IMU        ",IMU,1);
+										break;
+									case 2:
+										HMI_DMI("GAMEPAD    ",GP_BTN[1],2);
+										break;
+									case 3:
+										HMI_DMI("ADC0    ",_ADC1_Value[0],3);
+										break;
+									case 4:
+										HMI_DMI("ADC1    ",_ADC1_Value[1],4);
+										break;
+									case 5:
+										HMI_DMI("ADC2    ",_ADC1_Value[2],5);
+										break;
+									case 6:
+										HMI_DMI("ADC3    ",_ADC1_Value[3],6);
+										break;
+									case 7:
+										HMI_DMI("ENCODER1: ",READ_ENCODER(1),7);					
+										break;
+									case 8:
+										HMI_DMI("ENCODER2: ",READ_ENCODER(2),8);
+										break;
+									case 9:
+										HMI_DMI("ENCODER3: ",READ_ENCODER(3),9);        
+										break;
+									case 10:
+										HMI_DMI("ENCODER5: ",READ_ENCODER(5),10); 
+										break;
+									case 11:
+									//	strcat(_chu_cac_bit,"1");
+										sprintf(_ghep_bit,"%d",GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_7));	
+										strcat(_chu_cac_bit,_ghep_bit);
+										sprintf(_ghep_bit,"%d",GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_8));	
+										strcat(_chu_cac_bit,_ghep_bit);
+										sprintf(_ghep_bit,"%d",GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_6));		
+										strcat(_chu_cac_bit,_ghep_bit);
+										sprintf(_ghep_bit,"%d",GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_10));	
+										strcat(_chu_cac_bit,_ghep_bit);
+										sprintf(_ghep_bit,"%d",GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_5));		
+										strcat(_chu_cac_bit,_ghep_bit);
+										sprintf(_ghep_bit,"%d",GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_12));	
+										strcat(_chu_cac_bit,_ghep_bit);
+										sprintf(_ghep_bit,"%d",GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_4));		
+										strcat(_chu_cac_bit,_ghep_bit);
+										sprintf(_ghep_bit,"%d",GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_13));	
+										strcat(_chu_cac_bit,_ghep_bit);
+										sprintf(_ghep_bit,"%d",GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_3));		
+										strcat(_chu_cac_bit,_ghep_bit);
+										sprintf(_ghep_bit,"%d",GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_14));	
+										strcat(_chu_cac_bit,_ghep_bit);
+										sprintf(_ghep_bit,"%d",GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_2));		
+										strcat(_chu_cac_bit,_ghep_bit);
+										sprintf(_ghep_bit,"%d",GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_15));	
+										strcat(_chu_cac_bit,_ghep_bit);
+										sprintf(_ghep_bit,"%d",GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_1));		
+										strcat(_chu_cac_bit,_ghep_bit);
+										sprintf(_ghep_bit,"%d",GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_13));	
+										strcat(_chu_cac_bit,_ghep_bit);
+										sprintf(_ghep_bit,"%d",GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_0));		
+										strcat(_chu_cac_bit,_ghep_bit);		
+										sprintf(_ghep_bit,"%d",GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_14));	
+										strcat(_chu_cac_bit,_ghep_bit);
+										HMI_PUTS("IN: ",_chu_cac_bit,11);
+										break;
+									case 12:
+										sprintf(_ghep_bit,"%d",GPIO_ReadOutputDataBit(GPIOB,GPIO_Pin_15));		
+										strcat(_chu_cac_bit,_ghep_bit);
+										sprintf(_ghep_bit,"%d",GPIO_ReadOutputDataBit(GPIOA,GPIO_Pin_8));	
+										strcat(_chu_cac_bit,_ghep_bit);
+										sprintf(_ghep_bit,"%d",GPIO_ReadOutputDataBit(GPIOB,GPIO_Pin_14));		
+										strcat(_chu_cac_bit,_ghep_bit);		
+										sprintf(_ghep_bit,"%d",GPIO_ReadOutputDataBit(GPIOA,GPIO_Pin_6));	
+										strcat(_chu_cac_bit,_ghep_bit);
+										sprintf(_ghep_bit,"%d",GPIO_ReadOutputDataBit(GPIOB,GPIO_Pin_13));	
+										strcat(_chu_cac_bit,_ghep_bit);
+										sprintf(_ghep_bit,"%d",GPIO_ReadOutputDataBit(GPIOA,GPIO_Pin_5));	
+										strcat(_chu_cac_bit,_ghep_bit);
+										sprintf(_ghep_bit,"%d",GPIO_ReadOutputDataBit(GPIOB,GPIO_Pin_12));	
+										strcat(_chu_cac_bit,_ghep_bit);
+										sprintf(_ghep_bit,"%d",GPIO_ReadOutputDataBit(GPIOA,GPIO_Pin_4));	
+										strcat(_chu_cac_bit,_ghep_bit);
+										sprintf(_ghep_bit,"%d",GPIO_ReadOutputDataBit(GPIOB,GPIO_Pin_11));	
+										strcat(_chu_cac_bit,_ghep_bit);
+										sprintf(_ghep_bit,"%d",GPIO_ReadOutputDataBit(GPIOA,GPIO_Pin_11));	
+										strcat(_chu_cac_bit,_ghep_bit);
+										sprintf(_ghep_bit,"%d",GPIO_ReadOutputDataBit(GPIOB,GPIO_Pin_10));	
+										strcat(_chu_cac_bit,_ghep_bit);
+										sprintf(_ghep_bit,"%d",GPIO_ReadOutputDataBit(GPIOA,GPIO_Pin_12));	
+										strcat(_chu_cac_bit,_ghep_bit);
+										sprintf(_ghep_bit,"%d",GPIO_ReadOutputDataBit(GPIOB,GPIO_Pin_8));	
+										strcat(_chu_cac_bit,_ghep_bit);
+										sprintf(_ghep_bit,"%d",GPIO_ReadOutputDataBit(GPIOB,GPIO_Pin_6));	
+										strcat(_chu_cac_bit,_ghep_bit);
+										sprintf(_ghep_bit,"%d",GPIO_ReadOutputDataBit(GPIOB,GPIO_Pin_9));	
+										strcat(_chu_cac_bit,_ghep_bit);
+										sprintf(_ghep_bit,"%d",GPIO_ReadOutputDataBit(GPIOB,GPIO_Pin_7));	
+										strcat(_chu_cac_bit,_ghep_bit);
+										HMI_PUTS("OUT:",_chu_cac_bit,12);
+										break;	
+									case 13:
+												HMI_DMI("value= ",_ADC1_Value[4],14);
+										break;		
+									case 14:
+												HMI_DMI("value= ",_ADC1_Value[4],14);
+										break;	
+									case 15:
+												HMI_DMI("value= ",_ADC1_Value[4],14);
+										break;			
+									
+						}
+}
+
+//////////////////////////
+void DATA_SPEED_RUN_LOOP()///TOC DO <254
+	{int _k,_i;
+
+	DMA_Cmd(DMA1_Stream6,ENABLE);
+						
+		}
+//---------------------------- GUI TUNG MANG DI LAN LUOT-----------------------------
+void HMI_RUN_LOOP(vs32 _cause)
+{
+		if(HMI_LOOP>_cause)HMI_LOOP=0;
+	else HMI_LOOP++;
+	HMI_TRAN(HMI_LOOP);
+	}
+//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx HÊ DIEU HANH THOI GIAN THUC xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+/*	
+	hàm khoi tao chay song song bang bo thu vien FREE RT OS
+	khi su dung hàm này thì 3 hàm ngat sau khong còn su dung bình thuong duoc nua\
+			void SVC_Handler(void)
+			void PendSV_Handler(void)
+			void SysTick_Handler(void)
+	vi no danh de phuc vu cho chuong trinh chay song song
+{
+	
+*/
+void DAI_RTOS_V1(void)	
+  {	
+	
+	/* thu tu cac lenh-----------------------------------------------------------------------------------------
+	//xTaskCreate								//	khoi tao tac vu
+	//led_task									//	la ten cua tac vu duoc tro den hàm chua ten tác vu do
+	//( signed char * ) NULL		//	chuoi chua ten tac vu, co the dat tuy y hoc de NULL
+	//configMINIMAL_STACK_SIZE	//	so bien ma task su dung
+	//NULL											//	
+	//0													//	do uu tien cua tac vu, cang lon thi uu tien cang cao
+	//&xtask3										//	nhiem vu xu li
+	*///--------------------------------------------------------------------------------------------------------
+    xTaskCreate(Task_Main, 			(signed char*)"Task_Main", 			256, NULL, 1,NULL );
+    xTaskCreate(Task_HMI, 			(signed char*)"Task_HMI", 			256, NULL, 4, NULL);
+    xTaskCreate(Task_Control_1, (signed char*)"Task_Control_1", 256, NULL, 2, NULL);
+    xTaskCreate(Task_Control_2, (signed char*)"Task_Control_2", 256, NULL, 3, NULL);
+    vTaskStartScheduler();
+
+}
+//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+vs32 CHAY_TU_DONG_THEO_LAZE_0(vs32 chieu_chay,vs32 laze_chuan,vs32 he_so_dap_ung_laze)
+{
+	vs32 laze_lech,goc_lech;
+
+	laze_lech=(ADC1_Value_0-laze_chuan)*he_so_dap_ung_laze;
+	if(laze_lech>500) laze_lech = 500;    //200
+	else if(laze_lech<-500)laze_lech =-500;		//200
+	laze_lech=laze_lech*chieu_chay;	
+	return laze_lech;
+}	
+////////////////////
+vs32 CHAY_TU_DONG_THEO_LAZE_1(vs32 chieu_chay,vs32 laze_chuan,vs32 he_so_dap_ung_laze)
+{
+	vs32 laze_lech,goc_lech;
+
+	laze_lech=(ADC1_Value_1-laze_chuan)*he_so_dap_ung_laze;
+	if(laze_lech>200) laze_lech = 200;
+	else if(laze_lech<-200)laze_lech =-200;		
+	laze_lech=laze_lech*chieu_chay;	
+	return laze_lech;
+}	
+	
+	

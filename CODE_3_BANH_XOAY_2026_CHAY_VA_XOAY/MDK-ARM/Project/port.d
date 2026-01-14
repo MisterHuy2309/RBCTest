@@ -1,0 +1,12 @@
+.\project\port.o: ..\FreeRTOSv10.0.1\FreeRTOS\Source\portable\RVDS\ARM_CM3\port.c
+.\project\port.o: ..\FreeRTOSv10.0.1\FreeRTOS\Source\include\FreeRTOS.h
+.\project\port.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+.\project\port.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\project\port.o: ..\..\CODE_3_BANH_XOAY_2026\FreeRTOSConfig.h
+.\project\port.o: ..\FreeRTOSv10.0.1\FreeRTOS\Source\include\projdefs.h
+.\project\port.o: ..\FreeRTOSv10.0.1\FreeRTOS\Source\include\portable.h
+.\project\port.o: ..\FreeRTOSv10.0.1\FreeRTOS\Source\include\deprecated_definitions.h
+.\project\port.o: ..\FreeRTOSv10.0.1\FreeRTOS\Source\portable\RVDS\ARM_CM3\portmacro.h
+.\project\port.o: ..\FreeRTOSv10.0.1\FreeRTOS\Source\include\mpu_wrappers.h
+.\project\port.o: ..\FreeRTOSv10.0.1\FreeRTOS\Source\include\task.h
+.\project\port.o: ..\FreeRTOSv10.0.1\FreeRTOS\Source\include\list.h

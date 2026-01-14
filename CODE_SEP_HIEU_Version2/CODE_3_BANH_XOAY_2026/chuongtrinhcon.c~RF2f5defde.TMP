@@ -1,0 +1,720 @@
+void encoder_2(vs32 xung,vs32 huong,vs32 tocdo,float giAtoc){
+	while(abs(READ_ENCODER(2))<xung)
+		{
+			if(!X) break;
+			MAIN_CONTROL(0,huong,tocdo,gt,0);
+			vTaskDelay(1);
+		}
+	}
+void encoder_1(vs32 xung,vs32 huong,vs32 tocdo,float giAtoc){
+	while(abs(READ_ENCODER(1))<xung)
+		{
+			if(!X) break;
+			MAIN_CONTROL(0,huong,tocdo,gt,0);
+			vTaskDelay(1);
+		}
+	}
+void imu_toi(vs32 laban,vs32 t,float g){
+while(IMU<laban){
+if(!X) break;
+MAIN_CONTROL(0,40000,t,g,0);
+vTaskDelay(1);}
+}
+void imu_lui(vs32 iMu,vs32 toc_dO,float gIatoc){
+while(IMU>iMu){
+if(!X) break;
+MAIN_CONTROL(0,-40000,toc_dO,gIatoc,0);
+vTaskDelay(1);}}
+void imu_lui_tay(vs16 laban,vs32 toc_dO,float gIatoc){
+laban=IMU-laban;
+vTaskDelay(1);
+while(IMU>laban){
+if(!X) break;
+MAIN_CONTROL(0,-40000,toc_dO,gIatoc,0);
+vTaskDelay(1);}}
+void imu_toi_tay(vs16 laban,vs32 t,float g){
+laban+=IMU;
+vTaskDelay(1);
+while(IMU<laban){
+if(!X) break;
+MAIN_CONTROL(0,40000,t,g,0);
+vTaskDelay(1);}}
+void laze_sau(vs32 laze,vs32 huong,vs32 tocdo,float giAtoc){
+	while(adc_tb1<laze)
+		{
+			if(!X) break;
+			MAIN_CONTROL(0,huong,tocdo,giAtoc,0);
+			vTaskDelay(1);
+		}
+		
+	}
+void laze_sau_l(vs32 laze,vs32 huong,vs32 tocdo,float giAtoc){
+	while(adc_tb1>laze)
+		{
+			if(!X) break;
+			MAIN_CONTROL(0,huong,tocdo,giAtoc,0);
+			vTaskDelay(1);
+		}
+		
+	}
+void kep_de()
+{
+			xilanh_nha_de;
+			xilanh_nha_bong;	
+			xilanh_truot_xuong;
+			vTaskDelay(5000);
+			while(TAM_GIAC)vTaskDelay(1);
+			xilanh_kep_de;
+			vTaskDelay(5000);
+			xilanh_truot_len;
+			vTaskDelay(10000);	
+		}
+void lay_lai_de()
+{
+			xilanh_nha_de;
+			xilanh_nha_bong;	
+			xilanh_ket_kichball;
+			xilanh_truot_xuong;
+			vTaskDelay(15000);
+			xilanh_kep_de;
+			vTaskDelay(3000);
+			xilanh_truot_len;
+			vTaskDelay(5000);	
+		}
+void vitri_dau()
+{
+	RESET_ENCODER(1);
+	RESET_ENCODER(2);
+	xilanh_ket_tryball;
+	xilanh_xoay_tryball;
+	vTaskDelay(2);
+	while(1){
+	chan_da_kich_ball_lui;
+	chan_da_kich_ball=250;
+	vTaskDelay(2);
+	if(!cb_dung_chan_da||!X) break; }
+	while(1){
+			chan_da_kich_ball=0;
+			vTaskDelay(2);
+			break;
+		}		
+	kep_de();
+	vTaskDelay(2);
+}
+void chu_trinh_da_kickball()
+{
+	while(TAM_GIAC)vTaskDelay(1);
+	chan_da_kich_ball_lui;
+	chan_da_kich_ball=250;
+	vTaskDelay(10000);
+		while(1){
+		if(!cb_dung_chan_da||!X) break;
+	}
+	chan_da_kich_ball=0;
+	while(TAM_GIAC)vTaskDelay(1);
+	chan_da_kich_ball_lui;
+	chan_da_kich_ball=250;
+	vTaskDelay(2000);
+		vTaskDelay(2000);
+	while(1){
+		if(!cb_dung_chan_da||!X) break;
+	}
+	chan_da_kich_ball=0;
+	vTaskDelay(2);
+}
+//
+void chinh_da()
+{
+	while(!VUONG)
+	{
+		gt=0.001;
+		imu_toi_tay(1,5,gt);
+		gt=0.005;
+		imu_toi_tay(1,10,gt);
+		gt=0.01;
+		imu_toi_tay(1,10,gt);
+		gt=0.015;
+		imu_toi_tay(1,5,0.1);
+		gt=0.03;
+		imu_toi_tay(1,2,gt);
+		STOP_ROBOT();
+		}
+	vTaskDelay(2);
+		while(!O)
+	{
+		gt=0.001;
+		imu_lui_tay(1,5,gt);
+		gt=0.005;
+		imu_lui_tay(1,10,gt);
+		gt=0.01;
+		imu_lui_tay(1,10,gt);
+		gt=0.015;
+		imu_lui_tay(1,5,0.1);
+		gt=0.03;
+		imu_lui_tay(1,2,gt);
+		STOP_ROBOT();
+	}
+	vTaskDelay(2);
+}
+//----------------------dat-kichball--------------------------------
+void dat_kickball()
+{
+			xilanh_truot_xuong;
+			vTaskDelay(15000);
+			xilanh_nha_de;
+			vTaskDelay(1000);
+			xilanh_nha_kichball;
+			vTaskDelay(3000);
+//			xilanh_ket_kichball;
+//			vTaskDelay(1000);
+//			xilanh_nha_kichball;
+//			vTaskDelay(2000);
+			xilanh_nha_bong;
+			vTaskDelay(10000);
+			xilanh_truot_len;
+			vTaskDelay(10000);
+			while(TAM_GIAC)vTaskDelay(1);
+		}
+////----------------------dat-kichball--------------------------------
+void lay_tryball()
+{
+		xilanh_ket_tryball;
+	  vTaskDelay(1000);
+		RESET_ENCODER(1);
+		RESET_ENCODER(2);
+		xilanh_truyen_ve;
+		xilanh_nang_tryball; 
+		vTaskDelay(2000);
+}
+void lay_tryball_5()
+{
+		xilanh_ket_tryball;
+	  vTaskDelay(1000);
+		RESET_ENCODER(1);
+		RESET_ENCODER(2);
+		xilanh_nang_tryball; 
+		vTaskDelay(2000);
+}
+void tay_truyen_ve()
+{
+		xilanh_truyen_ve;
+		vTaskDelay(1000);
+}
+void lay_tryball_1()
+{
+		xilanh_xoay_tryball;
+		vTaskDelay(10);	
+}
+void lay_kickball()
+{		
+			xilanh_nha_kichball;
+			vTaskDelay(10000);
+			RESET_ENCODER(1);
+			RESET_ENCODER(2);
+			xilanh_truot_xuong;
+			vTaskDelay(15000);
+			xilanh_nha_de;
+			vTaskDelay(1000);	
+			xilanh_kep_de;
+			while(TAM_GIAC)
+			{reset_ve_vt_dau();
+				vTaskDelay(1);}
+			xilanh_du_bong;
+			xilanh_ket_kichball;
+			vTaskDelay(5000);
+			xilanh_truot_len;
+			vTaskDelay(5000);	
+}
+void truyen_tryball()
+{
+		
+		xilanh_truyen;
+		RESET_ENCODER(1);
+		RESET_ENCODER(2);
+		vTaskDelay(5000);
+		xilanh_duoi_tryball;
+}
+void dung()
+	{
+			MAIN_CONTROL(0,0,5,0.5,0);
+			vTaskDelay(2);
+			STOP_ROBOT(); 
+			vTaskDelay(500);
+	}
+//-------------------------lay try1---------------
+void lay_try_1_2_da_kick_1()
+{
+			while(abs(READ_ENCODER(2))<13500) //gia tri thuc te 15400
+		{
+			if(!cb_tryball) chong_nhieu++;
+			else chong_nhieu=0;
+			if(chong_nhieu>10||!X) break;
+			MAIN_CONTROL(0,905,80,0.1,0);
+			vTaskDelay(1);
+		}
+		MAIN_CONTROL(0,905,20,0.1,0);
+		vTaskDelay(2000);//delay duoc 100 xung
+		MAIN_CONTROL(0,905,0,0.1,0);
+		vTaskDelay(2000);
+		RESET_ENCODER(2);
+		//LAY TRY O VI TRI 1
+		while(TAM_GIAC){vTaskDelay(1);}
+		while(abs(READ_ENCODER(2))<13500) //gia tri thuc te 15400
+		{
+			if(!cb_phai) chong_nhieu++;
+			else chong_nhieu=0;
+			if(chong_nhieu>10||!X) break;
+			MAIN_CONTROL(0,-905,80,0.1,0);
+			vTaskDelay(1);
+		}
+		MAIN_CONTROL(0,-905,20,0.1,0);
+		vTaskDelay(2000);//delay duoc 100 xung
+		MAIN_CONTROL(0,-905,0,0.1,0);
+		vTaskDelay(2000);
+		RESET_ENCODER(2);
+		//TRUYEN TRY 1
+		while(TAM_GIAC){vTaskDelay(1);}
+		while(abs(READ_ENCODER(2))<13500) //gia tri thuc te 15400
+		{
+			if(!cb_tryball) chong_nhieu++;
+			else chong_nhieu=0;
+			if(chong_nhieu>10||!X) break;
+			MAIN_CONTROL(0,790,80,0.1,0);
+			vTaskDelay(1);
+		}
+		MAIN_CONTROL(0,900,20,0.1,0);
+		vTaskDelay(2000);//delay duoc 100 xung
+		MAIN_CONTROL(0,900,0,0.1,0);
+		vTaskDelay(2000);
+		RESET_ENCODER(2);
+		//LAY TRY O VI TRI 2
+		while(TAM_GIAC){vTaskDelay(1);}
+				while(abs(READ_ENCODER(2))<13500) //gia tri thuc te 15400
+		{
+			if(!cb_phai) chong_nhieu++;
+			else chong_nhieu=0;
+			if(chong_nhieu>10||!X) break;
+			MAIN_CONTROL(0,-1015,80,0.1,0);
+			vTaskDelay(1);
+		}
+		MAIN_CONTROL(0,1800,20,0.1,0);
+		vTaskDelay(2000);//delay duoc 100 xung
+		MAIN_CONTROL(0,1800,0,0.1,0);
+		vTaskDelay(2000);
+		RESET_ENCODER(2);
+		//TRUYEN TRY 2---- lay kick 1-------------
+		while(TAM_GIAC){vTaskDelay(1);}
+		while(abs(READ_ENCODER(1))<2000) //gia tri thuc te 3750
+		{
+			if(!X) break;
+			MAIN_CONTROL(0,450,80,0.1,0);
+			vTaskDelay(1);
+		}
+		reset_ecoder2=1;
+      //-----------chay xiem 54 do-------------
+		while(abs(READ_ENCODER(1))<39100) //gia tri thuc te 43000 e2 2900
+		{
+			if((adc_tb1>430)&&(adc_tb1<450)) break;
+			if(!X) break;
+			MAIN_CONTROL(0,0,80,0.1,0);
+			vTaskDelay(1);
+		}
+		//chay toi 
+		reset_ecoder1=1;
+		while(abs(READ_ENCODER(2))<21200) //gia tri thuc te 24800
+		{
+			if(!X) break;
+			MAIN_CONTROL(0,-900,80,0.1,0);
+			vTaskDelay(1);
+		}
+		//chay qua vung kick zone
+		while(abs(READ_ENCODER(1))<22200) //gia tri thuc te 24000
+		{
+			if((adc_tb1<170)&&(adc_tb1<150)) break;// LAZE CHUA DC
+			if(!X) break;
+			MAIN_CONTROL(0,1800,80,0.1,0);
+			vTaskDelay(1);
+		}
+		MAIN_CONTROL(0,1800,0,0.1,0);
+		//-----------chay lui cho ve khi thay cot 2-------------
+		while(IMU<180) //gia tri thuc te 254
+		{
+			if(!X) break;
+			MAIN_CONTROL(0,40000,60,0.1,0);
+			vTaskDelay(1);
+		}		
+		MAIN_CONTROL(0,0,0,0.1,0);
+		// XOAY DA		
+		while(TAM_GIAC){vTaskDelay(1);}		
+		while(IMU>60) //gia tri thuc te 254
+		{
+			if(!X) break;
+			MAIN_CONTROL(0,-40000,60,0.1,0);
+			vTaskDelay(1);
+		}		
+		MAIN_CONTROL(0,0,0,0.1,0);	
+		vTaskDelay(2000);
+		RESET_ENCODER(1);
+		RESET_ENCODER(2);
+		// XOAY XOAY VE
+		while(abs(READ_ENCODER(1))<22200) //gia tri thuc te 24000
+		{
+			//CHO GAN CAM BIEN
+			if(!X) break;
+			MAIN_CONTROL(0,0,80,0.1,0);
+			vTaskDelay(1);
+		}
+		// CHAY TOI COT 2 RE TRAI
+		reset_ecoder1=1;
+		while(abs(READ_ENCODER(2))<21200) //gia tri thuc te 24800
+		{
+			if(!X) break;
+			MAIN_CONTROL(0,900,80,0.1,0);
+			vTaskDelay(1);
+		}
+		//CHAY SANG TRAI VE VUNG LAY TRY
+		while(abs(READ_ENCODER(1))<20000) //gia tri thuc te 21500
+		{
+			if(!X) break;
+			MAIN_CONTROL(0,1800,80,0.1,0);
+			vTaskDelay(1);
+		}
+		//chay lui lech huong -1650
+		while(abs(READ_ENCODER(1))<42500) //gia tri thuc te 43624
+		{
+			if(!cb_sau) chong_nhieu++;
+			else chong_nhieu=0;
+			if(chong_nhieu>10||!X) break;
+			MAIN_CONTROL(0,-1650,80,0.1,0);
+			vTaskDelay(1);
+		}
+		MAIN_CONTROL(0,0,0,0.1,0);	
+		vTaskDelay(2000);
+		RESET_ENCODER(1);
+		RESET_ENCODER(2);
+		//lay kich 2
+	}
+void lay_try_3_da_kick_2()
+{
+		while(abs(READ_ENCODER(2))<13500) //gia tri thuc te 15400
+		{
+			if(!cb_tryball) chong_nhieu++;
+			else chong_nhieu=0;
+			if(chong_nhieu>10||!X) break;
+			MAIN_CONTROL(0,680,80,0.1,0);
+			vTaskDelay(1);
+		}
+		//lay try  vi tri 3
+		MAIN_CONTROL(0,0,0,0.1,0);
+		vTaskDelay(2000);
+		RESET_ENCODER(1);
+		RESET_ENCODER(2);
+		while(abs(READ_ENCODER(2))<13500) //gia tri thuc te 15400
+		{
+			if(!cb_phai) chong_nhieu++;
+			else chong_nhieu=0;
+			if(chong_nhieu>10||!X) break;
+			MAIN_CONTROL(0,-1130,80,0.1,0);
+			vTaskDelay(1);
+		}
+		MAIN_CONTROL(0,0,0,0.1,0);
+		vTaskDelay(2000);
+		RESET_ENCODER(1);
+		RESET_ENCODER(2);
+		while(TAM_GIAC){vTaskDelay(1);}
+		
+		while(abs(READ_ENCODER(1))<2000) //gia tri thuc te 3750
+		{
+			if(!X) break;
+			MAIN_CONTROL(0,450,80,0.1,0);
+			vTaskDelay(1);
+		}
+		reset_ecoder2=1;
+      //-----------chay xiem 54 do-------------
+		while(abs(READ_ENCODER(1))<39100) //gia tri thuc te 43000 e2 2900
+		{
+			if((adc_tb1>430)&&(adc_tb1<450)) break;
+			if(!X) break;
+			MAIN_CONTROL(0,0,80,0.1,0);
+			vTaskDelay(1);
+		}
+		//chay toi 
+		reset_ecoder1=1;
+		while(abs(READ_ENCODER(2))<21200) //gia tri thuc te 24800
+		{
+			if(!X) break;
+			MAIN_CONTROL(0,-900,80,0.1,0);
+			vTaskDelay(1);
+		}
+		//chay qua vung kick zone
+		while(abs(READ_ENCODER(1))<22200) //gia tri thuc te 24000
+		{
+			if((adc_tb1<170)&&(adc_tb1<150)) break;// LAZE CHUA DC
+			if(!X) break;
+			MAIN_CONTROL(0,1800,80,0.1,0);
+			vTaskDelay(1);
+		}
+		MAIN_CONTROL(0,1800,0,0.1,0);
+		//-----------chay lui cho ve khi thay cot 2-------------
+		while(IMU<180) //gia tri thuc te 254
+		{
+			if(!X) break;
+			MAIN_CONTROL(0,40000,60,0.1,0);
+			vTaskDelay(1);
+		}		
+		MAIN_CONTROL(0,0,0,0.1,0);
+		// XOAY DA		
+		while(TAM_GIAC){vTaskDelay(1);}		
+		while(IMU>60) //gia tri thuc te 254
+		{
+			if(!X) break;
+			MAIN_CONTROL(0,-40000,60,0.1,0);
+			vTaskDelay(1);
+		}		
+		MAIN_CONTROL(0,0,0,0.1,0);	
+		vTaskDelay(2000);
+		RESET_ENCODER(1);
+		RESET_ENCODER(2);
+		// XOAY XOAY VE
+		while(abs(READ_ENCODER(1))<22200) //gia tri thuc te 24000
+		{
+			//CHO GAN CAM BIEN
+			if(!X) break;
+			MAIN_CONTROL(0,0,80,0.1,0);
+			vTaskDelay(1);
+		}
+		// CHAY TOI COT 2 RE TRAI
+		reset_ecoder1=1;
+		while(abs(READ_ENCODER(2))<21200) //gia tri thuc te 24800
+		{
+			if(!X) break;
+			MAIN_CONTROL(0,900,80,0.1,0);
+			vTaskDelay(1);
+		}
+		//CHAY SANG TRAI VE VUNG LAY TRY
+		while(abs(READ_ENCODER(1))<20000) //gia tri thuc te 21500
+		{
+			if(!X) break;
+			MAIN_CONTROL(0,1800,80,0.1,0);
+			vTaskDelay(1);
+		}
+		//chay lui lech huong -1650
+		while(abs(READ_ENCODER(1))<42500) //gia tri thuc te 43624
+		{
+			if(!cb_sau) chong_nhieu++;
+			else chong_nhieu=0;
+			if(chong_nhieu>10||!X) break;
+			MAIN_CONTROL(0,-1650,80,0.1,0);
+			vTaskDelay(1);
+		}
+		MAIN_CONTROL(0,0,0,0.1,0);	
+		vTaskDelay(2000);
+		RESET_ENCODER(1);
+		RESET_ENCODER(2);
+		//lay kich 3
+	}
+void lay_try_4_da_kick_3()
+{
+		while(abs(READ_ENCODER(2))<13500) //gia tri thuc te 15400
+		{
+			if(!cb_tryball) chong_nhieu++;
+			else chong_nhieu=0;
+			if(chong_nhieu>10||!X) break;
+			MAIN_CONTROL(0,590,80,0.1,0);
+			vTaskDelay(1);
+		}
+		//lay try  vi tri 4
+		MAIN_CONTROL(0,0,0,0.1,0);
+		vTaskDelay(2000);
+		RESET_ENCODER(1);
+		RESET_ENCODER(2);
+		while(TAM_GIAC){vTaskDelay(1);}
+		while(abs(READ_ENCODER(2))<13500) //gia tri thuc te 15400
+		{
+			if(!cb_phai) chong_nhieu++;
+			else chong_nhieu=0;
+			if(chong_nhieu>10||!X) break;
+			MAIN_CONTROL(0,-1215,80,0.1,0);
+			vTaskDelay(1);
+		}
+		MAIN_CONTROL(0,0,0,0.1,0);
+		vTaskDelay(2000);
+		RESET_ENCODER(1);
+		RESET_ENCODER(2);
+		while(TAM_GIAC){vTaskDelay(1);}
+		
+		while(abs(READ_ENCODER(1))<2000) //gia tri thuc te 3750
+		{
+			if(!X) break;
+			MAIN_CONTROL(0,450,80,0.1,0);
+			vTaskDelay(1);
+		}
+		reset_ecoder2=1;
+      //-----------chay xiem 54 do-------------
+		while(abs(READ_ENCODER(1))<39100) //gia tri thuc te 43000 e2 2900
+		{
+			if((adc_tb1>430)&&(adc_tb1<450)) break;
+			if(!X) break;
+			MAIN_CONTROL(0,0,80,0.1,0);
+			vTaskDelay(1);
+		}
+		//chay toi 
+		reset_ecoder1=1;
+		while(abs(READ_ENCODER(2))<21200) //gia tri thuc te 24800
+		{
+			if(!X) break;
+			MAIN_CONTROL(0,-900,80,0.1,0);
+			vTaskDelay(1);
+		}
+		//chay qua vung kick zone
+		while(abs(READ_ENCODER(1))<22200) //gia tri thuc te 24000
+		{
+			if((adc_tb1<170)&&(adc_tb1<150)) break;// LAZE CHUA DC
+			if(!X) break;
+			MAIN_CONTROL(0,1800,80,0.1,0);
+			vTaskDelay(1);
+		}
+		MAIN_CONTROL(0,1800,0,0.1,0);
+		//-----------chay lui cho ve khi thay cot 2-------------
+		while(IMU<180) //gia tri thuc te 254
+		{
+			if(!X) break;
+			MAIN_CONTROL(0,40000,60,0.1,0);
+			vTaskDelay(1);
+		}		
+		MAIN_CONTROL(0,0,0,0.1,0);
+		// XOAY DA		
+		while(TAM_GIAC){vTaskDelay(1);}		
+		while(IMU>60) //gia tri thuc te 254
+		{
+			if(!X) break;
+			MAIN_CONTROL(0,-40000,60,0.1,0);
+			vTaskDelay(1);
+		}		
+		MAIN_CONTROL(0,0,0,0.1,0);	
+		vTaskDelay(2000);
+		RESET_ENCODER(1);
+		RESET_ENCODER(2);
+		// XOAY XOAY VE
+		while(abs(READ_ENCODER(1))<22200) //gia tri thuc te 24000
+		{
+			//CHO GAN CAM BIEN
+			if(!X) break;
+			MAIN_CONTROL(0,0,80,0.1,0);
+			vTaskDelay(1);
+		}
+		// CHAY TOI COT 2 RE TRAI
+		reset_ecoder1=1;
+		while(abs(READ_ENCODER(2))<21200) //gia tri thuc te 24800
+		{
+			if(!X) break;
+			MAIN_CONTROL(0,900,80,0.1,0);
+			vTaskDelay(1);
+		}
+		//CHAY SANG TRAI VE VUNG LAY TRY
+		while(abs(READ_ENCODER(1))<20000) //gia tri thuc te 21500
+		{
+			if(!X) break;
+			MAIN_CONTROL(0,1800,80,0.1,0);
+			vTaskDelay(1);
+		}
+		//chay lui lech huong -1650
+		while(abs(READ_ENCODER(1))<42500) //gia tri thuc te 43624
+		{
+			if(!cb_sau) chong_nhieu++;
+			else chong_nhieu=0;
+			if(chong_nhieu>10||!X) break;
+			MAIN_CONTROL(0,-1650,80,0.1,0);
+			vTaskDelay(1);
+		}
+		MAIN_CONTROL(0,0,0,0.1,0);	
+		vTaskDelay(2000);
+		RESET_ENCODER(1);
+		RESET_ENCODER(2);
+		//lay kich 4
+	}
+void da_kick_4()
+{
+      //-----------chay xiem 54 do-------------
+		while(abs(READ_ENCODER(1))<39100) //gia tri thuc te 43000 e2 2900
+		{
+			if((adc_tb1>430)&&(adc_tb1<450)) break;
+			if(!X) break;
+			MAIN_CONTROL(0,0,80,0.1,0);
+			vTaskDelay(1);
+		}
+		//chay toi 
+		reset_ecoder1=1;
+		while(abs(READ_ENCODER(2))<21200) //gia tri thuc te 24800
+		{
+			if(!X) break;
+			MAIN_CONTROL(0,-900,80,0.1,0);
+			vTaskDelay(1);
+		}
+		//chay qua vung kick zone
+		while(abs(READ_ENCODER(1))<22200) //gia tri thuc te 24000
+		{
+			if((adc_tb1<170)&&(adc_tb1<150)) break;// LAZE CHUA DC
+			if(!X) break;
+			MAIN_CONTROL(0,1800,80,0.1,0);
+			vTaskDelay(1);
+		}
+		MAIN_CONTROL(0,1800,0,0.1,0);
+		//-----------chay lui cho ve khi thay cot 2-------------
+		while(IMU<180) //gia tri thuc te 254
+		{
+			if(!X) break;
+			MAIN_CONTROL(0,40000,60,0.1,0);
+			vTaskDelay(1);
+		}		
+		MAIN_CONTROL(0,0,0,0.1,0);
+		// XOAY DA		
+		while(TAM_GIAC){vTaskDelay(1);}		
+		while(IMU>60) //gia tri thuc te 254
+		{
+			if(!X) break;
+			MAIN_CONTROL(0,-40000,60,0.1,0);
+			vTaskDelay(1);
+		}		
+		MAIN_CONTROL(0,0,0,0.1,0);	
+		vTaskDelay(2000);
+		RESET_ENCODER(1);
+		RESET_ENCODER(2);
+		// XOAY XOAY VE
+		while(abs(READ_ENCODER(1))<22200) //gia tri thuc te 24000
+		{
+			//CHO GAN CAM BIEN
+			if(!X) break;
+			MAIN_CONTROL(0,0,80,0.1,0);
+			vTaskDelay(1);
+		}
+		// CHAY TOI COT 2 RE TRAI
+		reset_ecoder1=1;
+		while(abs(READ_ENCODER(2))<21200) //gia tri thuc te 24800
+		{
+			if(!X) break;
+			MAIN_CONTROL(0,900,80,0.1,0);
+			vTaskDelay(1);
+		}
+		//CHAY SANG TRAI VE VUNG LAY TRY
+		while(abs(READ_ENCODER(1))<20000) //gia tri thuc te 21500
+		{
+			if(!X) break;
+			MAIN_CONTROL(0,1800,80,0.1,0);
+			vTaskDelay(1);
+		}
+		//chay lui lech huong -1650
+		while(abs(READ_ENCODER(1))<42500) //gia tri thuc te 43624
+		{
+			if(!cb_sau) chong_nhieu++;
+			else chong_nhieu=0;
+			if(chong_nhieu>10||!X) break;
+			MAIN_CONTROL(0,-1650,80,0.1,0);
+			vTaskDelay(1);
+		}
+		MAIN_CONTROL(0,0,0,0.1,0);	
+		vTaskDelay(2000);
+		RESET_ENCODER(1);
+		RESET_ENCODER(2);
+		//ve home
+	}

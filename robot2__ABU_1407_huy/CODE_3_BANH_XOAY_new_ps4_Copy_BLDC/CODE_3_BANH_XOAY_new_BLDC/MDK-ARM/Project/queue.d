@@ -1,0 +1,15 @@
+.\project\queue.o: ..\FreeRTOSv10.0.1\FreeRTOS\Source\queue.c
+.\project\queue.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\project\queue.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\project\queue.o: ..\FreeRTOSv10.0.1\FreeRTOS\Source\include\FreeRTOS.h
+.\project\queue.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+.\project\queue.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\project\queue.o: ..\..\CODE_3_BANH_XOAY_new_BLDC\FreeRTOSConfig.h
+.\project\queue.o: ..\FreeRTOSv10.0.1\FreeRTOS\Source\include\projdefs.h
+.\project\queue.o: ..\FreeRTOSv10.0.1\FreeRTOS\Source\include\portable.h
+.\project\queue.o: ..\FreeRTOSv10.0.1\FreeRTOS\Source\include\deprecated_definitions.h
+.\project\queue.o: ..\FreeRTOSv10.0.1\FreeRTOS\Source\portable\RVDS\ARM_CM3\portmacro.h
+.\project\queue.o: ..\FreeRTOSv10.0.1\FreeRTOS\Source\include\mpu_wrappers.h
+.\project\queue.o: ..\FreeRTOSv10.0.1\FreeRTOS\Source\include\task.h
+.\project\queue.o: ..\FreeRTOSv10.0.1\FreeRTOS\Source\include\list.h
+.\project\queue.o: ..\FreeRTOSv10.0.1\FreeRTOS\Source\include\queue.h

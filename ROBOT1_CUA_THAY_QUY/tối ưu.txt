@@ -1,0 +1,209 @@
+#region toa do tam
+# region toa do tam
+from ultralytics import YOLO
+import cv2
+import serial  # Thư viện pySerial để giao tiếp UART
+
+
+# Khởi tạo kết nối UART
+# uart = serial.Serial(port='COM6', baudrate=115200, timeout=1)  # Thay 'COM6' bằng cổng UART tương ứng trên máy tính của bạn
+
+# # Hàm truyền số nguyên qua UART dưới dạng byte
+# def send_data_via_uart(dolech_x, dolech_y):
+#     if uart.is_open:
+#         # Chuyển đổi số nguyên thành 2 byte
+#         byte_x = dolech_x.to_bytes(1, 'big')  # 1 byte cho giá trị dolech_x
+#         byte_y = dolech_y.to_bytes(1, 'big')  # 1 byte cho giá trị dolech_y
+#
+#         # Ghép hai byte lại thành mảng và gửi qua UART
+#         uart.write(byte_x + byte_y)
+#         print(f"Đã gửi: X={dolech_x}, Y={dolech_y}")
+
+
+# Tải mô hình YOLO
+model = YOLO('LH_SWEEP.pt')  # Đường dẫn tới file mô hình YOLO đã huấn luyện
+
+# Mở video (thay thế camera bằng video)
+video = '4720916299070747113.mp4'  # Tên file video phải chính xác
+cap = cv2.VideoCapture(video)
+
+if not cap.isOpened():
+    print("Không thể mở video")
+    exit()
+
+# Lấy tổng số khung hình trong video
+total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+
+
+# Hàm kiểm tra xem bảng rổ có nằm ở trung tâm khung hình không
+def is_basket_centered(box, frame_width, frame_height, threshold=0.1):
+    """
+    Kiểm tra xem bounding box (bảng rổ) có nằm trong trung tâm khung hình không.
+    Nếu độ lệch tâm vượt quá ngưỡng (threshold), báo rằng bảng rổ đã di chuyển khỏi trung tâm.
+    """
+    x1, y1, x2, y2 = box
+    box_center_x = (x1 + x2) / 2
+    box_center_y = (y1 + y2) / 2
+
+    frame_center_x = frame_width / 2
+    frame_center_y = frame_height / 2
+
+    # Tính độ lệch
+    dolech_X = box_center_x - frame_center_x
+    dolech_y = frame_center_y - box_center_y
+
+    # Chuyển đổi độ lệch sang phạm vi [0, 200] với tâm là (100, 100)
+    max_dolech = max(frame_width, frame_height) / 2  # Giá trị lệch lớn nhất
+    scale_factor = 100 / max_dolech  # Chia đôi vì từ tâm đến rìa tối đa là 100
+
+    # Map độ lệch vào khoảng [0, 200], tâm (100, 100)
+    dolech_X = int(100 - (dolech_X * scale_factor))
+    dolech_y = int(100 - (dolech_y * scale_factor))  # Đảo chiều vì Y ngược so với trục
+
+    # Giới hạn độ lệch trong phạm vi [0, 200]
+    dolech_X = max(min(dolech_X, 200), 0)
+    dolech_y = max(min(dolech_y, 200), 0)
+
+    # Kiểm tra nếu lệch trái
+    if dolech_X < 100:
+        print(f"Đang lệch X {100 - dolech_X} pixel về bên trái từ tâm.")
+    elif dolech_X > 100:
+        print(f"Đang lệch X {dolech_X - 100} pixel về bên phải từ tâm.")
+
+    # Kiểm tra nếu lệch trên
+    if dolech_y < 100:
+        print(f"Đang lệch Y {100 - dolech_y} pixel lên trên từ tâm.")
+    elif dolech_y > 100:
+        print(f"Đang lệch Y {dolech_y - 100} pixel xuống dưới từ tâm.")
+
+    print(f" X  : {dolech_X} pixels | Y {dolech_y} pixels")
+
+    # In lên khung hình video
+    text = f"X: {dolech_X:} px, Y: {dolech_y:} px"
+
+    cv2.putText(
+        annotated_frame,  # Khung hình hiện tại
+        text,  # Nội dung cần hiển thị
+        (10, 30),  # Vị trí của văn bản (X, Y)
+        cv2.FONT_HERSHEY_SIMPLEX,  # Font chữ
+        1,  # Kích thước font
+        (255, 255, 255),  # Màu chữ (trắng)
+        2,  # Độ dày của chữ
+        cv2.LINE_AA  # Chống răng cưa cho chữ
+    )
+
+    # Hiển thị khung hình đã có văn bản
+    cv2.imshow('YOLO Video Detection', annotated_frame)
+
+    # Kiểm tra nếu độ lệch vượt quá ngưỡng cho phép
+    return dolech_X < threshold and dolech_y < threshold
+
+
+# Hàm xác định hướng cần quay của camera
+def get_movement_direction(box, frame_width, frame_height):
+    """
+    Dựa trên vị trí của bảng rổ so với trung tâm khung hình,
+    xác định hướng mà camera cần quay (trái, phải, trên, dưới).
+    """
+    box_center_x = (box[0] + box[2]) / 2
+    box_center_y = (box[1] + box[3]) / 2
+
+    frame_center_x = frame_width / 2
+    frame_center_y = frame_height / 2
+
+    if box[0] <= frame_center_x <= box[2] and box[1] <= frame_center_y <= box[3]:
+        print("Chấm tâm đã đi qua ô nhận diện!")
+    else:
+        print("Chấm tâm chưa đi qua ô nhận diện.")
+
+    direction = ""
+
+    if box_center_x < frame_center_x:
+        direction += "trái, "
+    elif box_center_x > frame_center_x:
+        direction += "phải, "
+
+    if box_center_y < frame_center_y:
+        direction += "trên,"
+    elif box_center_y > frame_center_y:
+        direction += "dưới,"
+
+    return direction.strip()
+
+
+# Số khung hình cần nhảy khi tua nhanh hoặc tua lại
+frame_skip = 30  # Mặc định là 30 khung hình
+
+# Biến để tạm dừng video
+paused = False
+
+while True:
+    if not paused:
+        ret, frame = cap.read()
+        if not ret:
+            print("Video kết thúc hoặc không thể nhận diện khung hình")
+            break
+
+        # Thực hiện dự đoán
+        results = model.predict(source=frame)
+
+        # # Xoay khung hình 180 độ
+        # rotated_frame = cv2.rotate(frame, cv2.ROTATE_180)
+        # Hiển thị kết quả trên khung hình
+        annotated_frame = results[0].plot()
+
+        # Lấy kích thước khung hình
+        frame_height, frame_width, _ = frame.shape
+
+        # Màu mặc định của tâm là đỏ (chưa căn giữa)
+        center_color = (0, 0, 255)  # Đỏ
+
+        # Kiểm tra nếu có bất kỳ kết quả nào (bounding box) được phát hiện
+        if results[0].boxes is not None and len(results[0].boxes) > 0:
+            box = results[0].boxes[0].xyxy[0].cpu().numpy()  # Lấy tọa độ (x1, y1, x2, y2)
+
+            # Kiểm tra xem bảng rổ có nằm ở giữa khung hình không
+            if is_basket_centered(box, frame_width, frame_height):
+                center_color = (0, 255, 0)  # Xanh lá cây (bảng rổ ở trung tâm)
+                print("Trong Phạm Vi bảng rổ")
+            else:
+                # Báo cáo khi bảng rổ lệch khỏi trung tâm
+                print("Bảng rổ đã lệch khỏi trung tâm!")
+                # Xác định hướng di chuyển và báo cáo
+                direction = get_movement_direction(box, frame_width, frame_height)
+                print(f"Cần quay về hướng: {direction}")
+        else:
+            # Nếu không phát hiện mục tiêu, truyền UART X và Y là 50
+            dolech_X = 50
+            dolech_y = 50
+            # send_data_via_uart(dolech_X, dolech_y)
+
+        frame_center_x = frame_width // 2
+        frame_center_y = frame_height // 2
+
+        # Vẽ dấu cộng tại tâm
+        cv2.line(annotated_frame, (frame_center_x - 10, frame_center_y), (frame_center_x + 10, frame_center_y),
+                 (0, 0, 255), 2)
+        cv2.line(annotated_frame, (frame_center_x, frame_center_y - 10), (frame_center_x, frame_center_y + 10),
+                 (0, 0, 255), 2)
+
+        # Hiển thị khung hình
+        cv2.imshow('YOLO Video Detection', annotated_frame)
+
+    key = cv2.waitKey(1)
+    if key == ord('p'):  # Nhấn 'p' để tạm dừng
+        paused = not paused
+    elif key == ord('q'):  # Nhấn 'q' để thoát
+        break
+
+# Giải phóng video capture và đóng cửa sổ
+cap.release()
+cv2.destroyAllWindows()
+
+        break
+
+# Giải phóng tài nguyên
+cap.release()
+cv2.destroyAllWindows()
+#endregion
+

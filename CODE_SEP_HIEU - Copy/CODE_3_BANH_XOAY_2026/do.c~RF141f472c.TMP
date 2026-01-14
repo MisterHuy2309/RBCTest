@@ -1,0 +1,630 @@
+void RESET_TRAO_THE_SD();
+void RESET_SHAGAI2_SD();
+void RESET_SHAGAI3_SD();
+void Kich_Xi_Lanh()
+{
+	vTaskDelay(15000);				
+	////////////////////////////////////      KICH_BO_TRUOC_1
+	GPIO_WriteBit(GPIOB,GPIO_Pin_13,1);
+		vTaskDelay(5000);
+	////////////////////////////////////      KICH_BO_TRUOC_2
+	GPIO_WriteBit(GPIOB,GPIO_Pin_12,1);
+		vTaskDelay(15000);
+	////////////////////////////////////      NHA_SHAGAI
+	GPIO_WriteBit(GPIOA,GPIO_Pin_4,0);
+		vTaskDelay(25000);
+	/////////////////////////////////// 		KICH_XI_LANH_BAN
+	GPIO_WriteBit(GPIOA,GPIO_Pin_5,1);
+		vTaskDelay(2000);
+	GPIO_WriteBit(GPIOA,GPIO_Pin_5,0);
+		vTaskDelay(5000);
+	GPIO_WriteBit(GPIOB,GPIO_Pin_12,0);
+		vTaskDelay(7000);
+	GPIO_WriteBit(GPIOB,GPIO_Pin_13,0);	
+}
+
+void chuong_trinh_chay_san_do()
+{
+	if(TAM_GIAC==0)
+		{		
+				Robot_Stop_Now(0);
+				run_read_gyro_uart1();
+				RESET_ENCODER(3);
+				while(abs(READ_ENCODER(3))<5000)
+					{
+						if(O==0)break;
+							
+						MAIN_CONTROL(0,470,100,0.1,0);
+						vTaskDelay(1);
+						GPIO_ToggleBits(GPIOD,GPIO_Pin_7);	
+					}
+				while(abs(READ_ENCODER(3))<7600)
+					{
+						if(O==0)break;
+							
+						MAIN_CONTROL(0,470,80,0.1,0);
+						vTaskDelay(1);
+						GPIO_ToggleBits(GPIOD,GPIO_Pin_7);	
+					}
+				///////////////////////////////////////////////////////////////LEN COT 1
+				while(abs(READ_ENCODER(3))<12500)
+					{
+						if(O==0)break;
+						
+						MAIN_CONTROL(0,0,80,0.1,0);
+						vTaskDelay(1);
+						GPIO_ToggleBits(GPIOD,GPIO_Pin_7);	
+					}
+//				///////////////////////////////////////////////////////
+				while(abs(READ_ENCODER(3))<22800)
+					{
+						if(O==0)break;
+						
+						MAIN_CONTROL(0,-470,80,0.1,0);
+						vTaskDelay(1);
+						GPIO_ToggleBits(GPIOD,GPIO_Pin_7);	
+					}
+//				///////////////////////////////////////////////////// LEN COT 2
+				while(abs(READ_ENCODER(3))<28200)
+					{
+						if(O==0)break;
+					
+						MAIN_CONTROL(0,0,80,0.1,0);
+						vTaskDelay(1);
+						GPIO_ToggleBits(GPIOD,GPIO_Pin_7);	
+					}
+////								////////////////////////////////////
+				while(abs(READ_ENCODER(3))<38100)
+					{
+						if(O==0)break;
+					
+						MAIN_CONTROL(0,470,80,0.1,0);
+						vTaskDelay(1);
+						GPIO_ToggleBits(GPIOD,GPIO_Pin_7);	
+					}
+//				//////////////////////////////////////////////////// LEN COT 3
+				while(abs(READ_ENCODER(3))<44700)
+					{
+						if(O==0)break;
+						MAIN_CONTROL(0,0,80,0.1,0);
+						vTaskDelay(1);
+						GPIO_ToggleBits(GPIOD,GPIO_Pin_7);	
+					}
+////					///////////////////////////////////////////////////////
+				while(abs(READ_ENCODER(3))<50000)
+					{
+						if(O==0)break;
+						if(CB_QUANG==0) break;
+						MAIN_CONTROL(0,-300,80,0.1,0);
+						vTaskDelay(1);
+						GPIO_ToggleBits(GPIOD,GPIO_Pin_7);	
+					}
+				vTaskDelay(1450);
+
+////							//////////////////////////////////////////////qua cau
+				while(abs(READ_ENCODER(3))<77000)
+					{
+						if(O==0)break;
+						if(ADC1_Value_1<205)break;
+						MAIN_CONTROL(0,0,80,0.1,0);
+						vTaskDelay(1);
+						GPIO_ToggleBits(GPIOD,GPIO_Pin_7);	
+					}
+
+				//////	//chay ngang
+				RESET_ENCODER(2);
+				while(abs(READ_ENCODER(2))<21000)
+					{
+						if(O==0)break;
+							MAIN_CONTROL(0,900-CHAY_TU_DONG_THEO_LAZE_1(1,215,10),80,0.1,0);
+						vTaskDelay(1);
+						GPIO_ToggleBits(GPIOD,GPIO_Pin_7);	
+					}
+//				///////////////////////////////////////////////////
+         while(abs(READ_ENCODER(2))<30000)
+					{
+						 if(O==0)break;
+						 MAIN_CONTROL(0,900,80,0.1,0);
+						 vTaskDelay(1);
+						 GPIO_ToggleBits(GPIOD,GPIO_Pin_7);   
+					}
+					while(abs(READ_ENCODER(2))<43000)
+					{
+						 if(O==0)break;
+						 if(CB_QUANG==0)break;
+						 MAIN_CONTROL(0,900,80,0.1,0);
+						 vTaskDelay(1);
+						 GPIO_ToggleBits(GPIOD,GPIO_Pin_7);   
+					}
+
+
+					MAIN_CONTROL(0,1800,20,0.1,0);
+				 vTaskDelay(5000);
+         RESET_ENCODER(2);
+         while(abs(READ_ENCODER(2))<9000)
+					 {
+							if(O==0)break;
+							MAIN_CONTROL(0,900,15,0.1,0);
+							vTaskDelay(1);
+							GPIO_ToggleBits(GPIOD,GPIO_Pin_7);
+					 }	   
+	MAIN_CONTROL(0,1800,10,0.1,0);
+				 vTaskDelay(20000);					 
+				MAIN_CONTROL(0,0,0,0.1,0);
+				 ////////////////////////////////////////////// XOAY_NONG_RA_SAU_DE_TRAO_THE
+				 while(VR1<380)
+						{
+							DC_XOAY_NONG_SAU;
+							DC_XOAY_NONG=20;
+						}
+				DC_XOAY_NONG=0;
+				//-------------------------------------------------- NHA~_THE
+				GPIO_WriteBit(GPIOA,GPIO_Pin_4,1);
+				vTaskDelay(40000);//--------------------------------TIME_CHO_TRAO_THE
+				GPIO_WriteBit(GPIOA,GPIO_Pin_4,0);//----------------OPEN_TAY_KEP_SHAGAI
+				vTaskDelay(1);
+						while(VR1<300)
+						{
+							DC_XOAY_NONG_SAU;
+							DC_XOAY_NONG=20;
+						}
+				DC_XOAY_NONG=0;
+										if(HT_XOAY_TRUOC==1)
+					{
+						DC_XOAY_NONG_TRUOC;
+						DC_XOAY_NONG=15;
+						vTaskDelay(1);
+					}		
+		///////////////////////////////////////////////
+						RESET_ENCODER(2);
+				while(abs(READ_ENCODER(2))<6000)
+					 {
+							if(O==0)break;
+							MAIN_CONTROL(0,-900,10,0.1,0);
+							vTaskDelay(1);
+							GPIO_ToggleBits(GPIOD,GPIO_Pin_7);
+					 }
+MAIN_CONTROL(0,-900,0,0.1,0);					 
+	
+				while(HT_XOAY_TRUOC==1)
+					{
+						DC_XOAY_NONG_TRUOC;
+						DC_XOAY_NONG=40;
+						vTaskDelay(1);
+					}		
+				vTaskDelay(10000);
+				//////// DINH_VI_SHAGAI
+				RESET_ENCODER(3);
+				while(abs(READ_ENCODER(3))<4000) 
+					{
+						if(O==0)break;
+						if(ADC1_Value_1<1)chong_nhieu++;
+						else chong_nhieu=0;
+						if(chong_nhieu>300) break;
+						MAIN_CONTROL(0,0,20,0.1,0);
+						GPIO_ToggleBits(GPIOD,GPIO_Pin_7);
+						vTaskDelay(1);
+					}
+				////////////////////////////////////// KICH_XILANH_KEP
+				vTaskDelay(1);
+				if(O!=0)
+					{
+						MAIN_CONTROL(0,900,20,0.1,0);//delay
+						vTaskDelay(2600);
+						GPIO_WriteBit(GPIOA,GPIO_Pin_4,1);//kep
+						MAIN_CONTROL(0,900,0,0.1,0);
+						vTaskDelay(1000);
+					}
+				else MAIN_CONTROL(0,0,2,0.1,0);
+				///////////////////////////////////////// XOAY_NONG_RA_SAU
+				if(O==0) DC_XOAY_NONG=0;
+				else 
+				{
+					while(VR1<310)
+						{
+							DC_XOAY_NONG_SAU;
+							DC_XOAY_NONG=40;
+							vTaskDelay(1);
+						}
+					DC_XOAY_NONG=2;
+				}
+				vTaskDelay(1);
+				//////////////////////////////////////////// Chay_Ngang_Vung_Ban
+				RESET_ENCODER(2);
+				while(abs(READ_ENCODER(2))<14000) 
+					{
+						if(O==0)break;
+						MAIN_CONTROL(0,-900,20,0.1,0);
+						vTaskDelay(1);
+					}
+				MAIN_CONTROL(0,-900,0,0.1,0);
+				vTaskDelay(1);
+				//////////////////////////////////
+				while(1)
+				{
+					if(TAM_GIAC==0)
+						{
+							Robot_Stop_Now(0);
+						
+							//run_read_gyro_uart1();
+							///////////////////////////////////////// CHAY_VAO_VUNG_BAN
+							RESET_ENCODER(3);
+							while(abs(READ_ENCODER(3))<10000)
+								{
+									if(O==0)break;
+									MAIN_CONTROL(0,1800,40,0.1,0);
+								}
+							while(abs(READ_ENCODER(3))<36000)
+								{
+									if(O==0)break;
+									if(CB_QUANG==0)break;
+									MAIN_CONTROL(0,1800-CHAY_TU_DONG_THEO_LAZE_0(1,12,10),70,0.1,0);
+									vTaskDelay(1);
+								}
+							RESET_ENCODER(3);
+							vTaskDelay(1);
+							while(abs(READ_ENCODER(3))<700)
+								{
+									if(O==0)break;
+									MAIN_CONTROL(-220,1800,20,0.05,2);//170
+									vTaskDelay(1);		
+								} 
+							MAIN_CONTROL(-220,1800,20,0.05,0);
+							vTaskDelay(10000);						
+							MAIN_CONTROL(0,0,2,0.1,0);
+							if(O==0) DC_XOAY_NONG=0;
+							else 
+								{
+									DC_XOAY_NONG_SAU;
+									DC_XOAY_NONG=40;
+									vTaskDelay(1);
+								}
+
+							////////////////////////////////Kich_Xi_Lanh
+							if(O==0)
+								{
+									GPIO_WriteBit(GPIOB,GPIO_Pin_12,0);
+										vTaskDelay(1);
+									GPIO_WriteBit(GPIOB,GPIO_Pin_13,0);	
+										vTaskDelay(1);
+									GPIO_WriteBit(GPIOA,GPIO_Pin_4,0);
+										vTaskDelay(1);
+									GPIO_WriteBit(GPIOA,GPIO_Pin_5,0);
+										vTaskDelay(1);
+								}
+							else	Kich_Xi_Lanh();
+			//			
+			//					
+
+			//	/*~~~~~~~~~~~~ GAP_ XI LANH_2~~~~~~~~~~*/			
+
+				////////////////////////////////////// XOAY_NONG_RA_TRUOC
+							MAIN_CONTROL(0,0,0,0.1,0);
+							vTaskDelay(10);	
+							if(O==0) DC_XOAY_NONG=0;			
+							else
+								{
+									DC_XOAY_NONG_TRUOC;
+									DC_XOAY_NONG=70;
+									vTaskDelay(10000);
+								}				
+							RESET_ENCODER(3);
+							///////////////////////////// CT_ Kep Shagai 2////////////////////////////////////////////////////////////////////////////////////////////
+							while(abs(READ_ENCODER(3))<25000)
+							{
+								if(O==0)break;
+							MAIN_CONTROL(0,0-CHAY_TU_DONG_THEO_LAZE_0(-1,20,10),60,0.1,0);//0
+								vTaskDelay(1);
+							}
+							while(abs(READ_ENCODER(3))<35000)
+							{
+								//if(ADC1_Value_1 <180) break;
+								if(O==0)break;
+							MAIN_CONTROL(0,0,60,0.1,0);
+								vTaskDelay(1);
+							}
+							RESET_ENCODER(2);
+							while(abs(READ_ENCODER(2))<10000)
+							{
+								if(O==0)break;
+								if(ADC1_Value_1 <130) break;
+								MAIN_CONTROL(0,900,40,0.1,0);
+								vTaskDelay(1);
+								GPIO_ToggleBits(GPIOD,GPIO_Pin_7);	
+							}
+							
+							//////////////////////////Dinh_vi_ShaGai
+							RESET_ENCODER(3);
+							chong_nhieu=0;
+							while(abs(READ_ENCODER(3))<7500)
+							{
+								if(ADC1_Value_1<1)chong_nhieu++;
+									else chong_nhieu=0;
+									if(chong_nhieu>250) break;
+								if(O==0)break;
+							MAIN_CONTROL(0,0,25,0.1,0);
+								vTaskDelay(1);
+							}
+							vTaskDelay(1);
+						////////////////////////////////////// KICH_XL_KEP SHAGAI_2
+							if(O!=0)
+							{
+								MAIN_CONTROL(0,900,15,0.1,0);//delay
+								vTaskDelay(3500);
+								GPIO_WriteBit(GPIOA,GPIO_Pin_4,1);//kep
+								MAIN_CONTROL(0,900,0,0.1,0);
+								vTaskDelay(2000);
+							}
+							else MAIN_CONTROL(0,0,0,0.1,0);
+							//////////////////////////////////////// XOAY_NONG_RA_SAU/-----------------/ Lan 2
+							if(O==0) DC_XOAY_NONG=0;
+							else 
+							{
+								DC_XOAY_NONG_SAU;
+								DC_XOAY_NONG=40;
+								vTaskDelay(1);		
+							}
+							vTaskDelay(10000);
+							RESET_ENCODER(2);
+							while(abs(READ_ENCODER(2))<2000)
+							{
+								if(O==0)break;
+								MAIN_CONTROL(0,-900,60,0.1,0);
+								vTaskDelay(1);
+								GPIO_ToggleBits(GPIOD,GPIO_Pin_7);	
+							}
+							/////////////////////////////////////// CHAY_VAO_VUNG_BAN_LAN_2
+							RESET_ENCODER(3);
+							while(abs(READ_ENCODER(3))<10000)		
+							{
+								if(O==0)break;
+							MAIN_CONTROL(0,1800,60,0.1,0);
+								vTaskDelay(1);
+							}
+							//////////////////////////////////////////// START_LAZE_LAN_2
+							while(abs(READ_ENCODER(3))<38000)
+							{
+								if(O==0)break;
+								if(CB_QUANG==0)break;
+								MAIN_CONTROL(0,1800-CHAY_TU_DONG_THEO_LAZE_0(1,12,10),70,0.1,0);
+								vTaskDelay(1);
+							}
+							RESET_ENCODER(3);
+							vTaskDelay(1);
+							while(abs(READ_ENCODER(3))<700)
+							{
+								if(O==0)break;
+								MAIN_CONTROL(-250,1800,20,0.05,2);//180
+								vTaskDelay(1);
+							}
+							MAIN_CONTROL(-250,1800,20,0.05,0);//180
+							vTaskDelay(25000);
+							MAIN_CONTROL(0,0,2,0.1,3);
+							
+								if(O==0)
+								{
+									GPIO_WriteBit(GPIOB,GPIO_Pin_12,0);
+										vTaskDelay(1);
+									GPIO_WriteBit(GPIOB,GPIO_Pin_13,0);	
+										vTaskDelay(1);
+									GPIO_WriteBit(GPIOA,GPIO_Pin_4,0);
+										vTaskDelay(1);
+									GPIO_WriteBit(GPIOA,GPIO_Pin_5,0);
+										vTaskDelay(1);
+								}
+								else	Kich_Xi_Lanh();
+								
+							/*~~~~~~~~~~~~~~~~``KEP_SHAGAI_LAN_3~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~``*/
+
+							////////////////////////////// XOAY_NONG_RA_TRUOC/
+							MAIN_CONTROL(0,0,0,0.1,0);
+								vTaskDelay(1);
+							if(O==0) DC_XOAY_NONG=0;			
+							else
+							{
+								DC_XOAY_NONG_TRUOC;
+								DC_XOAY_NONG=70;
+								vTaskDelay(10000);
+							}		
+							///////////////////////////// CT_ Kep Shagai 3
+							RESET_ENCODER(3);
+							while(abs(READ_ENCODER(3))<25000)
+							{
+								if(O==0)break;
+								MAIN_CONTROL(0,0-CHAY_TU_DONG_THEO_LAZE_0(-1,55,20),60,0.1,0);//0
+								vTaskDelay(1);
+							}
+							while(abs(READ_ENCODER(3))<38000)
+							{
+								if(ADC1_Value_1 <200) break;
+								if(O==0)break;
+								MAIN_CONTROL(-50,0,60,0.1,0);
+								vTaskDelay(1);
+							}
+							RESET_ENCODER(2);
+			//					while(abs(READ_ENCODER(2))<7000)
+			//					{
+			//						if(O==0)break;
+			//						MAIN_CONTROL(0,-900,20,0.1,0);
+			//						vTaskDelay(1);
+			//						GPIO_ToggleBits(GPIOD,GPIO_Pin_7);	
+			//					}
+//							while(abs(READ_ENCODER(2))<12000)
+//								{
+//									if(O==0)break;
+//									MAIN_CONTROL(0,-900,20,0.1,0);
+//									vTaskDelay(1);
+//									GPIO_ToggleBits(GPIOD,GPIO_Pin_7);	
+//								}
+							vTaskDelay(1);
+							RESET_ENCODER(2);
+							while(abs(READ_ENCODER(2))<10000)
+								{
+									if(O==0)break;
+									if(ADC1_Value_1 <50)  break;
+									MAIN_CONTROL(0,900,20,0.1,0);
+									vTaskDelay(1);
+									GPIO_ToggleBits(GPIOD,GPIO_Pin_7);	
+								}
+							RESET_ENCODER(3);
+							chong_nhieu=0;
+							while(abs(READ_ENCODER(3))<6000)		
+								{
+									if(ADC1_Value_1<1)chong_nhieu++;
+									else chong_nhieu=0;
+									if(chong_nhieu>250) break;
+									if(O==0)break;
+									MAIN_CONTROL(-20,0,25,0.1,0);
+									vTaskDelay(1);
+								}
+							////////////////////////////////////// KICH_XL_KEP SHAGAI_3
+								if(O!=0)
+								{
+									MAIN_CONTROL(0,900,20,0.1,0);//delay
+									vTaskDelay(2500);
+									GPIO_WriteBit(GPIOA,GPIO_Pin_4,1);//kep
+									vTaskDelay(2000);
+								}
+								else MAIN_CONTROL(0,0,0,0.1,0);
+
+							//////////////////////////////////////// XOAY_NONG_RA_SAU/-----------------/ Lan 3
+							if(O==0)	DC_XOAY_NONG=0;
+							else 
+								{
+									DC_XOAY_NONG_SAU;
+									DC_XOAY_NONG=40;
+									vTaskDelay(10000);
+								}
+							/////////////////////////////////////// CHAY_VAO_VUNG_BAN_LAN_3
+							RESET_ENCODER(3);
+							while(abs(READ_ENCODER(3))<10000)		
+								{
+									if(O==0)break;
+									MAIN_CONTROL(0,1800,60,0.1,0);
+									vTaskDelay(1);
+								}
+							//////////////////////////////////////////// START_LAZE
+							while(abs(READ_ENCODER(3))<38000)
+								{
+									if(O==0)break;
+									if(CB_QUANG==0)break;
+									MAIN_CONTROL(0,1800-CHAY_TU_DONG_THEO_LAZE_0(1,12,10),70,0.1,0);
+									vTaskDelay(1);
+								}
+							RESET_ENCODER(3);
+							vTaskDelay(1);
+							while(abs(READ_ENCODER(3))<700)
+								{
+									if(O==0)break;
+									MAIN_CONTROL(-300,1800,20,0.1,2);//165
+									vTaskDelay(1);
+								} 			
+							MAIN_CONTROL(-300,1800,20,0.05,0);
+							vTaskDelay(25000);
+							MAIN_CONTROL(0,0,2,0.1,3);
+							/////KICH_XL
+							if(O==0)
+								{
+									GPIO_WriteBit(GPIOB,GPIO_Pin_12,0);
+										vTaskDelay(1);
+									GPIO_WriteBit(GPIOB,GPIO_Pin_13,0);	
+										vTaskDelay(1);
+									GPIO_WriteBit(GPIOA,GPIO_Pin_4,0);
+										vTaskDelay(1);
+									GPIO_WriteBit(GPIOA,GPIO_Pin_5,0);
+										vTaskDelay(1);
+								}
+							else	Kich_Xi_Lanh();
+							while(VR1>300)
+								{
+									DC_XOAY_NONG_TRUOC;
+									DC_XOAY_NONG=30;
+								}	
+							//////////////////
+						MAIN_CONTROL(0,0,0,0.1,0);
+					}
+				}
+			MAIN_CONTROL(0,0,0,0.1,0);
+		}
+		if(X==0)
+		{
+			while(1)
+			{
+				if(O==0) break;
+				RESET_TRAO_THE_SD();
+				RESET_SHAGAI2_SD();
+				RESET_SHAGAI3_SD();
+			}
+		}
+	MAIN_CONTROL(0,0,0,0.1,0);
+}
+//////////////////////////////////////////////////////////////////////////////////////
+void RESET_TRAO_THE_SD()
+{	
+	while(R2==0)
+	{
+		if(O==0) break;
+		while(VR1<380)
+			{
+				if(0) break;
+				DC_XOAY_NONG_SAU;
+				DC_XOAY_NONG=15;
+				vTaskDelay(1);
+				GPIO_ToggleBits(GPIOD,GPIO_Pin_7);
+			}
+		DC_XOAY_NONG=0;
+		vTaskDelay(1000);
+		////////////////////////////////////////////////////////////// NHA~_THE
+		GPIO_WriteBit(GPIOA,GPIO_Pin_4,1);
+		vTaskDelay(20000);//////////////////////////////////////////// TIME_CHO_TRAO_THE
+		GPIO_WriteBit(GPIOA,GPIO_Pin_4,0);/////////////////////////// OPEN_TAY_KEP_SHAGAI
+		while(VR1>320)
+			{
+				if(0) break;
+				DC_XOAY_NONG_TRUOC;
+				DC_XOAY_NONG=40;
+				vTaskDelay(1);
+				GPIO_ToggleBits(GPIOD,GPIO_Pin_7);
+			}
+			DC_XOAY_NONG=0;
+	}
+}
+//////////////////////////////////////////////////// RETRY_SHAGAI2_SAN_DO
+void RESET_SHAGAI2_SD()
+{
+	while(L1==0)
+	{
+		if(O==0) break;
+		Robot_Stop_Now(0);			
+		run_read_gyro_uart1();
+		RESET_ENCODER(2);
+		while(abs(READ_ENCODER(2))<30000)
+		{
+			if(O==0)break;
+			if(ADC1_Value_1 <130) break;
+			MAIN_CONTROL(-25,-900,40,0.1,0);
+			vTaskDelay(1);
+			GPIO_ToggleBits(GPIOD,GPIO_Pin_7);	
+		}
+		MAIN_CONTROL(0,0,0,0.1,0);
+	}
+}
+////////////////////////////////////////////////// RETRY_SHAGAI 3 SAN DO
+void RESET_SHAGAI3_SD()
+{
+	while(L2==0)
+	{
+		if(O==0) break;
+		Robot_Stop_Now(0);			
+		run_read_gyro_uart1();
+		RESET_ENCODER(2);
+		while(abs(READ_ENCODER(2))<40000)
+		{
+			if(O==0)break;
+			if(ADC1_Value_1 <130) break;
+			MAIN_CONTROL(-25,-900,40,0.1,0);
+			vTaskDelay(1);
+			GPIO_ToggleBits(GPIOD,GPIO_Pin_7);	
+		}
+	}
+}

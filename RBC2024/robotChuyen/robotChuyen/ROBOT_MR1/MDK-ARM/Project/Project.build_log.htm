@@ -1,0 +1,183 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.36.0.0
+Copyright (C) 2021 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: ac aca, ac, LIC=MPPLD-8BQ4X-LQL0Q-NSA61-8FH8L-44ICW
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Plus  Version: 5.36.0.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 7 (build 960)
+Assembler:       Armasm.exe V5.06 update 7 (build 960)
+Linker/Locator:  ArmLink.exe V5.06 update 7 (build 960)
+Library Manager: ArmAr.exe V5.06 update 7 (build 960)
+Hex Converter:   FromElf.exe V5.06 update 7 (build 960)
+CPU DLL:         SARMCM3.DLL V5.36.0.0
+Dialog DLL:      DCM.DLL V1.17.3.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.9.0
+Dialog DLL:      TCM.DLL V1.53.0.0
+ 
+<h2>Project:</h2>
+D:\Desktop\SWEEP\robocon2025\robotChuyen\robotChuyen\ROBOT_MR1\MDK-ARM\Project.uvprojx
+Project File Date:  03/31/2025
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 7 (build 960)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Build target 'Project'
+compiling main.c...
+..\LID_HMI.h(16): warning:  #223-D: function "strlen" declared implicitly
+      int len = strlen(_buf1);
+..\LID_HMI.h(17): warning:  #223-D: function "strcmp" declared implicitly
+      if (strcmp(Buffer_HMI, _buf1) != 0) {	
+..\LID_HMI.h(18): warning:  #223-D: function "strncpy" declared implicitly
+          strncpy(Buffer_HMI, _buf1, sizeof(Buffer_HMI) - 1);  // Sao chép n?i dung m?i vào Buffer_HMI v?i gi?i h?n kích thu?c
+..\LID_HMI.h(114): warning:  #223-D: function "strcat" declared implicitly
+  strcat (ky_tu,ky_tu_1);
+..\LID_HMI.h(97): warning:  #177-D: variable "k"  was declared but never referenced
+  	char k=0xff,i;
+..\LID_HMI.h(147): warning:  #223-D: function "strcat" declared implicitly
+  strcat (ky_tu,ky_tu_1);
+..\LID_HMI.h(132): warning:  #177-D: variable "k"  was declared but never referenced
+  	char k=0xff,i;
+..\LID_HMI.h(188): warning:  #223-D: function "strcat" declared implicitly
+  strcat (ky_tu,ky_tu_1);
+..\LID_HMI.h(171): warning:  #177-D: variable "k"  was declared but never referenced
+  	char k=0xff,i;
+..\doc_tay_game.h(345): warning:  #177-D: variable "CANH_A"  was declared but never referenced
+  	   float CANH_A,CANH_B;
+..\doc_tay_game.h(345): warning:  #177-D: variable "CANH_B"  was declared but never referenced
+  	   float CANH_A,CANH_B;
+..\config.h(636): warning:  #177-D: variable "NVIC_InitStructure"  was declared but never referenced
+  	NVIC_InitTypeDef NVIC_InitStructure;
+..\config.h(1549): warning:  #188-D: enumerated type mixed with another type
+  											GPIO_WriteBit(GPIOC,GPIO_Pin_15,0);
+..\config.h(1553): warning:  #188-D: enumerated type mixed with another type
+  											GPIO_WriteBit(GPIOC,GPIO_Pin_15,1);
+..\config.h(1591): warning:  #111-D: statement is unreachable
+  										break;
+..\config.h(1540): warning:  #177-D: variable "camera"  was declared but never referenced
+  		char*camera="11111111111111111111110111111111";
+..\config.h(1543): warning:  #550-D: variable "_chu_cac_bit"  was set but never used
+  									char _chu_cac_bit[40];
+..\config.h(1668): warning:  #177-D: variable "_k"  was declared but never referenced
+  	{int _k,_i;
+..\config.h(1668): warning:  #177-D: variable "_i"  was declared but never referenced
+  	{int _k,_i;
+..\config.h(1680): warning:  #1-D: last line of file ends without a newline
+  }
+..\4OmniControler.h(112): warning:  #177-D: variable "gd"  was declared but never referenced
+  	int goc_den, goc_doi, gd;
+..\4OmniControler.h(279): warning:  #550-D: variable "R"  was set but never used
+  		int R;
+..\4OmniControler.h(488): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+  			robotRotate(robotAngle, (absF(robotAngle - _robotIMUAngle) > 50? (robotAngle > _robotIMUAngle ? rotate: -rotate):(robotAngle - _robotIMUAngle)*0.0005), 0);
+..\DieuKhienCoCau.h(25): warning:  #260-D: explicit type is missing ("int" assumed)
+  extern speed_temp;
+..\DieuKhienCoCau.h(69): warning:  #174-D: expression has no effect
+          lazeTraiValue; 
+..\DieuKhienCoCau.h(255): warning:  #177-D: variable "lazeSauCouter"  was declared but never referenced
+  	static unsigned int lazeSauCouter = 0, lazeSau_SUM = 0;
+..\DieuKhienCoCau.h(255): warning:  #177-D: variable "lazeSau_SUM"  was declared but never referenced
+  	static unsigned int lazeSauCouter = 0, lazeSau_SUM = 0;
+..\DieuKhienCoCau.h(256): warning:  #177-D: variable "lazeTruocCouter"  was declared but never referenced
+  	static unsigned int lazeTruocCouter = 0, lazeTruoc_SUM = 0;
+..\DieuKhienCoCau.h(256): warning:  #177-D: variable "lazeTruoc_SUM"  was declared but never referenced
+  	static unsigned int lazeTruocCouter = 0, lazeTruoc_SUM = 0;
+..\DieuKhienCoCau.h(257): warning:  #177-D: variable "lazePhaiCouter"  was declared but never referenced
+  	static unsigned int lazePhaiCouter = 0, lazePhai_SUM = 0;
+..\DieuKhienCoCau.h(257): warning:  #177-D: variable "lazePhai_SUM"  was declared but never referenced
+  	static unsigned int lazePhaiCouter = 0, lazePhai_SUM = 0;
+..\DieuKhienCoCau.h(258): warning:  #177-D: variable "lazeTraiCouter"  was declared but never referenced
+  	static unsigned int lazeTraiCouter = 0, lazeTrai_SUM = 0;
+..\DieuKhienCoCau.h(258): warning:  #177-D: variable "lazeTrai_SUM"  was declared but never referenced
+  	static unsigned int lazeTraiCouter = 0, lazeTrai_SUM = 0;
+..\DieuKhienCoCau.h(376): warning:  #188-D: enumerated type mixed with another type
+  										XI_LANH_BAN_BONG_ON;
+..\DieuKhienCoCau.h(381): warning:  #188-D: enumerated type mixed with another type
+  										XI_LANH_BAN_BONG_OFF;
+..\DieuKhienCoCau.h(391): warning:  #188-D: enumerated type mixed with another type
+  										XI_LANH_BAN_BONG_ON;
+..\DieuKhienCoCau.h(394): warning:  #188-D: enumerated type mixed with another type
+  										XI_LANH_BAN_BONG_OFF;
+..\DieuKhienCoCau.h(397): warning:  #188-D: enumerated type mixed with another type
+  										XI_LANH_LAZE_OFF;
+..\DieuKhienCoCau.h(432): warning:  #188-D: enumerated type mixed with another type
+  			XI_LANH_RE_BONG_RA;//
+..\DieuKhienCoCau.h(437): warning:  #188-D: enumerated type mixed with another type
+  			XI_LANH_DAY_BONG_RA;
+..\DieuKhienCoCau.h(440): warning:  #188-D: enumerated type mixed with another type
+  			XI_LANH_KEP_MO;
+..\DieuKhienCoCau.h(445): warning:  #188-D: enumerated type mixed with another type
+  			XI_LANH_DAY_BONG_VAO;
+..\DieuKhienCoCau.h(450): warning:  #188-D: enumerated type mixed with another type
+  			XI_LANH_KEP_DONG;
+..\DieuKhienCoCau.h(452): warning:  #188-D: enumerated type mixed with another type
+  			XI_LANH_RE_BONG_VAO;//
+..\DieuKhienCoCau.h(518): warning:  #188-D: enumerated type mixed with another type
+  		XI_LANH_KEP_DONG;
+..\DieuKhienCoCau.h(519): warning:  #188-D: enumerated type mixed with another type
+  		XI_LANH_RE_BONG_VAO;
+..\DieuKhienCoCau.h(522): warning:  #188-D: enumerated type mixed with another type
+  	{		XI_LANH_RE_BONG_RA;
+..\DieuKhienCoCau.h(525): warning:  #188-D: enumerated type mixed with another type
+  			XI_LANH_KEP_MO;
+..\DieuKhienCoCau.h(531): warning:  #188-D: enumerated type mixed with another type
+  			XI_LANH_KEP_DONG;
+..\DieuKhienCoCau.h(533): warning:  #188-D: enumerated type mixed with another type
+  		  XI_LANH_RE_BONG_VAO;
+..\DieuKhienCoCau.h(539): warning:  #188-D: enumerated type mixed with another type
+  		XI_LANH_RE_BONG_RA;
+..\DieuKhienCoCau.h(540): warning:  #188-D: enumerated type mixed with another type
+  		XI_LANH_KEP_DONG;
+..\DieuKhienCoCau.h(557): warning:  #177-D: variable "i"  was declared but never referenced
+  		int i; 
+..\DieuKhienCoCau.h(766): warning:  #188-D: enumerated type mixed with another type
+  		XI_LANH_BAN_BONG_ON;
+..\DieuKhienCoCau.h(770): warning:  #188-D: enumerated type mixed with another type
+  		XI_LANH_BAN_BONG_OFF;
+..\DieuKhienCoCau.h(771): warning:  #188-D: enumerated type mixed with another type
+  		XI_LANH_NONG_BAN_OFF;
+..\DieuKhienCoCau.h(826): warning:  #188-D: enumerated type mixed with another type
+  		XI_LANH_NONG_BAN_OFF;
+..\DieuKhienCoCau.h(847): warning:  #188-D: enumerated type mixed with another type
+  		XI_LANH_BAN_BONG_ON;
+..\DieuKhienCoCau.h(967): warning:  #1-D: last line of file ends without a newline
+  }
+..\BasicFunction.h(54): warning:  #177-D: variable "td_x"  was declared but never referenced
+  	int tocdo = 20, td_x = 5;
+..\BasicFunction.h(246): warning:  #1-D: last line of file ends without a newline
+  }
+..\main.c: 61 warnings, 0 errors
+linking...
+Program Size: Code=42744 RO-data=832 RW-data=1020 ZI-data=12164  
+FromELF: creating hex file...
+".\Project\Project.axf" - 0 Error(s), 61 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                https://www.keil.com/pack/ARM.CMSIS.6.1.0.pack
+                ARM.CMSIS.6.1.0
+                CMSIS (Common Microcontroller Software Interface Standard)
+   * Component: CORE Version: 6.1.0
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.STM32F4xx_DFP.2.5.0.pack
+                Keil.STM32F4xx_DFP.2.5.0
+                STMicroelectronics STM32F4 Series Device Support, Drivers and Examples
+
+<h2>Collection of Component include folders:</h2>
+  .\RTE\_Project
+  C:\Users\DELL\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include
+  C:\Users\DELL\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:6.1.0
+Build Time Elapsed:  00:00:01
+</pre>
+</body>
+</html>

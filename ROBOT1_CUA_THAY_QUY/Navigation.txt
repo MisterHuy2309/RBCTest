@@ -1,0 +1,148 @@
+#include <ESP8266WiFi.h>
+#include <ESP8266WebServer.h>
+#include <Adafruit_Sensor.h>
+#include <DHT.h>
+#include <DHT_U.h>
+
+// ====== CẤU HÌNH AP ======
+const char* AP_SSID = "ESP8266_Temp_AP";
+const char* AP_PASS = "12345678";  // >= 8 ký tự
+IPAddress apIP(192, 168, 4, 1);
+IPAddress apGW(192, 168, 4, 1);
+IPAddress apMASK(255, 255, 255, 0);
+
+// ====== CẢM BIẾN DHT ======
+#define DHTPIN D1        // DATA nối D1 (GPIO5)
+#define DHTTYPE DHT22    // Hoặc DHT11 nếu bạn dùng DHT11
+DHT dht(DHTPIN, DHTTYPE);
+
+// ====== WEBSERVER ======
+ESP8266WebServer server(80);
+
+// HTML trang chủ (tự cập nhật 2s/lần)
+const char* INDEX_HTML = R"HTML(
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>ESP8266 DHT22 Monitor</title>
+<style>
+  body { font-family: system-ui, Arial; margin: 0; padding: 24px; }
+  .card { max-width: 520px; margin: 0 auto; padding: 20px; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,.1); }
+  h1 { margin: 0 0 6px 0; font-size: 22px; }
+  .muted { color: #555; margin-bottom: 16px; }
+  .reading { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 12px; }
+  .tile { padding: 16px; border-radius: 12px; background: #f6f7fb; text-align: center; }
+  .val { font-size: 32px; font-weight: 700; }
+  .lbl { font-size: 13px; color: #666; margin-top: 6px; }
+  .status { font-size: 13px; color: #666; margin-top: 12px; text-align: center; }
+  button { padding: 10px 14px; border: 0; border-radius: 10px; cursor: pointer; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>ESP8266 DHT22 Monitor</h1>
+    <div class="muted">Truy cập nội bộ qua AP của thiết bị. Trang sẽ tự làm mới số liệu mỗi 2 giây.</div>
+
+    <div class="reading">
+      <div class="tile">
+        <div class="val" id="temp">--.-°C</div>
+        <div class="lbl">Nhiệt độ</div>
+      </div>
+      <div class="tile">
+        <div class="val" id="humi">--.-%</div>
+        <div class="lbl">Độ ẩm</div>
+      </div>
+    </div>
+
+    <div class="status" id="status">Đang lấy dữ liệu...</div>
+  </div>
+
+<script>
+async function refresh() {
+  try {
+    const r = await fetch('/data'); // JSON: {t: 00.0, h: 00.0, ok: true/false}
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const j = await r.json();
+    if (j.ok) {
+      document.getElementById('temp').textContent = j.t.toFixed(1) + '°C';
+      document.getElementById('humi').textContent = j.h.toFixed(1) + '%';
+      document.getElementById('status').textContent = 'Cập nhật: ' + new Date().toLocaleTimeString();
+    } else {
+      document.getElementById('status').textContent = 'Lỗi cảm biến';
+    }
+  } catch (e) {
+    document.getElementById('status').textContent = 'Mất kết nối: ' + e.message;
+  }
+}
+refresh();
+setInterval(refresh, 2000);
+</script>
+</body>
+</html>
+)HTML";
+
+// Đọc cảm biến an toàn (trả về ok=false nếu lỗi)
+struct DhtReading {
+  float t;
+  float h;
+  bool ok;
+};
+
+DhtReading readDht() {
+  DhtReading r;
+  r.t = dht.readTemperature();
+  r.h = dht.readHumidity();
+  r.ok = !(isnan(r.t) || isnan(r.h));
+  return r;
+}
+
+// Handlers
+void handleIndex() {
+  server.send(200, "text/html; charset=utf-8", INDEX_HTML);
+}
+
+void handleData() {
+  DhtReading r = readDht();
+  String json = String("{\"ok\":") + (r.ok ? "true" : "false");
+  if (r.ok) {
+    json += String(",\"t\":") + String(r.t, 1) + String(",\"h\":") + String(r.h, 1);
+  }
+  json += "}";
+  server.send(200, "application/json", json);
+}
+
+void handleNotFound() {
+  server.send(404, "text/plain; charset=utf-8", "404 Not Found");
+}
+
+void setup() {
+  Serial.begin(115200);
+  delay(200);
+  Serial.println();
+  Serial.println(F("Booting..."));
+
+  // Khởi tạo DHT
+  dht.begin();
+
+  // Khởi tạo Access Point
+  WiFi.mode(WIFI_AP);
+  WiFi.softAPConfig(apIP, apGW, apMASK);
+  bool ok = WiFi.softAP(AP_SSID, AP_PASS);
+  Serial.printf("AP %s: %s\n", AP_SSID, ok ? "OK" : "FAIL");
+  Serial.print("AP IP: "); Serial.println(WiFi.softAPIP()); // Thường là 192.168.4.1
+
+  // Routes
+  server.on("/", handleIndex);
+  server.on("/data", handleData);
+  server.on("/favicon.ico", [](){ server.send(204); }); // tránh 404
+  server.onNotFound(handleNotFound);
+
+  server.begin();
+  Serial.println(F("HTTP server started"));
+}
+
+void loop() {
+  server.handleClient();
+}

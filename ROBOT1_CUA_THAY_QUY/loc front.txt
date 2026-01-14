@@ -1,0 +1,36 @@
+from rembg import remove
+from PIL import Image
+import io
+import os
+
+# Đường dẫn đến thư mục chứa ảnh
+input_folder = 'C:/Users/DELL/Downloads/train2017'  # Thư mục chứa ảnh gốc
+output_folder = 'C:/Users/DELL/Downloads/train2017_no_bg'  # Thư mục để lưu ảnh đã xoá phông
+
+# Tạo thư mục output nếu chưa tồn tại
+if not os.path.exists(output_folder):
+    os.makedirs(output_folder)
+
+# Duyệt qua tất cả các tệp trong thư mục
+for file_name in os.listdir(input_folder):
+    # Chỉ xử lý các tệp có định dạng .jpg, .jpeg, .png
+    if file_name.endswith(('.jpg', '.jpeg', '.png')):
+        input_path = os.path.join(input_folder, file_name)
+        output_path = os.path.join(output_folder, f'no_bg_{file_name}')
+
+        try:
+            # Mở file ảnh đầu vào
+            with open(input_path, 'rb') as input_file:
+                input_data = input_file.read()
+
+            # Xử lý để xoá phông nền
+            output_data = remove(input_data)
+
+            # Lưu file ảnh đã xử lý (xoá phông nền)
+            with open(output_path, 'wb') as output_file:
+                output_file.write(output_data)
+
+            print(f"Processed: {input_path} -> {output_path}")
+
+        except Exception as e:
+            print(f"An error occurred while processing {file_name}: {e}")

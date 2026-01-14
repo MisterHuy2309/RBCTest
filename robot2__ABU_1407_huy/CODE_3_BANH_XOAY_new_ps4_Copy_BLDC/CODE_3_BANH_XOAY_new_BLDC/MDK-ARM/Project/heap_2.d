@@ -1,0 +1,13 @@
+.\project\heap_2.o: ..\FreeRTOSv10.0.1\FreeRTOS\Source\portable\MemMang\heap_2.c
+.\project\heap_2.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\project\heap_2.o: ..\FreeRTOSv10.0.1\FreeRTOS\Source\include\FreeRTOS.h
+.\project\heap_2.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+.\project\heap_2.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\project\heap_2.o: ..\..\CODE_3_BANH_XOAY_new_BLDC\FreeRTOSConfig.h
+.\project\heap_2.o: ..\FreeRTOSv10.0.1\FreeRTOS\Source\include\projdefs.h
+.\project\heap_2.o: ..\FreeRTOSv10.0.1\FreeRTOS\Source\include\portable.h
+.\project\heap_2.o: ..\FreeRTOSv10.0.1\FreeRTOS\Source\include\deprecated_definitions.h
+.\project\heap_2.o: ..\FreeRTOSv10.0.1\FreeRTOS\Source\portable\RVDS\ARM_CM3\portmacro.h
+.\project\heap_2.o: ..\FreeRTOSv10.0.1\FreeRTOS\Source\include\mpu_wrappers.h
+.\project\heap_2.o: ..\FreeRTOSv10.0.1\FreeRTOS\Source\include\task.h
+.\project\heap_2.o: ..\FreeRTOSv10.0.1\FreeRTOS\Source\include\list.h

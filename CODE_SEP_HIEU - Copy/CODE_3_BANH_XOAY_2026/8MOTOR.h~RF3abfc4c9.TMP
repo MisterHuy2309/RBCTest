@@ -1,0 +1,1054 @@
+/// THU VIEN 8 MOTOR
+float cao_chan_phai_truoc,cao_chan_trai_truoc,cao_chan_phai_sau,cao_chan_trai_sau,diem_giua_chan_phai_truoc,
+	diem_giua_chan_trai_truoc,diem_giua_chan_phai_sau,diem_giua_chan_trai_sau;
+vs32 _chan_phai_sau_A,_chan_phai_sau_B,_chan_trai_sau_A,_chan_trai_sau_B,_chan_phai_truoc_A,
+	_chan_phai_truoc_B,_chan_trai_truoc_A,_chan_trai_truoc_B;
+	
+float _diem_giua_chan_trai_sau,_diem_giua_chan_phai_sau,_diem_giua_chan_trai_truoc,_diem_giua_chan_phai_truoc,
+	_cao_chan_trai_sau,_cao_chan_trai_truoc,_cao_chan_phai_sau,_cao_chan_phai_truoc,he_so_bu;
+
+void bu_do_cao(vs32 cao_phai_truoc,vs32 cao_trai_truoc,vs32 cao_phai_sau,vs32 cao_trai_sau,float gia_toc){
+
+_cao_chan_phai_truoc=cao_phai_truoc;
+_cao_chan_trai_truoc=cao_trai_truoc;
+_cao_chan_phai_sau=cao_phai_sau;
+_cao_chan_trai_sau=cao_trai_sau;	
+he_so_bu=gia_toc;
+}
+
+void thay_doi_diem_giua(vs32 giua_chan_phai_truoc,vs32 giua_chan_trai_truoc,vs32 giua_chan_phai_sau,vs32 giua_chan_trai_sau,float gia_toc){
+
+_diem_giua_chan_phai_truoc=giua_chan_phai_truoc;
+_diem_giua_chan_trai_truoc=giua_chan_trai_truoc;
+_diem_giua_chan_phai_sau=giua_chan_phai_sau;
+_diem_giua_chan_trai_sau=giua_chan_trai_sau;	
+he_so_bu=gia_toc;
+}
+
+/////////////////////////////////
+void TIMER_8_CHAN(void)
+{
+		if(bit_dieu_khien_PT==0){
+	/////////////////////////chan_phai_truoc
+
+				if(GOC_A_HIEN_TAI_PT>GOC_A_PT)GOC_A_HIEN_TAI_PT=GOC_A_HIEN_TAI_PT-GIA_TOC_A_PT;
+				else if(GOC_A_HIEN_TAI_PT<GOC_A_PT)GOC_A_HIEN_TAI_PT=GOC_A_HIEN_TAI_PT+GIA_TOC_A_PT;
+				else GOC_A_HIEN_TAI_PT=GOC_A_PT;
+			
+				if(GOC_B_HIEN_TAI_PT>GOC_B_PT)GOC_B_HIEN_TAI_PT=GOC_B_HIEN_TAI_PT-GIA_TOC_B_PT;
+				else if(GOC_B_HIEN_TAI_PT<GOC_B_PT)GOC_B_HIEN_TAI_PT=GOC_B_HIEN_TAI_PT+GIA_TOC_B_PT;
+				else GOC_B_HIEN_TAI_PT=GOC_B_PT;
+
+		}
+		else {
+				/////////////////////////chan_phai_truoc
+				GOC_A_HIEN_TAI_PT=GOC_A_PT;
+				GOC_B_HIEN_TAI_PT=GOC_B_PT;
+
+			}
+		
+		////////////////////////////////////////////CHAN TRAI TRUOC
+			
+		if(bit_dieu_khien_TT==0){
+	/////////////////////////chan_phai_truoc
+
+				if(GOC_A_HIEN_TAI_TT>GOC_A_TT)GOC_A_HIEN_TAI_TT=GOC_A_HIEN_TAI_TT-GIA_TOC_A_TT;
+				else if(GOC_A_HIEN_TAI_TT<GOC_A_TT)GOC_A_HIEN_TAI_TT=GOC_A_HIEN_TAI_TT+GIA_TOC_A_TT;
+				else GOC_A_HIEN_TAI_TT=GOC_A_TT;
+			
+				if(GOC_B_HIEN_TAI_TT>GOC_B_TT)GOC_B_HIEN_TAI_TT=GOC_B_HIEN_TAI_TT-GIA_TOC_B_TT;
+				else if(GOC_B_HIEN_TAI_TT<GOC_B_TT)GOC_B_HIEN_TAI_TT=GOC_B_HIEN_TAI_TT+GIA_TOC_B_TT;
+				else GOC_B_HIEN_TAI_TT=GOC_B_TT;
+
+		}
+		else {
+				/////////////////////////chan_phai_truoc
+				GOC_A_HIEN_TAI_TT=GOC_A_TT;
+				GOC_B_HIEN_TAI_TT=GOC_B_TT;
+
+			}			
+			
+//////////------------------NUA SAU-------------------------///////////////////////////////////////			
+			if(bit_dieu_khien_PS==0){
+	/////////////////////////chan_phai_truoc
+
+				if(GOC_A_HIEN_TAI_PS>GOC_A_PS)GOC_A_HIEN_TAI_PS=GOC_A_HIEN_TAI_PS-GIA_TOC_A_PS;
+				else if(GOC_A_HIEN_TAI_PS<GOC_A_PS)GOC_A_HIEN_TAI_PS=GOC_A_HIEN_TAI_PS+GIA_TOC_A_PS;
+				else GOC_A_HIEN_TAI_PS=GOC_A_PS;
+			
+				if(GOC_B_HIEN_TAI_PS>GOC_B_PS)GOC_B_HIEN_TAI_PS=GOC_B_HIEN_TAI_PS-GIA_TOC_B_PS;
+				else if(GOC_B_HIEN_TAI_PS<GOC_B_PS)GOC_B_HIEN_TAI_PS=GOC_B_HIEN_TAI_PS+GIA_TOC_B_PS;
+				else GOC_B_HIEN_TAI_PS=GOC_B_PS;
+
+		}
+		else {
+				/////////////////////////chan_phai_truoc
+				GOC_A_HIEN_TAI_PS=GOC_A_PS;
+				GOC_B_HIEN_TAI_PS=GOC_B_PS;
+
+			}
+		
+		////////////////////////////////////////////CHAN TRAI TRUOC
+			
+		if(bit_dieu_khien_TS==0){
+	/////////////////////////chan_phai_truoc
+
+				if(GOC_A_HIEN_TAI_TS>GOC_A_TS)GOC_A_HIEN_TAI_TS=GOC_A_HIEN_TAI_TS-GIA_TOC_A_TS;
+				else if(GOC_A_HIEN_TAI_TS<GOC_A_TS)GOC_A_HIEN_TAI_TS=GOC_A_HIEN_TAI_TS+GIA_TOC_A_TS;
+				else GOC_A_HIEN_TAI_TS=GOC_A_TS;
+			
+				if(GOC_B_HIEN_TAI_TS>GOC_B_TS)GOC_B_HIEN_TAI_TS=GOC_B_HIEN_TAI_TS-GIA_TOC_B_TS;
+				else if(GOC_B_HIEN_TAI_TS<GOC_B_TS)GOC_B_HIEN_TAI_TS=GOC_B_HIEN_TAI_TS+GIA_TOC_B_TS;
+				else GOC_B_HIEN_TAI_TS=GOC_B_TS;
+
+		}
+		else {
+				/////////////////////////chan_phai_truoc
+				GOC_A_HIEN_TAI_TS=GOC_A_TS;
+				GOC_B_HIEN_TAI_TS=GOC_B_TS;
+
+			}				
+			
+//////////////////xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//////////////////////			
+		if(cao_chan_phai_truoc<_cao_chan_phai_truoc)cao_chan_phai_truoc=cao_chan_phai_truoc+he_so_bu;
+		else if(cao_chan_phai_truoc>_cao_chan_phai_truoc)cao_chan_phai_truoc=cao_chan_phai_truoc-he_so_bu;
+		else cao_chan_phai_truoc=_cao_chan_phai_truoc;
+//			cao_chan_phai_truoc=_cao_chan_phai_truoc;
+		if(diem_giua_chan_phai_truoc<_diem_giua_chan_phai_truoc)diem_giua_chan_phai_truoc=diem_giua_chan_phai_truoc+he_so_bu;
+		else if(diem_giua_chan_phai_truoc>_diem_giua_chan_phai_truoc)diem_giua_chan_phai_truoc=diem_giua_chan_phai_truoc-he_so_bu;
+		else diem_giua_chan_phai_truoc=_diem_giua_chan_phai_truoc;
+//diem_giua_chan_phai_truoc=_diem_giua_chan_phai_truoc;				
+		////
+		if(cao_chan_trai_truoc<_cao_chan_trai_truoc)cao_chan_trai_truoc=cao_chan_trai_truoc+he_so_bu;
+		else if(cao_chan_trai_truoc>_cao_chan_trai_truoc)cao_chan_trai_truoc=cao_chan_trai_truoc-he_so_bu;
+		else cao_chan_trai_truoc=_cao_chan_trai_truoc;
+//			cao_chan_trai_truoc=_cao_chan_trai_truoc;
+		if(diem_giua_chan_trai_truoc<_diem_giua_chan_trai_truoc)diem_giua_chan_trai_truoc=diem_giua_chan_trai_truoc+he_so_bu;
+		else if(diem_giua_chan_trai_truoc>_diem_giua_chan_trai_truoc)diem_giua_chan_trai_truoc=diem_giua_chan_trai_truoc-he_so_bu;
+		else diem_giua_chan_trai_truoc=_diem_giua_chan_trai_truoc;	
+	//		diem_giua_chan_trai_truoc=_diem_giua_chan_trai_truoc;	
+		////
+		if(cao_chan_phai_sau<_cao_chan_phai_sau)cao_chan_phai_sau=cao_chan_phai_sau+he_so_bu;
+		else if(cao_chan_phai_sau>_cao_chan_phai_sau)cao_chan_phai_sau=cao_chan_phai_sau-he_so_bu;
+		else cao_chan_phai_sau=_cao_chan_phai_sau;
+//cao_chan_phai_sau=_cao_chan_phai_sau;
+		if(diem_giua_chan_phai_sau<_diem_giua_chan_phai_sau)diem_giua_chan_phai_sau=diem_giua_chan_phai_sau+he_so_bu;
+		else if(diem_giua_chan_phai_sau>_diem_giua_chan_phai_sau)diem_giua_chan_phai_sau=diem_giua_chan_phai_sau-he_so_bu;
+		else diem_giua_chan_phai_sau=_diem_giua_chan_phai_sau;
+//diem_giua_chan_phai_sau=_diem_giua_chan_phai_sau;
+		////
+		if(cao_chan_trai_sau<_cao_chan_trai_sau)cao_chan_trai_sau=cao_chan_trai_sau+he_so_bu;
+		else if(cao_chan_trai_sau>_cao_chan_trai_sau)cao_chan_trai_sau=cao_chan_trai_sau-he_so_bu;
+		else cao_chan_trai_sau=_cao_chan_trai_sau;
+//cao_chan_trai_sau=_cao_chan_trai_sau;
+		if(diem_giua_chan_trai_sau<_diem_giua_chan_trai_sau)diem_giua_chan_trai_sau=diem_giua_chan_trai_sau+he_so_bu;
+		else if(diem_giua_chan_trai_sau>_diem_giua_chan_trai_sau)diem_giua_chan_trai_sau=diem_giua_chan_trai_sau-he_so_bu;
+		else diem_giua_chan_trai_sau=_diem_giua_chan_trai_sau;	
+//diem_giua_chan_trai_sau=_diem_giua_chan_trai_sau;
+			
+/////////////////////xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx///////////////////////////			
+			
+			
+		///////////gan toc do vao dong co////////////////////////
+			
+		_chan_phai_truoc_A=abs(GOC_A_HIEN_TAI_PT)+cao_chan_phai_truoc-diem_giua_chan_phai_truoc-20;	
+		_chan_phai_truoc_B=abs(GOC_B_HIEN_TAI_PT)+cao_chan_phai_truoc+diem_giua_chan_phai_truoc+15;
+			
+		_chan_trai_truoc_A=abs(GOC_A_HIEN_TAI_TT)+cao_chan_trai_truoc-diem_giua_chan_trai_truoc-20;	
+		_chan_trai_truoc_B=abs(GOC_B_HIEN_TAI_TT)+cao_chan_trai_truoc+diem_giua_chan_trai_truoc+10;	
+			
+		_chan_phai_sau_A=abs(GOC_A_HIEN_TAI_PS)+cao_chan_phai_sau-diem_giua_chan_phai_sau-20;	
+		_chan_phai_sau_B=abs(GOC_B_HIEN_TAI_PS)+cao_chan_phai_sau+diem_giua_chan_phai_sau+5;
+			
+		_chan_trai_sau_A=abs(GOC_A_HIEN_TAI_TS)+cao_chan_trai_sau-diem_giua_chan_trai_sau-10;	
+		_chan_trai_sau_B=abs(GOC_B_HIEN_TAI_TS)+cao_chan_trai_sau+diem_giua_chan_trai_sau+10;		
+		
+		///truoc
+		if(_chan_phai_truoc_A>cuc_dai)_chan_phai_truoc_A=cuc_dai;
+		else if(_chan_phai_truoc_A<cuc_tieu)_chan_phai_truoc_A=cuc_tieu;
+		else 	chan_phai_truoc_A=_chan_phai_truoc_A;
+			
+    if(_chan_phai_truoc_B>cuc_dai)_chan_phai_truoc_B=cuc_dai;
+		else if(_chan_phai_truoc_B<cuc_tieu)_chan_phai_truoc_B=cuc_tieu;
+		else 	chan_phai_truoc_B=_chan_phai_truoc_B;
+		
+		if(_chan_trai_truoc_A>cuc_dai)_chan_trai_truoc_A=cuc_dai;
+		else if(_chan_trai_truoc_A<cuc_tieu)_chan_trai_truoc_A=cuc_tieu;
+		else 	chan_trai_truoc_A=_chan_trai_truoc_A;
+		
+		if(_chan_trai_truoc_B>cuc_dai)_chan_trai_truoc_B=cuc_dai;
+		else if(_chan_trai_truoc_B<cuc_tieu)_chan_trai_truoc_B=cuc_tieu;
+		else 	chan_trai_truoc_B=_chan_trai_truoc_B;
+		////////sau
+		
+		if(_chan_phai_sau_A>cuc_dai)_chan_phai_sau_A=cuc_dai;
+		else if(_chan_phai_sau_A<cuc_tieu)_chan_phai_sau_A=cuc_tieu;
+		else 	chan_phai_sau_A=_chan_phai_sau_A;
+			
+    if(_chan_phai_sau_B>cuc_dai)_chan_phai_sau_B=cuc_dai;
+		else if(_chan_phai_sau_B<cuc_tieu)_chan_phai_sau_B=cuc_tieu;
+		else 	chan_phai_sau_B=_chan_phai_sau_B;
+		
+		if(_chan_trai_sau_A>cuc_dai)_chan_trai_sau_A=cuc_dai;
+		else if(_chan_trai_sau_A<cuc_tieu)_chan_trai_sau_A=cuc_tieu;
+		else 	chan_trai_sau_A=_chan_trai_sau_A;
+		
+		if(_chan_trai_sau_B>cuc_dai)_chan_trai_sau_B=cuc_dai;
+		else if(_chan_trai_sau_B<cuc_tieu)_chan_trai_sau_B=cuc_tieu;
+		else 	chan_trai_sau_B=_chan_trai_sau_B;
+		
+		
+}
+
+
+
+void chan_phai_truoc(vs32 goc_A,vs32 goc_B,float toc_do_phai_truoc,vs32 cach_dieu_khien){
+	
+	float TI_SO_LECH_AB;
+	vs32 GOC_LECH_A,GOC_LECH_B;
+	
+							if(cach_dieu_khien==0){	
+								GOC_LECH_A = abs(goc_A-GOC_A_HIEN_TAI_PT);
+								GOC_LECH_B = abs(goc_B-GOC_B_HIEN_TAI_PT);
+							}
+							else{
+								GOC_LECH_A=GOC_LECH_B=0;
+								
+							}
+								
+								
+												if(GOC_LECH_A>GOC_LECH_B){
+													
+													TI_SO_LECH_AB=GOC_LECH_A/GOC_LECH_B;
+															if(TI_SO_LECH_AB==0)TI_SO_LECH_AB=1;
+													GIA_TOC_A_PT = TI_SO_LECH_AB*toc_do_phai_truoc;
+													GIA_TOC_B_PT = toc_do_phai_truoc;
+													
+													}
+												else if(GOC_LECH_A<GOC_LECH_B){
+													
+													TI_SO_LECH_AB=GOC_LECH_B/GOC_LECH_A;
+														if(TI_SO_LECH_AB==0)TI_SO_LECH_AB=1;
+													GIA_TOC_A_PT = toc_do_phai_truoc;
+													GIA_TOC_B_PT = TI_SO_LECH_AB*toc_do_phai_truoc;
+														
+													}
+												else{
+													
+															
+													GIA_TOC_A_PT = toc_do_phai_truoc;
+													GIA_TOC_B_PT = toc_do_phai_truoc;
+													
+													
+													}
+												
+									GOC_A_PT=goc_A;
+									GOC_B_PT=goc_B;				
+									bit_dieu_khien_PT=0;				
+								
+
+	}
+//////////////////////////////////////////////////////////////
+void chan_trai_truoc(vs32 goc_A,vs32 goc_B,float toc_do_trai_truoc,vs32 cach_dieu_khien){
+	
+	float TI_SO_LECH_AB;
+	vs32 GOC_LECH_A,GOC_LECH_B;
+	
+	
+
+							if(cach_dieu_khien==0){	
+								GOC_LECH_A = abs(goc_A-GOC_A_HIEN_TAI_TT);
+								GOC_LECH_B = abs(goc_B-GOC_B_HIEN_TAI_TT);
+							}
+							else{
+								GOC_LECH_A=GOC_LECH_B=0;
+								
+							}
+										
+
+										
+										
+														if(GOC_LECH_A>GOC_LECH_B){
+															
+															TI_SO_LECH_AB=GOC_LECH_A/GOC_LECH_B;
+																if(TI_SO_LECH_AB==0)TI_SO_LECH_AB=1;
+															GIA_TOC_A_TT = TI_SO_LECH_AB*toc_do_trai_truoc;
+															GIA_TOC_B_TT = toc_do_trai_truoc;
+															
+															}
+														else if(GOC_LECH_A<GOC_LECH_B){
+															
+															TI_SO_LECH_AB=GOC_LECH_B/GOC_LECH_A;
+																if(TI_SO_LECH_AB==0)TI_SO_LECH_AB=1;
+															GIA_TOC_A_TT = toc_do_trai_truoc;
+															GIA_TOC_B_TT = TI_SO_LECH_AB*toc_do_trai_truoc;
+																
+															}
+														else{
+															
+																	
+															GIA_TOC_A_TT = toc_do_trai_truoc;
+															GIA_TOC_B_TT = toc_do_trai_truoc;
+															
+															
+															}
+														
+											GOC_A_TT=goc_A;
+											GOC_B_TT=goc_B;				
+											bit_dieu_khien_TT=0;				
+						
+
+	}
+/////////////////////////////--------------------------------------///////////////////////////////	
+
+void chan_phai_sau(vs32 goc_A,vs32 goc_B,float toc_do_phai_sau,vs32 cach_dieu_khien){
+	
+	float TI_SO_LECH_AB;
+	vs32 GOC_LECH_A,GOC_LECH_B;
+	
+								
+								
+							if(cach_dieu_khien==0){	
+								GOC_LECH_A = abs(goc_A-GOC_A_HIEN_TAI_PS);
+								GOC_LECH_B = abs(goc_B-GOC_B_HIEN_TAI_PS);
+							}
+							else{
+								GOC_LECH_A=GOC_LECH_B=0;
+								
+							}
+								
+								
+												if(GOC_LECH_A>GOC_LECH_B){
+													
+													TI_SO_LECH_AB=GOC_LECH_A/GOC_LECH_B;
+															if(TI_SO_LECH_AB==0)TI_SO_LECH_AB=1;
+													GIA_TOC_A_PS = TI_SO_LECH_AB*toc_do_phai_sau;
+													GIA_TOC_B_PS = toc_do_phai_sau;
+													
+													}
+												else if(GOC_LECH_A<GOC_LECH_B){
+													
+													TI_SO_LECH_AB=GOC_LECH_B/GOC_LECH_A;
+														if(TI_SO_LECH_AB==0)TI_SO_LECH_AB=1;
+													GIA_TOC_A_PS = toc_do_phai_sau;
+													GIA_TOC_B_PS = TI_SO_LECH_AB*toc_do_phai_sau;
+														
+													}
+												else{
+													
+															
+													GIA_TOC_A_PS = toc_do_phai_sau;
+													GIA_TOC_B_PS = toc_do_phai_sau;
+													
+													
+													}
+												
+									GOC_A_PS=goc_A;
+									GOC_B_PS=goc_B;				
+									bit_dieu_khien_PS=0;				
+				
+
+	}
+//////////////////////////////////////////////////////////////
+void chan_trai_sau(vs32 goc_A,vs32 goc_B,float toc_do_trai_sau,vs32 cach_dieu_khien){
+	
+	float TI_SO_LECH_AB;
+	vs32 GOC_LECH_A,GOC_LECH_B;
+							
+							
+							if(cach_dieu_khien==0){	
+								GOC_LECH_A = abs(goc_A-GOC_A_HIEN_TAI_TS);
+								GOC_LECH_B = abs(goc_B-GOC_B_HIEN_TAI_TS);
+							}
+							else{
+								GOC_LECH_A=GOC_LECH_B=0;
+								
+							}
+							
+							
+											if(GOC_LECH_A>GOC_LECH_B){
+												
+												TI_SO_LECH_AB=GOC_LECH_A/GOC_LECH_B;
+													if(TI_SO_LECH_AB==0)TI_SO_LECH_AB=1;
+												GIA_TOC_A_TS = TI_SO_LECH_AB*toc_do_trai_sau;
+												GIA_TOC_B_TS = toc_do_trai_sau;
+												
+												}
+											else if(GOC_LECH_A<GOC_LECH_B){
+												
+												TI_SO_LECH_AB=GOC_LECH_B/GOC_LECH_A;
+													if(TI_SO_LECH_AB==0)TI_SO_LECH_AB=1;
+												GIA_TOC_A_TS = toc_do_trai_sau;
+												GIA_TOC_B_TS = TI_SO_LECH_AB*toc_do_trai_sau;
+													
+												}
+											else{
+												
+														
+												GIA_TOC_A_TS = toc_do_trai_sau;
+												GIA_TOC_B_TS = toc_do_trai_sau;
+												
+												
+												}
+											
+								GOC_A_TS=goc_A;
+								GOC_B_TS=goc_B;				
+								bit_dieu_khien_TS=0;				
+					
+
+	}
+////////////////////////////
+	
+	
+void ham_ket_hop_4_dong_co(vs32 so_buoc,vs32 bien_do,vs32 diem_giua,vs32 toc_do,float gia_toc,vs32 di_toi_lui,vs32 imu){
+	vs32 bu_trai,bu_phai,lech_imu;
+		
+		diem_tren=diem_giua+bien_do;
+		diem_duoi=diem_giua-bien_do;
+		
+
+	
+	for(buoc=0;buoc<so_buoc;buoc++){
+		
+							if(imu<30000){	
+								lech_imu=(IMU-imu);
+								if(lech_imu>50)lech_imu=50;
+								else if(lech_imu<-50)lech_imu=-50;
+								
+								if(lech_imu>0)//lech trai
+									{
+										bu_trai=abs(lech_imu);
+										bu_phai=0;
+										
+									}
+								
+								else if(lech_imu<0)//lech phai
+									{
+										bu_phai=abs(lech_imu);
+										bu_trai=0;	
+									}
+								else {
+									
+										bu_trai=0;
+										bu_phai=0;
+									
+									}
+								}
+							else{
+								bu_trai=0;
+								bu_phai=0;
+								}
+
+
+
+		
+										chan_phai_truoc(diem_duoi-bu_phai+bu_trai-di_toi_lui,diem_duoi+di_toi_lui,gia_toc,0);
+										chan_trai_sau(diem_duoi-di_toi_lui,diem_duoi+di_toi_lui,gia_toc,0);
+									
+										chan_phai_sau(diem_tren,diem_tren,gia_toc*2,0);
+										chan_trai_truoc(diem_tren,diem_tren,gia_toc*2,0);
+										vTaskDelay(toc_do);
+										vTaskDelay(abs(lech_imu)*2);
+
+										chan_phai_truoc(diem_giua,diem_giua,gia_toc,0);
+										chan_trai_sau(diem_giua,diem_giua,gia_toc,0);
+									
+										chan_phai_sau(diem_giua,diem_giua,gia_toc,0);
+										chan_trai_truoc(diem_giua,diem_giua,gia_toc,0);
+									
+								
+										vTaskDelay(toc_do);
+
+										
+										chan_phai_truoc(diem_tren,diem_tren,gia_toc*2,0);
+										chan_trai_sau(diem_tren,diem_tren,gia_toc*2,0);
+									
+										chan_phai_sau(diem_duoi-di_toi_lui,diem_duoi+di_toi_lui,gia_toc,0);
+										chan_trai_truoc(diem_duoi-bu_trai+bu_phai-di_toi_lui,diem_duoi+di_toi_lui,gia_toc,0);
+										vTaskDelay(toc_do);
+  									vTaskDelay(abs(lech_imu)*2);
+										chan_phai_truoc(diem_giua,diem_giua,gia_toc,0);
+										chan_trai_sau(diem_giua,diem_giua,gia_toc,0);
+									
+										chan_phai_sau(diem_giua,diem_giua,gia_toc,0);
+										chan_trai_truoc(diem_giua,diem_giua,gia_toc,0);
+										vTaskDelay(toc_do);
+
+								
+								
+				}
+
+	
+	
+}
+////////////********************************************?????????????
+	
+	
+void ham_di_len_doc(vs32 so_buoc,vs32 bien_do,vs32 diem_giua,vs32 toc_do,float gia_toc,vs32 di_toi_lui,vs32 imu){
+	vs32 bu_trai,bu_phai,lech_imu,he_so_day_chan_tt,he_so_day_chan_pt,he_so_day_chan_ps,he_so_day_chan_ts;
+		
+	
+		diem_tren=diem_giua+bien_do;
+		diem_duoi=diem_giua-bien_do;
+
+	
+	for(buoc=0;buoc<so_buoc;buoc++){
+		
+							if(imu<30000){	
+								lech_imu=(IMU-imu)/10;
+								if(lech_imu>40)lech_imu=40;
+								else if(lech_imu<-40)lech_imu=-40;
+								
+								if(lech_imu>0)//lech trai
+									{
+										bu_trai=abs(lech_imu);
+										bu_phai=0;
+										
+									}
+								
+								else if(lech_imu<0)//lech phai
+									{
+										bu_phai=abs(lech_imu);
+										bu_trai=0;	
+									}
+								else {
+									
+										bu_trai=0;
+										bu_phai=0;
+									
+									}
+								}
+							else{
+								bu_trai=0;
+								bu_phai=0;
+								}
+
+
+he_so_day_chan_pt=abs(diem_giua_chan_phai_truoc/2);
+if(he_so_day_chan_pt<2)he_so_day_chan_pt=2;								
+															
+he_so_day_chan_ts=abs(diem_giua_chan_trai_sau/2);		
+if(he_so_day_chan_ts<2)he_so_day_chan_ts=2;
+
+he_so_day_chan_tt=abs(diem_giua_chan_trai_truoc/2);
+if(he_so_day_chan_tt<2)he_so_day_chan_tt=2;								
+															
+he_so_day_chan_ps=abs(diem_giua_chan_phai_sau/2);		
+if(he_so_day_chan_ps<2)he_so_day_chan_ps=2;
+								
+									
+//								_cao_chan_phai_truoc=-bu_phai/4;
+//								_cao_chan_trai_truoc=-bu_trai/4;
+//								he_so_bu=1;
+										
+										chan_phai_truoc(diem_duoi-bu_phai-di_toi_lui,diem_duoi+(di_toi_lui/he_so_day_chan_pt),gia_toc,0);
+										chan_trai_sau(diem_duoi-di_toi_lui,diem_duoi+(di_toi_lui/he_so_day_chan_ts),gia_toc,0);
+									
+										chan_phai_sau(diem_tren,diem_tren,gia_toc*2,0);
+										chan_trai_truoc(diem_tren-(bu_phai/4),diem_tren,gia_toc*2,0);
+										vTaskDelay(toc_do);
+
+										chan_phai_truoc(diem_giua,diem_giua,1,0);
+										chan_trai_sau(diem_giua,diem_giua,1,0);
+									
+										chan_phai_sau(diem_giua,diem_giua,1,0);
+										chan_trai_truoc(diem_giua,diem_giua,1,0);
+//										vTaskDelay(toc_do);
+//									
+										GOC_A_PT=GOC_B_PT=GOC_A_PS=GOC_B_PS=diem_giua;
+										GOC_A_TT=GOC_B_TT=GOC_A_TS=GOC_B_TS=diem_giua;
+								
+
+										chan_phai_truoc(diem_tren-(bu_trai/4),diem_tren,gia_toc*2,0);
+										chan_trai_sau(diem_tren,diem_tren,gia_toc*2,0);
+										
+										chan_phai_sau(diem_duoi-di_toi_lui,diem_duoi+(di_toi_lui/he_so_day_chan_ps),gia_toc,0);
+										chan_trai_truoc(diem_duoi-bu_trai-di_toi_lui,diem_duoi+(di_toi_lui/he_so_day_chan_tt),gia_toc,0);
+										vTaskDelay(toc_do);
+
+										chan_phai_truoc(diem_giua,diem_giua,1,0);
+										chan_trai_sau(diem_giua,diem_giua,1,0);
+									
+										chan_phai_sau(diem_giua,diem_giua,1,0);
+										chan_trai_truoc(diem_giua,diem_giua,1,0);
+//										vTaskDelay(toc_do);
+										GOC_A_PT=GOC_B_PT=GOC_A_PS=GOC_B_PS=diem_giua;
+										GOC_A_TT=GOC_B_TT=GOC_A_TS=GOC_B_TS=diem_giua;
+							
+								
+				}
+	
+	
+}
+	
+//////////////////////////////////////////////////////////////////	
+void ham_dung(vs32 diem_giua,float gia_toc){
+
+										chan_phai_truoc(diem_giua,diem_giua,gia_toc,0);
+										chan_trai_sau(diem_giua,diem_giua,gia_toc,0);
+									
+										chan_phai_sau(diem_giua,diem_giua,gia_toc,0);
+										chan_trai_truoc(diem_giua,diem_giua,gia_toc,0);
+	
+	}
+//////////////////////////////////////////////////////////////		
+	
+void ham_di_4_chan(vs32 toc_do,float gia_toc)	{
+	
+	
+
+	VI_TRI_CHUONG_TRINH=0;
+			chan_phai_truoc(100,100,gia_toc,0);
+	
+			chan_trai_sau(100,100,gia_toc,0);
+	
+			chan_phai_sau(120,120,gia_toc,0);
+		  chan_trai_truoc(120,120,gia_toc,0);
+			
+	vTaskDelay(toc_do);
+	VI_TRI_CHUONG_TRINH++;
+			chan_phai_truoc(120,120,gia_toc,0);
+			chan_trai_sau(120,120,gia_toc,0);
+	
+			chan_phai_sau(100,100,gia_toc,0);
+		  chan_trai_truoc(100,100,gia_toc,0);
+//				
+	vTaskDelay(toc_do);
+	
+
+	
+	
+	
+	}
+	
+	
+void qua_buc(vs32 _delay)	
+{
+	int so_buoc;	
+	
+	vTaskDelay(_delay);
+					thay_doi_diem_giua(0,0,0,0,0.5);
+					bu_do_cao(-20,-20,0,0,0.5);		
+vTaskDelay(_delay*2);
+	
+					thay_doi_diem_giua(0,0,0,0,1);
+					bu_do_cao(-20,50,0,0,1);		
+	
+vTaskDelay(_delay);
+					thay_doi_diem_giua(0,-50,0,0,1);
+					bu_do_cao(-20,0,0,0,1);		
+		
+vTaskDelay(_delay);
+	
+					thay_doi_diem_giua(0,-50,0,0,1);
+					bu_do_cao(-20,-20,0,0,1);
+vTaskDelay(_delay);
+	
+	
+	
+					thay_doi_diem_giua(0,-50,0,0,1);
+					bu_do_cao(50,-20,0,0,1);	
+	vTaskDelay(_delay);
+						thay_doi_diem_giua(-50,-50,0,0,1);
+					bu_do_cao(0,-20,0,0,1);	
+	vTaskDelay(_delay);
+					thay_doi_diem_giua(-50,-50,0,0,1);
+					bu_do_cao(-20,-20,0,0,1);	
+	vTaskDelay(_delay);
+	
+					thay_doi_diem_giua(-30,-30,30,30,1);
+					bu_do_cao(20,20,0,0,1);	
+	vTaskDelay(_delay);
+									
+									ham_di_len_doc(5,5,140,700,0.5,40,40000);
+						
+		thay_doi_diem_giua(0,0,20,20,1);
+		bu_do_cao(20,20,-40,-40,1);	
+/////////////////////////////////////////chan sau
+								
+			vTaskDelay(_delay);						
+		thay_doi_diem_giua(0,0,100,20,1);
+		bu_do_cao(20,20,70,-40,1);							
+			vTaskDelay(_delay);
+
+		thay_doi_diem_giua(0,0,0,20,1);
+		bu_do_cao(20,20,70,-40,1);							
+			vTaskDelay(_delay);
+								
+		thay_doi_diem_giua(0,0,0,20,1);
+		bu_do_cao(20,20,20,-40,1);							
+		vTaskDelay(_delay);		
+				//////////	
+				
+	//	while(1){};
+								
+		thay_doi_diem_giua(10,10,0,100,1);
+		bu_do_cao(20,20,20,80,1);							
+		vTaskDelay(_delay);	
+
+			thay_doi_diem_giua(10,10,-10,-10,1);
+		bu_do_cao(20,20,20,60,1);							
+		vTaskDelay(_delay);	
+	
+		///////////////
+				
+		thay_doi_diem_giua(10,10,-10,-10,1);
+		bu_do_cao(20,20,60,60,1);							
+		vTaskDelay(_delay*2);	
+		
+
+									ham_di_len_doc(2,5,140,800,0.5,40,tham_so_imu);
+									thay_doi_diem_giua(0,0,0,0,1);
+									bu_do_cao(20,20,40,40,1);
+									ham_di_len_doc(3,5,140,800,0.5,40,tham_so_imu);
+									
+							
+	vTaskDelay(_delay);	
+	bu_do_cao(0,0,0,0,0.5);		
+	thay_doi_diem_giua(0,0,0,0,0.5)	;
+		
+
+		
+}		
+		
+
+void qua_day(vs32 _delay)	
+{
+
+	
+bu_do_cao(-50,-50,0,0,0.5);		
+thay_doi_diem_giua(0,0,0,0,0.5)	;
+vTaskDelay(_delay*2);	
+	
+	bu_do_cao(0,-50,0,0,0.5);		
+			chan_phai_truoc(100,240,0.1,0);
+	
+	vTaskDelay(_delay);	
+				chan_phai_truoc(240,240,1,0);
+
+	vTaskDelay(_delay*1.5);	
+				chan_phai_truoc(240,100,1,0);
+	
+	vTaskDelay(_delay);	
+				  chan_phai_truoc(100,100,1,0);
+
+//////////////////////////////////////
+	vTaskDelay(_delay*2);	
+	bu_do_cao(0,0,0,0,0.5);		
+			//chan_phai_truoc(150,240,0.1,0);
+
+				chan_trai_truoc(100,240,1,0);
+	
+	vTaskDelay(_delay);	
+				//chan_phai_truoc(240,240,0.1,0);
+
+				chan_trai_truoc(240,240,1,0);
+	vTaskDelay(_delay*1.5);	
+				//chan_phai_truoc(240,100,0.1,0);
+
+				chan_trai_truoc(240,100,1,0);		
+	vTaskDelay(_delay);	
+				//chan_phai_truoc(100,100,0.1,0);
+
+		    chan_trai_truoc(100,100,1,0);	
+///////////////////////////////////////////////////////
+	
+	bu_do_cao(0,0,0,0,0.5);		
+	thay_doi_diem_giua(0,0,0,0,0.5)	;
+	vTaskDelay(_delay);	
+	
+	ham_di_len_doc(6,15,140,700,5,50,tham_so_imu);
+	
+/////////////////////////////////////////////////////*****************/////////////////////////////////////////////////
+
+bu_do_cao(0,0,-50,-50,0.5);		
+thay_doi_diem_giua(0,0,0,0,0.5)	;
+vTaskDelay(_delay*2);	
+	
+	bu_do_cao(0,0,0,-50,0.5);		
+			chan_phai_sau(100,240,1,0);
+	vTaskDelay(_delay);	
+				chan_phai_sau(240,240,1,0);
+	vTaskDelay(_delay);	
+				chan_phai_sau(240,100,1,0);
+	vTaskDelay(_delay);	
+				  chan_phai_sau(100,100,1,0);
+//////////////////////////////////////
+	vTaskDelay(_delay*2);	
+	bu_do_cao(0,0,0,0,0.5);		
+				chan_trai_sau(100,240,1,0);
+	vTaskDelay(_delay);	
+				chan_trai_sau(240,240,1,0);
+	vTaskDelay(_delay);	
+				chan_trai_sau(240,100,1,0);		
+	vTaskDelay(_delay);	
+		    chan_trai_sau(100,100,1,0);	
+///////////////////////////////////////////////////////
+	
+	bu_do_cao(0,0,0,0,1);		
+	thay_doi_diem_giua(0,0,0,0,1)	;
+	vTaskDelay(_delay);	
+	ham_di_len_doc(6,15,140,700,5,50,tham_so_imu);
+
+	
+}
+///////////////////
+void len_doc(){
+//					thay_doi_diem_giua(20,20,40,40,0.5);
+//					bu_do_cao(10,10,-40,-40,0.5);
+//					vTaskDelay(1000);
+					ham_ket_hop_4_dong_co(19,40,170,400,0.5,15,0);	//ok
+					while(CB_BAT_THANH==1){
+					ham_ket_hop_4_dong_co(1,40,170,400,0.5,15,0);	//ok
+				}
+					XL_DO_THE_ON;
+//					thay_doi_diem_giua(0,0,0,0,0.5);
+//					bu_do_cao(-70,70,70,70,0.5);
+				
+	}
+///////////////////////////////////////************************>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	
+void xuat_phat_xanh(void)	{
+				ham_di_len_doc(10,15,140,800,0.5,50,0);
+				ham_di_len_doc(2,10,140,800,0.5,40,0);
+			
+				while((CB_CHAN_PHAI==1)&&(CB_CHAN_TRAI==1)){
+						ham_di_len_doc(1,10,140,800,0.5,40,-150);
+				}		
+					
+/////////////////////////////////////////TOI BUC
+				while(IMU>-400){					
+					ham_di_len_doc(1,5,140,800,0.5,40,-450);
+				  vTaskDelay(1);
+				}	
+				while(IMU<-500){					
+					ham_di_len_doc(1,5,140,800,0.5,40,450);
+				  vTaskDelay(1);
+				}	
+	
+///////////////////////////////XOAY LAY HUONG				
+				tham_so_imu=-450;					
+				qua_buc(1100);
+///////////////////////////////DI TOI DAY	
+				ham_di_len_doc(6,10,140,700,0.5,40,-450);
+
+//////// toi day//////////////////
+	
+									while(IMU<-50){						
+										ham_di_len_doc(5,5,140,700,0.5,40,0);
+									}	
+/////////////////LAY XONG GOC DE QUA DAY							
+					tham_so_imu=0;			
+					qua_day(1000);
+					vTaskDelay(1000);
+					qua_day(1000);
+///////////////////////////////////////////QUA XONG DAY							
+						
+					while(NUT_LEN_DOC==1){	vTaskDelay(1);}
+							thay_doi_diem_giua(20,20,40,40,0.5);
+							bu_do_cao(10,10,-40,-40,0.5);
+					while(CB_DUOI==1){	vTaskDelay(1);}
+					run_read_gyro_uart1();
+					len_doc();
+
+	}
+
+//////////////////////////////////////////////	
+	void quet_tay_game(void){
+		
+		if(TAM_GIAC==0){
+					
+					thay_doi_diem_giua(-20,-20,0,0,0.01);
+					bu_do_cao(10,10,20,20,0.05);
+					
+				}
+				else if(O==0){
+			//		ham_dung(140,0.05);
+					thay_doi_diem_giua(-20,-20,0,0,1);
+					bu_do_cao(20,20,-20,-20,1);
+				
+				}
+				else if(X==0){
+
+					qua_buc(5000);
+				
+				}
+				else if(VUONG==0){
+				
+				chan_phai_truoc(60,60,0.01,0);
+				chan_trai_sau(60,60,0.01,0);
+				chan_phai_sau(60,60,0.01,0);
+				chan_trai_truoc(60,60,0.01,0);
+				}		
+				
+				else if(TOI==0){
+
+ham_di_len_doc(1,15,140,800,0.5,50,0);
+					
+				}
+				
+				else if(LUI==0){
+					
+						ham_ket_hop_4_dong_co(1,20,140,500,0.5,-40,0);	
+				
+				}
+		
+				else if(TRAI==0){
+							_cao_chan_phai_truoc=0;
+								_cao_chan_trai_truoc=0;
+				 		ham_di_len_doc(1,10,140,1000,0.5,0,450);
+				}
+					
+				else if(PHAI==0){
+						_cao_chan_phai_truoc=0;
+								_cao_chan_trai_truoc=0;
+					ham_di_len_doc(1,10,140,1000,0.5,0,-450);
+				
+				}
+				
+				else if(SELECT==0){
+					tham_so_imu=0;
+				 	qua_buc(1000);
+					vTaskDelay(2000);
+					ham_ket_hop_4_dong_co(7,20,140,400,0.5,40,0);				
+				}
+
+
+				
+				else{
+					thay_doi_diem_giua(0,0,0,0,1);
+					bu_do_cao(0,0,0,0,1);		
+						ham_dung(140,0.1);
+//					thay_doi_diem_giua(20,20,40,40);
+//					bu_do_cao(10,10,-40,-40);
+						tham_so_imu=0;
+						run_read_gyro_uart1();
+					
+					}
+				
+		
+		
+		}
+	//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX	
+	void quet_nut_nhan(void){
+		if( GPIO_ReadOutputDataBit(GPIOC,GPIO_Pin_15)==0)	{	//xanh
+			
+				if(NUT_STAR==0){
+					
+										while(CB_THE==0){	vTaskDelay(1);}
+												run_read_gyro_uart1();	
+												XL_CHOT_ON;
+												tham_so_imu=0;
+												xuat_phat_xanh();
+		
+				}
+				else if(NUT_QUA_BUC==0){
+																run_read_gyro_uart1();	
+																tham_so_imu=-450;
+																while((CB_CHAN_PHAI==1)&&(CB_CHAN_TRAI==1)){
+																	ham_di_len_doc(1,15,140,700,5,20,0);
+																	}		
+																ham_di_len_doc(2,15,140,700,5,20,0);
+																qua_buc(700);
+				}
+				
+				else if(NUT_QUA_DAY==0){
+																ham_dung(140,0.1);
+																thay_doi_diem_giua(0,0,0,0,1);
+																bu_do_cao(0,0,0,0,1);
+																while(CB_DUOI==0){	vTaskDelay(1);}
+																run_read_gyro_uart1();	
+																ham_di_len_doc(5,15,140,700,5,20,0);
+																while(IMU>-400){
+																		ham_di_len_doc(1,15,140,700,5,20,-450);
+																}		
+																
+																tham_so_imu=-450;
+															  qua_day(1000);
+				}
+				else if(NUT_LEN_DOC==0){
+																thay_doi_diem_giua(10,10,10,10,1);
+																bu_do_cao(20,20,0,0,1);
+																ham_dung(150,0.1);
+																while(CB_DUOI==0){	vTaskDelay(1);}
+																
+																run_read_gyro_uart1();	
+																ham_di_len_doc(15,20,150,1000,0.5,60,0);
+																thay_doi_diem_giua(20,20,10,10,1);
+																bu_do_cao(20,20,0,0,1);
+
+																			while(CB_BAT_THANH==1){	
+																					ham_di_len_doc(1,15,150,1000,0.5,60,0);	
+																					vTaskDelay(1);
+																			}
+					
+
+								}
+				
+				}
+		
+		
+///////////XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX		
+else{						//do
+
+	if(NUT_STAR==0){
+					
+										while(CB_THE==0){	vTaskDelay(1);}
+												run_read_gyro_uart1();	
+												XL_CHOT_ON;
+												xuat_phat_xanh();
+		
+				}
+				else if(NUT_QUA_BUC==0){
+																tham_so_imu=0;
+																qua_buc(700);
+				}
+				
+				else if(NUT_QUA_DAY==0){
+																while(CB_DUOI==0){	vTaskDelay(1);}
+																run_read_gyro_uart1();	
+																thay_doi_diem_giua(0,0,0,0,1);
+																bu_do_cao(0,0,0,0,1);
+															  qua_day(1000);
+				}
+				else if(NUT_LEN_DOC==0){
+																thay_doi_diem_giua(10,10,10,10,1);
+																bu_do_cao(20,20,0,0,1);
+																ham_dung(150,0.1);
+																while(CB_DUOI==0){	vTaskDelay(1);}
+																run_read_gyro_uart1();	
+																ham_di_len_doc(10,20,150,1000,0.5,60,0);
+																
+																thay_doi_diem_giua(20,20,10,10,1);
+																bu_do_cao(20,20,0,0,1);
+																if( GPIO_ReadOutputDataBit(GPIOC,GPIO_Pin_15)==0)	{	//XANH
+																	
+																			while(CB_CHAN_TRAI==1){	
+																					ham_di_len_doc(1,15,150,1000,0.5,60,0);	
+																					vTaskDelay(1);
+																			}
+												
+																}
+																else 	{	//DO
+																			while(CB_CHAN_PHAI==1){	
+																			ham_di_len_doc(1,15,150,1000,0.5,60,0);	
+																			vTaskDelay(1);
+																}
+
+								}
+																
+
+				}
+
+
+}		
+				
+				
+				
+				
+		
+		
+		}
+	
+	
+	

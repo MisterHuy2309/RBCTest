@@ -1,0 +1,552 @@
+
+void vitri_dau()
+{
+	RESET_IMU();
+	RESET_ENCODER(1);
+	RESET_ENCODER(2);
+	xilanh_ket_tryball_do;
+	xilanh_xoay_tryball_do;
+	while(O)vTaskDelay(1);
+	while(1){
+		chan_da_kich_ball_lui;
+		chan_da_kich_ball=250;
+		vTaskDelay(200);
+		if(!cb_dung_chan_da) break;
+	}
+	chan_da_kich_ball=0;
+	vTaskDelay(2000);
+}
+void chu_trinh_da_kickball()
+{
+	while(TAM_GIAC)vTaskDelay(1);
+	chan_da_kich_ball_lui;
+	chan_da_kich_ball=250;
+	vTaskDelay(2000);
+		while(1){
+		if(!cb_dung_chan_da) break;
+	}
+	chan_da_kich_ball=0;
+	vTaskDelay(2);
+}
+//-chay-theo-laze----------------
+void chay_toi_theo_laze(vs32 encoder_2,vs32 laze)
+	{
+		while(1){
+			MAIN_CONTROL(0,0-CHAY_TU_DONG_THEO_LAZE_Y(1,laze,2),60,gt,0);//CHAY toi theo laze vao dung vi tri dat bong
+			if(abs(READ_ENCODER(1))>encoder_2)break;
+			vTaskDelay(1);
+			}
+	}
+	void chay_lui_theo_laze(vs32 encoder_2,vs32 laze)
+	{
+		while(1){
+			MAIN_CONTROL(0,1800-CHAY_TU_DONG_THEO_LAZE_Y(-1,laze,2),60,gt,0);//CHAY toi theo laze vao dung vi tri dat bong
+			if(abs(READ_ENCODER(1))>encoder_2)break;
+			vTaskDelay(1);
+			}
+	}
+	//-chay-theo-laze----------------
+void chay_phai_theo_laze(vs32 encoder_1,vs32 laze)
+	{
+		while(1){
+			MAIN_CONTROL(0,-900-CHAY_TU_DONG_THEO_LAZE_X(1,laze,2),60,gt,0);//CHAY toi theo laze vao dung vi tri dat bong
+			if(abs(READ_ENCODER(2))>encoder_1)break;
+			vTaskDelay(1);
+			}
+	}
+	void chay_trai_theo_laze(vs32 encoder_1,vs32 laze)
+	{
+		while(1){
+			MAIN_CONTROL(0,900-CHAY_TU_DONG_THEO_LAZE_X(-1,laze,2),60,gt,0);//CHAY toi theo laze vao dung vi tri dat bong
+			if(abs(READ_ENCODER(2))>encoder_1)break;
+			vTaskDelay(1);
+			}
+	}
+////----------------------dat-kichball--------------------------------
+void dat_kickball()
+{
+			xilanh_nha_kichball;
+			xilanh_truot_xuong;
+			vTaskDelay(10000);
+			xilanh_ket_kichball;	
+			xilanh_du_bong;
+			vTaskDelay(10000);
+			xilanh_truot_len;
+			vTaskDelay(10000);	
+			while(TAM_GIAC)vTaskDelay(1);
+		}
+////----------------------dat-kichball--------------------------------
+void kep_de()
+{
+			xilanh_nha_de;
+			xilanh_truot_xuong;
+			vTaskDelay(10000);
+			while(VUONG)vTaskDelay(1);
+			xilanh_kep_de;
+			vTaskDelay(10000);
+			xilanh_truot_len;
+			vTaskDelay(10000);	
+			while(VUONG)vTaskDelay(1);
+			xilanh_nha_kichball;
+			vTaskDelay(10000);
+			xilanh_truot_xuong;
+			vTaskDelay(10000);
+			while(VUONG)vTaskDelay(1);
+			xilanh_ket_kichball;
+			vTaskDelay(10000);
+			xilanh_truot_len;
+			vTaskDelay(1000);
+		}
+void lay_tryball()
+{
+		xilanh_ket_tryball;
+	  vTaskDelay(1000);
+		xilanh_truyen_ve;
+		while(TAM_GIAC)vTaskDelay(1);
+		xilanh_nang_tryball; 
+		vTaskDelay(10000);
+		xilanh_xoay_tryball;
+		vTaskDelay(1000);	
+}
+void truyen_tryball()
+{
+		xilanh_nha_tryball;
+		vTaskDelay(10000);
+		xilanh_ha_tryball;
+		vTaskDelay(10000);
+		while(X)vTaskDelay(1);
+		xilanh_truyen;
+		vTaskDelay(5000);
+		xilanh_duoi_tryball;
+}
+//-----------------------------------------CHAY NGANG---------------------------------------
+void control_encoder1(vs32 mat,vs32 huong,vs32 toc_do_chay,float gia_toc,float chay_va_xoay,vs32 giam_toc,vs32 encoder)// chay cho chuyen huong
+{
+	vs32 toc_do;
+	giam_toc=giam_toc-500;// giam giam toc thi giam encoder theo
+	encoder=encoder-500;// theo toc do 60
+	MAIN_CONTROL(mat,huong,toc_do_chay,gia_toc,chay_va_xoay);
+	vTaskDelay(2);
+	while(1){
+	if(abs(READ_ENCODER(1))>giam_toc)break;
+	vTaskDelay(2);}
+	toc_do=toc_do_chay/2;
+	MAIN_CONTROL(mat,huong,toc_do,gia_toc,chay_va_xoay);
+	vTaskDelay(2);
+	while(1){
+	if(abs(READ_ENCODER(1))>encoder)break;
+	vTaskDelay(2);}
+	vTaskDelay(2);
+}
+//-----------------------------------------CHAY DOC---------------------------------------
+void control_encoder2(vs32 mat,vs32 huong,vs32 toc_do_chay,float gia_toc,float chay_va_xoay,vs32 giam_toc_1,vs32 encoder_1)// chay cho chuyen huong
+{
+	vs32 toc_do;
+	giam_toc_1=giam_toc_1-200;// giam giam toc thi giam encoder theo
+	encoder_1=encoder_1-200;// theo toc do 60
+	MAIN_CONTROL(mat,huong,toc_do_chay,gia_toc,chay_va_xoay);
+	vTaskDelay(2);
+	while(1){
+	if(abs(READ_ENCODER(2))>giam_toc_1)break;
+	vTaskDelay(2);}
+	toc_do=toc_do_chay/2;
+	MAIN_CONTROL(mat,huong,toc_do,gia_toc,chay_va_xoay);
+	vTaskDelay(2);
+	while(1){
+	if(abs(READ_ENCODER(2))>encoder_1)break;
+	vTaskDelay(2);}
+	vTaskDelay(2);
+}
+//-------------------------dieu kien co cam bien npn----------------
+void cam_bien_p(vs32 cambien)
+{
+				while(1){
+				if(!cambien)break;//khi cam bien nhan thoat ra khoi while (1) l4 la de tam cho gan cam bien trai
+				vTaskDelay(1);}
+}
+//-------------------------dieu kien co cam bien pnp----------------
+void cam_bien_n(vs32 cambien)
+{
+				while(1){
+				if(cambien)break;//khi cam bien nhan thoat ra khoi while (1) l4 la de tam cho gan cam bien trai
+				vTaskDelay(1);}
+}
+// ----------------------dieu khien laze phai
+void laze_phai_n(vs32 dk)
+{
+			while(1){
+				if(adc_tb<dk)break;
+				vTaskDelay(1);}
+}
+//-------------------------dieu kien laze sau----------------
+void laze_sau_n(vs32 dk)
+{
+			while(1){
+				if(adc_tb1<dk)break;
+				vTaskDelay(1);}
+}
+// ----------------------dieu khien laze phai
+void laze_phai_l(vs32 dk)
+{
+			while(1){
+				if(adc_tb>dk)break;
+				vTaskDelay(1);}
+}
+//-------------------------dieu kien laze sau----------------
+void laze_sau_l(vs32 dk)
+{
+			while(1){
+				if(adc_tb1>dk)break;
+				vTaskDelay(1);}
+}
+//---------------------dung va reset encoder------------------------
+void dung()
+	{
+			STOP_ROBOT(); 
+			RESET_ENCODER(1);
+			RESET_ENCODER(2);
+			vTaskDelay(1);
+	}
+//---------------------------------------------------------------------------------------------------------------
+//------------------------------chay-toi-vi-tri-truyen-tryball-1-------------------------------------------------
+void chay_toi_vi_tri_truyen_tryball_1()
+{
+			gt=0.006;
+			control_encoder2(0,940,60,gt,0,13000,14000);//CHAY  sang trai lay try 1
+			vTaskDelay(1);
+			cam_bien_p(cb_trai);
+			dung();
+			lay_tryball();
+			control_encoder2(0,-900,60,gt,0,1000,2000);
+			control_encoder1(0,-40,60,gt,0,40000,41000);//CHAY TOI THEO ENCODER 2 de gan toi vi tri laze 
+			chay_phai_theo_laze(10000,420);// CHAY THEO LAZE
+			//control_encoder1(0,-900,60,gt,0,6000,7000);//TEST CHAY  SANG PHAI XEM THANG KHONG 
+			dung();
+			truyen_tryball();
+			MAIN_CONTROL(0,1800,60,gt,0);
+			while(1){
+				if(adc_tb<50)break;//nhan thanh phai
+				vTaskDelay(1);}
+			chay_lui_theo_laze(39500,150);// CHAY THEO LAZE
+			MAIN_CONTROL(0,1800,30,gt,0);
+			RESET_ENCODER(1);
+			RESET_ENCODER(2);
+			while(1){
+				if(!cb_sau)break;//nhan thanh phai
+				vTaskDelay(1);}
+			control_encoder2(0,900,60,gt,0,5000,5500);//CHAY  sang trai lay try 2
+			MAIN_CONTROL(0,900,30,gt,0);
+			while(1){
+				if(!cb_trai)break;//nhan thanh phai
+				vTaskDelay(1);}
+			MAIN_CONTROL(0,0,30,gt,0);
+			while(1){
+				if(!cb_tryball)break;//khi cam bien nhan thoat ra khoi while (1) l4 la de tam cho gan cam bien trai
+				vTaskDelay(1);}
+			vTaskDelay(5);
+			STOP_ROBOT(); 
+			RESET_ENCODER(1);
+			RESET_ENCODER(2);
+			lay_tryball();
+			MAIN_CONTROL(0,1800,30,gt,0);
+			while(1){
+				if(!cb_sau)break;//khi cam bien nhan thoat ra khoi while (1) l4 la de tam cho gan cam bien trai
+				vTaskDelay(1);}
+			control_encoder1(0,-900,60,gt,0,1400,1500);//CHAY  sang phai ve  home
+			while(1){
+				if(!cb_phai)break;//khi cam bien nhan thoat ra khoi while (1) l4 la de tam cho gan cam bien trai
+				vTaskDelay(1);}
+			STOP_ROBOT(); 
+			RESET_ENCODER(1);
+			RESET_ENCODER(2);
+			vTaskDelay(1);
+			
+}
+//------------------------------chay-vi-tri-truyen-tryball-2-da-kichball-1-------------------------------------------------
+void chay_vi_tri_truyen_tryball_2_da_kichball_1()
+{
+			gt=0.006;
+			chay_toi_theo_laze(30000,5);// CHAY THEO LAZE
+			MAIN_CONTROL(0,0,60,gt,0);
+			control_encoder1(0,0,60,gt,0,38000,39000);//CHAY  sang phai 
+			while(1){
+				if(adc_tb1>420)break;//nhan thanh phai
+				vTaskDelay(1);}
+			STOP_ROBOT();
+			vTaskDelay(50);				
+			RESET_ENCODER(1);
+			RESET_ENCODER(2);
+			truyen_tryball();
+			control_encoder2(0,-900,60,gt,0,17000,18000);//CHAY  sang phai 
+			chay_lui_theo_laze(24000,600);// CHAY THEO LAZE
+			while(1){
+				if(adc_tb1>160)break;//nhan thanh phai
+				vTaskDelay(1);}
+//			chay_phai_theo_laze(4000,300);// CHAY THEO LAZE
+//			while(1){
+//				if(adc_tb>700)break;//nhan thanh phai
+//				vTaskDelay(1);}
+			while(1){
+				chay_xoay=300;
+				nho_IMU=IMU-chay_xoay;
+				MAIN_CONTROL(nho_IMU,0,30,gt,0);
+				if(nho_IMU>200)break;
+				vTaskDelay(1);}
+			nho_IMU=IMU;
+			chay_xoay=500;
+			STOP_ROBOT(); 
+			RESET_ENCODER(1);
+			RESET_ENCODER(2);
+			dat_kickball();
+			chu_trinh_da_kickball();
+			kep_de();
+			while(TAM_GIAC)vTaskDelay(1);
+			chay_toi_theo_laze(25000,700);// CHAY THEO LAZE
+			while(1){
+				if(adc_tb>700)break;//nhan thanh phai
+				vTaskDelay(1);}
+			control_encoder2(0,900,60,gt,0,22000,23000);//CHAY  sang trai la duong
+			RESET_ENCODER(1);
+			RESET_ENCODER(2);
+			control_encoder1(0,1800,60,gt,0,20000,21000);//CHAY  lui
+			chay_lui_theo_laze(20000,0);// CHAY THEO LAZE
+			MAIN_CONTROL(0,1800,30,gt,0);
+			while(1){
+				if(!cb_sau)break;//khi cam bien nhan thoat ra khoi while (1) l4 la de tam cho gan cam bien trai
+				vTaskDelay(1);}
+			STOP_ROBOT(); 
+			RESET_ENCODER(1);
+			RESET_ENCODER(2);
+			vTaskDelay(1);
+}
+////------------------------------chay-toi-vi-tri-nhan-tryball-3-------------------------------------------------
+//void chay_ve_vi_tri_nhan_tryball_3()
+//{
+//			control_encoder1(0,-1600,60,gt,0,18000,19000);//CHAY lui ve cot 2 hang 1 de cho cam bien quang trai de lui ve
+//			vTaskDelay(1);
+//			while(1){
+//				if(!cb_trai) break;/// khi nhan cam bien quang trai chuyen huong lui ve
+//				vTaskDelay(1);}
+//			control_encoder1(0,1800,60,gt,0,18000,19000);// cha lui ve cho cong tac hanh trinh sau
+//			MAIN_CONTROL(0,1800,30,gt,0);// khi nhan cam bien trai thi trai qua trai do cam bien quang sau
+//			while(1) {
+//				if(adc_tong<=2000) break; // khi laze <= khoang cach dat chay lui 
+//				vTaskDelay(1);
+//			}
+//			control_encoder2(0,1800,60,gt,0,18000,19000);
+//			while(1){
+//				if(!cb_sau) break;/// khi nhan cam bien hanh tri sau chuyen huong di toi
+//				vTaskDelay(1);}
+//			RESET_ENCODER(1);
+//			RESET_ENCODER(2);
+//			while(1){
+//			MAIN_CONTROL(0,0-CHAY_TU_DONG_THEO_LAZE_Y(1,2000,2),30,gt,0);//CHAY toi theo laze vao dung vi tri nhan bong
+//			if(abs(READ_ENCODER(2))>4000)break;
+//			vTaskDelay(1);
+//			}
+//			STOP_ROBOT(); 
+//			RESET_ENCODER(1);
+//			RESET_ENCODER(2);
+//			vTaskDelay(1);
+//			
+//}
+////------------------------------chay-toi-vi-tri-dat-tryball-3-------------------------------------------------
+//void chay_toi_vi_tri_dat_tryball_3()
+//{
+//			gt=0.006;
+//			control_encoder1(0,-150,60,gt,0,18000,19000);//CHAY sang phai khi quet thay cot 2 hanh 2 thi chay toi
+//			vTaskDelay(1);
+//			while(1){
+//				if(adc_tong<100)break;//khi laze thay cot 2 hang 1 thi thoat ra while 1;
+//				vTaskDelay(1);}
+//			MAIN_CONTROL(0,0,30,gt,0);// khi nhan cam bien trai thi trai qua trai do cam bien quang phai doi hung sang trai
+//			vTaskDelay(1);
+//			while(1) {
+//				if(!cb_phai) break; // khi nhan cam bien quang trai chay qua trai
+//				vTaskDelay(1);
+//				MAIN_CONTROL(0,-900,30,gt,0);
+//			}
+//			//----------------chay-theo-laze-khi gap- cot 2-hang-2-neu-muon chuan hon--------------------------
+////			while(1){
+////				if(l4<300)break;//khi laze thay cot 2 hang 1 thi thoat ra while 1;
+////				vTaskDelay(1);}
+////			while(1)
+////			{
+////				MAIN_CONTROL(0,0-CHAY_TU_DONG_THEO_LAZE_Y(1,2000,2),60,gt,0);//CHAY TOI qua cot 2
+////				vTaskDelay(1);
+////				if(READ_ENCODER(1)>5000)break;
+////				vTaskDelay(1);
+////			}
+//			//-----------------------chay-theo-do-cam-bien--------------------------
+//			control_encoder2(0,-150,60,gt,0,10000,11000);
+//			MAIN_CONTROL(0,900,30,gt,0);
+//			vTaskDelay(1);
+//			chinh_dat_tryball();
+//			vTaskDelay(1);
+//			
+//}
+////------------------------------chay-toi-vi-tri-nhan-tryball-4-------------------------------------------------
+//void chay_ve_vi_tri_nhan_tryball_4()
+//{
+//			control_encoder1(0,1350,60,gt,0,18000,19000);//CHAY lui ve cot 2 hang 1 de cho cam bien quang trai de lui ve
+//			vTaskDelay(1);
+//			while(1){
+//				if(!cb_trai) break;/// khi nhan cam bien quang trai chuyen huong lui ve
+//				vTaskDelay(1);}
+//			control_encoder1(0,1800,60,gt,0,18000,19000);// cha lui ve cho cong tac hanh trinh sau
+//			MAIN_CONTROL(0,1800,30,gt,0);// khi nhan cam bien trai thi trai qua trai do cam bien quang sau
+//			while(1) {
+//				if(adc_tong<=2000) break; // khi laze <= khoang cach dat chay lui 
+//				vTaskDelay(1);
+//			}
+//			control_encoder2(0,1800,60,gt,0,18000,19000);
+//			while(1){
+//				if(!cb_sau) break;/// khi nhan cam bien hanh tri sau chuyen huong di toi
+//				vTaskDelay(1);}
+//			RESET_ENCODER(1);
+//			RESET_ENCODER(2);
+//			while(1){
+//			MAIN_CONTROL(0,0-CHAY_TU_DONG_THEO_LAZE_Y(1,2000,2),30,gt,0);//CHAY toi theo laze vao dung vi tri nhan bong
+//			if(abs(READ_ENCODER(2))>4000)break;
+//			vTaskDelay(1);
+//			}
+//			STOP_ROBOT(); 
+//			RESET_ENCODER(1);
+//			RESET_ENCODER(2);
+//			vTaskDelay(1);
+//			
+//}
+////------------------------------chay-toi-vi-tri-dat-tryball-4-------------------------------------------------
+//void chay_toi_vi_tri_dat_tryball_4()
+//{
+//			control_encoder1(0,-450,60,gt,0,10000,10000);//CHAY sang phai khi quet thay cot 2 hanh 2 thi chay toi
+//			vTaskDelay(1);
+//			while(1){
+//				if(adc_tong<100)break;//khi laze thay cot 2 hang 1 thi thoat ra while 1;
+//				vTaskDelay(1);}
+//			MAIN_CONTROL(0,0,30,gt,0);// khi nhan cam bien trai thi trai qua trai do cam bien quang phai doi hung sang trai
+//			vTaskDelay(1);
+//			while(1) {
+//				if(!cb_phai) break; // khi nhan cam bien quang trai chay qua trai
+//				vTaskDelay(1);
+//			}
+//			MAIN_CONTROL(0,-900,30,gt,0);
+//			//----------------chay-theo-laze-khi gap- cot 2-hang-2-neu-muon chuan hon--------------------------
+////			while(1){
+////				if(l4<300)break;//khi laze thay cot 2 hang 1 thi thoat ra while 1;
+////				vTaskDelay(1);}
+////			while(1)
+////			{
+////				MAIN_CONTROL(0,0-CHAY_TU_DONG_THEO_LAZE_Y(1,2000,2),60,gt,0);//CHAY TOI qua cot 2
+////				vTaskDelay(1);
+////				if(READ_ENCODER(1)>5000)break;
+////				vTaskDelay(1);
+////			}
+//			//-----------------------chay-theo-do-cam-bien--------------------------
+//			control_encoder2(0,0,60,gt,0,10000,11000);
+//			vTaskDelay(1);
+//			chinh_dat_tryball();
+//			vTaskDelay(1);
+//			
+//}
+////------------------------------chay-toi-vi-tri-nhan-tryball-5-------------------------------------------------
+//void chay_ve_vi_tri_nhan_tryball_5()
+//{
+//			control_encoder1(0,1350,60,gt,0,18000,19000);//CHAY lui ve cot 2 hang 1 de cho cam bien quang trai de lui ve
+//			vTaskDelay(1);
+//			while(1){
+//				if(!cb_trai) break;/// khi nhan cam bien quang trai chuyen huong lui ve
+//				vTaskDelay(1);}
+//			control_encoder2(0,1350,60,gt,0,18000,19000);
+//			while(1){
+//				if(!cb_sau) break;/// khi nhan cam bien hanh tri sau chuyen huong di toi
+//				vTaskDelay(1);}
+//			RESET_ENCODER(1);
+//			RESET_ENCODER(2);
+//			while(1){
+//			MAIN_CONTROL(0,0-CHAY_TU_DONG_THEO_LAZE_Y(1,2000,2),30,gt,0);//CHAY toi theo laze vao dung vi tri nhan bong
+//			if(abs(READ_ENCODER(2))>4000)break;
+//			vTaskDelay(1);
+//			}
+//			STOP_ROBOT(); 
+//			RESET_ENCODER(1);
+//			RESET_ENCODER(2);
+//			vTaskDelay(1);
+//			
+//}
+////------------------------------chay-toi-vi-tri-dat-tryball-5-------------------------------------------------
+//void chay_toi_vi_tri_dat_tryball_5()
+//{
+//			control_encoder1(0,-150,60,gt,0,10000,10000);//CHAY sang phai khi quet thay cot 2 hanh 2 thi chay toi
+//			vTaskDelay(1);
+//			while(1){
+//				if(adc_tong<100)break;//khi laze thay cot 2 hang 1 thi thoat ra while 1;
+//				vTaskDelay(1);}
+//			MAIN_CONTROL(0,0,30,gt,0);// khi nhan cam bien trai thi trai qua trai do cam bien quang phai doi hung sang trai
+//			vTaskDelay(1);
+//			while(1) {
+//				if(!cb_phai) break; // khi nhan cam bien quang trai chay qua trai
+//				vTaskDelay(1);
+//			}
+//			MAIN_CONTROL(0,-900,30,gt,0);
+//			//----------------chay-theo-laze-khi gap- cot 2-hang-2-neu-muon chuan hon--------------------------
+////			while(1){
+////				if(l4<300)break;//khi laze thay cot 2 hang 1 thi thoat ra while 1;
+////				vTaskDelay(1);}
+////			while(1)
+////			{
+////				MAIN_CONTROL(0,0-CHAY_TU_DONG_THEO_LAZE_Y(1,2000,2),60,gt,0);//CHAY TOI qua cot 2
+////				vTaskDelay(1);
+////				if(READ_ENCODER(1)>5000)break;
+////				vTaskDelay(1);
+////			}
+//			//-----------------------chay-theo-do-cam-bien--------------------------
+//			control_encoder2(0,0,60,gt,0,10000,11000);
+//			vTaskDelay(1);
+//			chinh_dat_tryball();
+//			vTaskDelay(1);
+//			
+//}
+////------------------------------chay-ve-vi-tri-xuat-phat-------------------------------------------------
+//void chay_ve_vi_tri_xuat_phat()
+//{
+//			control_encoder1(0,1350,60,gt,0,18000,19000);//CHAY lui ve cot 2 hang 1 de cho cam bien quang trai de lui ve
+//			vTaskDelay(1);
+//			while(1){
+//				if(!cb_trai) break;/// khi nhan cam bien quang trai chuyen huong lui ve
+//				vTaskDelay(1);}
+//			control_encoder2(0,1800,60,gt,0,18000,19000);
+//			while(1){
+//				if(!cb_sau) break;/// khi nhan cam bien hanh tri sau chuyen huong di toi
+//				vTaskDelay(1);}
+//			RESET_ENCODER(1);
+//			RESET_ENCODER(2);
+//			control_encoder2(0,1800,60,gt,0,18000,19000);
+//			RESET_ENCODER(1);
+//			RESET_ENCODER(2);
+//			STOP_ROBOT(); 
+//			vTaskDelay(1);
+//			
+//}
+void test()
+{
+while(!TAM_GIAC)
+				{
+				kep_de();
+				vTaskDelay(2);
+				}
+				while(!O)
+				{
+				dat_kickball();
+				vTaskDelay(2);
+				}
+				while(!VUONG)
+				{
+				kep_de();
+				vTaskDelay(2);}	
+				while(!X)
+				{
+					chan_da_kich_ball=0;
+//				truyen_tryball();
+				vTaskDelay(2);}
+			}

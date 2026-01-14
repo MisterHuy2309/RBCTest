@@ -1,0 +1,700 @@
+///////tướng 1 vàng 
+{
+  "name": "Gnar",
+  "cost": 1,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_gnar.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Aatrox",
+  "cost": 1,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_aatrox.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Ezreal",
+  "cost": 1,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_ezreal.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Kalista",
+  "cost": 1,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_kalista.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Kayle",
+  "cost": 1,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_kayle.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Kennen",
+  "cost": 1,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_kennen.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Lucian",
+  "cost": 1,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_lucian.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Malphite",
+  "cost": 1,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_malphite.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Naafiri",
+  "cost": 1,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_naafiri.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Rell",
+  "cost": 1,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_rell.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Sivir",
+  "cost": 1,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_sivir.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Syndra",
+  "cost": 1,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_syndra.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Zac",
+  "cost": 1,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_zac.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+////tướng 2 vàng 
+
+{
+  "name": "Dr.Mundo",
+  "cost": 2,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_drmundo.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Gangplank",
+  "cost": 2,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_gangplank.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Janna",
+  "cost": 2,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_janna.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Jhin",
+  "cost": 2,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_jhin.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Kai'Sa",
+  "cost": 2,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_kaisa.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Katarina",
+  "cost": 2,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_katarina.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Kobuko",
+  "cost": 2,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_kobuko.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Lux",
+  "cost": 2,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_lux.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Rakan",
+  "cost": 2,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_rakan.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Shen",
+  "cost": 2,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_shen.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Vi",
+  "cost": 2,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_vi.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Xayah",
+  "cost": 2,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_xayah.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Xinzhao",
+  "cost": 2,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_xinzhao.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+//// Tướng 3 vàng 
+
+{
+  "name": "Ahri",
+  "cost": 3,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_ahri.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Caitlyn",
+  "cost": 3,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_caitlyn.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Darius",
+  "cost": 3,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_darius.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+
+{
+  "name": "Jayce",
+  "cost": 3,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_jayce.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Kog'Maw",
+  "cost": 3,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_kogmaw.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "LuLu",
+  "cost": 3,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_lulu.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Malzahar",
+  "cost": 3,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_malzahar.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Neeko",
+  "cost": 3,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_neeko.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Rammus",
+  "cost": 3,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_rammus.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Senna",
+  "cost": 3,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_senna.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+
+{
+  "name": "Smolder",
+  "cost": 3,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_smolder.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Swain",
+  "cost": 3,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_swain.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Udyr",
+  "cost": 3,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_udyr.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Viego",
+  "cost": 3,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_viego.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Yasuo",
+  "cost": 3,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_yasuo.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+
+{
+  "name": "Ziggs",
+  "cost": 3,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_ziggs.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+
+//// Tướng 4 vàng 
+{
+  "name": "Akali",
+  "cost": 4,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_akali.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Ashe",
+  "cost": 4,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_ashe.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Javan IV",
+  "cost": 4,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_jarvaniv.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Karma",
+  "cost": 4,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_karma.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Leona",
+  "cost": 4,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_leona.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Poppy",
+  "cost": 4,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_poppy.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+
+{
+  "name": "Ryze",
+  "cost": 4,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_ryze.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Samira",
+  "cost": 4,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_samira.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Sett",
+  "cost": 4,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_sett.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Volibear",
+  "cost": 4,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_volibear.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Yuumi",
+  "cost": 4,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_yuumi.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+
+///// tướng 5 vàng 
+
+{
+  "name": "Braum",
+  "cost": 5,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_braum.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Gwen",
+  "cost": 5,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_gwen.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Lee Sin",
+  "cost": 5,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_leesin.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Seraphine",
+  "cost": 5,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_seraphine.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Twisted Fate",
+  "cost": 5,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_twistedfate.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Varus",
+  "cost": 5,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_varus.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Yone",
+  "cost": 5,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_yone.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+{
+  "name": "Zyra",
+  "cost": 5,
+  "toc": ["Đấu Sĩ", "Thánh Thần"],
+  "he": ["Hộ Vệ"],
+  "imageUrl": "https://c-tft-api.op.gg/img/set/15/tft-champion/tiles/tft15_zyra.tft_set15.png?image=q_auto:good,f_webp&v=1756269377"
+}
+
+
+##XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+# Cây thư mục dự án — TFT Team Builder
+
+*Dự án*: giao diện giống [https://op.gg/vi/tft/tools/team-builder](https://op.gg/vi/tft/tools/team-builder)
+
+**Stack**: Frontend: Vue 3 (Vite) | Backend: Node.js + Express | Database: MongoDB
+
+---
+
+```
+tft-team-builder/
+├── README.md
+├── .env.example
+├── docker-compose.yml
+├── docker/
+│   ├── mongo-init/               # script khởi tạo DB (indexes, sample data)
+│   └── nginx/                    # (tùy chọn) proxy cho production
+├── frontend/
+│   ├── README.md
+│   ├── package.json
+│   ├── vite.config.js
+│   ├── index.html
+│   ├── public/                   # hình ảnh tướng, icons, favicon
+│   │   └── champions/            # các assets champion JSON + images
+│   ├── src/
+│   │   ├── main.js
+│   │   ├── App.vue
+│   │   ├── router/
+│   │   │   └── index.js
+│   │   ├── store/                # pinia hoặc vuex
+│   │   │   └── index.js
+│   │   ├── composables/          # composable hooks (useTeam, useChampion)
+│   │   ├── views/
+│   │   │   ├── HomeView.vue
+│   │   │   └── BuilderView.vue   # main team builder
+│   │   ├── components/
+│   │   │   ├── TeamCanvas.vue    # vùng kéo-thả
+│   │   │   ├── ChampionCard.vue
+│   │   │   ├── ChampionList.vue
+│   │   │   ├── TraitBadge.vue
+│   │   │   └── SaveLoadModal.vue
+│   │   ├── services/
+│   │   │   └── api.js            # axios instance -> backend
+│   │   ├── utils/
+│   │   │   └── synergyEngine.js  # tính sát thương/buff đội
+│   │   └── styles/
+│   │       └── main.css
+│   └── tests/                    # (tùy chọn) unit/e2e tests
+│
+├── backend/
+│   ├── README.md
+│   ├── package.json
+│   ├── server.js                 # entrypoint express
+│   ├── app.js                    # config express + middleware
+│   ├── config/
+│   │   └── db.js                 # kết nối MongoDB
+│   ├── routes/
+│   │   ├── index.js
+│   │   ├── auth.routes.js        # (tùy chọn) auth, users
+│   │   └── teams.routes.js       # API lưu/đọc team
+│   ├── controllers/
+│   │   └── teams.controller.js
+│   ├── models/
+│   │   ├── Team.model.js         # schema team
+│   │   └── User.model.js         # (tùy chọn)
+│   ├── services/
+│   │   └── championService.js    # tải dữ liệu champion (cache)
+│   ├── middleware/
+│   │   ├── auth.middleware.js
+│   │   └── error.middleware.js
+│   ├── utils/
+│   │   └── validateTeam.js       # validate team before save
+│   └── tests/
+│
+├── data/
+│   ├── champions.json            # cơ sở dữ liệu champion (tên, traits, cost, icon)
+│   └── traits.json               # mô tả các trait/bonus
+
+└── infra/
+    ├── k8s/                      # (tùy chọn) manifests
+    └── ci/                       # pipelines (GitHub Actions)
+```
+
+---
+
+## Giải thích các phần quan trọng
+
+### Frontend
+
+* `ChampionList.vue` hiển thị danh sách tướng, hỗ trợ lọc/ tìm kiếm theo cost, trait.
+* `TeamCanvas.vue` chứa chức năng kéo-thả (drag & drop) để đặt tướng vào vị trí đội.
+* `synergyEngine.js` chịu trách nhiệm tính các buff từ trait, hiển thị trạng thái synergies (ví dụ 2/4/6 cuộc buff).
+* `services/api.js` dùng axios để gọi backend (save/load/share team).
+
+Gợi ý thư viện: `vue-router`, `pinia` (hoặc `vuex`), `vue-dnd` hoặc `sortablejs` cho drag-drop, `axios`.
+
+### Backend
+
+* `teams.routes.js` (REST):
+
+  * `GET /api/teams/:id` - lấy team
+  * `POST /api/teams` - lưu team mới (returns id/share slug)
+  * `PUT /api/teams/:id` - cập nhật
+  * `DELETE /api/teams/:id` - xóa
+  * `GET /api/champions` - trả về danh sách champion (cached)
+
+* `Team.model.js` (MongoDB schema) ví dụ fields: `name, champions: [{id, level, position}], ownerId, createdAt, meta (synergySummary)`
+
+Gợi ý packages: `express`, `mongoose`, `cors`, `dotenv`, `helmet`, `express-validator`, `jsonwebtoken` (nếu auth).
+
+### Data
+
+* `data/champions.json` nên được chuẩn hóa (unique id, name, cost, traits\[], imagePath, attributes nếu cần).
+* Backend có thể load file này khi start và cache vào memory/redis.
+
+### Docker & môi trường
+
+* `docker-compose.yml` để chạy `backend`, `frontend` (tùy chọn), và `mongo`.
+* `.env.example` chứa biến: `MONGO_URI`, `PORT`, `JWT_SECRET`, `FRONTEND_URL`.
+
+---
+
+## Một số lưu ý kỹ thuật & tính năng mở rộng
+
+* **Tối ưu hình ảnh**: dùng CDN hoặc serve từ `public/champions`.
+* **Shareable link**: khi lưu team, backend trả về một slug (ví dụ `/t/abc123`) để frontend load.
+* **Import/Export**: hỗ trợ export team JSON, import từ URL (OP.GG có mô hình data — bạn có thể map fields tương ứng).
+* **Realtime collaboration (nhiều người build cùng lúc)**: có thể thêm `socket.io`.
+* **Rate-limiting & caching**: cache champion data, rate-limit API save để tránh spam.
+
+---
+
+## Tiếp theo mình có thể làm (tự động):
+
+* Sinh scaffold `backend` (server.js, routes, model Team.model.js) và `frontend` (Vite + Vue cơ bản, vài component) — nếu bạn muốn mình sinh code mẫu, chỉ nói “Tạo scaffold backend” hoặc “Tạo scaffold frontend”.
+
+---
+
+Nếu bạn muốn, mình có thể triển khai thêm `example team JSON`, `Team.model.js` mẫu, hoặc một `synergyEngine.js` cơ bản ngay bây giờ.
+
+
+in file.h
+
+int State_Servor_check_trai = 0 , State_Servor_check_phai;
+
+void checkservo();
+{
+Servor_check_trai;	
+  State_Servor_check_trai = 1;
+  if(State_Servor_check_trai == 1 && CB_Truoc == 1 && Cam == 1) { //code di chuyen qua lay box;  }
+ else if (Servor_check_trai == 1 && CB_Truoc == 1 && Cam != 1 && Cam == 2 ) { Servor_check_phai, state_servor_checkphai =1 ; }
+ else if (state_servor_checkphai == 1 && CB_Truoc == 1 && Cam == 0 ) {//code di chuyen qua phai }	
+}
+
+
+main.c
+	
+if(cam == 0 && CB == 1) // co vat the trc mat
+
+{
+   checkservo();
+}
+
+
+
+1, 3, 5, 9, 7, 11 : #339966
+
+2, 4, 12, 10: #006600
+
+6, 8: #CCCC66
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
